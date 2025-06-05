@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -25,6 +27,26 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PersonByEmailNotFoundException.class)
     public ResponseEntity<ErrorResponse> handlePersonByEmailNotFoundException(PersonByEmailNotFoundException ex){
+        return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex){
+        return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNoResourceFoundException(NoResourceFoundException ex){
+        return ResponseEntity.badRequest().body(new ErrorResponse("Recurso no encontrado"));
+    }
+
+    @ExceptionHandler(CannotDeleteTeamOwnerException.class)
+    public ResponseEntity<ErrorResponse> handleCannotDeleteTeamOwnerException(CannotDeleteTeamOwnerException ex){
+        return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(PlayerNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlePlayerNotFoundException(PlayerNotFoundException ex){
         return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
     }
 

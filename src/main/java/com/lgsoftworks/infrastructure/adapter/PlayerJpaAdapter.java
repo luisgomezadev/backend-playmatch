@@ -78,4 +78,9 @@ public class PlayerJpaAdapter implements PlayerRepositoryPort {
                 .map(PlayerDboMapper::toModel);
     }
 
+    @Override
+    public boolean existsByIdAndTeamId(Long playerId, Long teamId) {
+        return playerRepository.existsByIdAndTeamId(playerId, teamId);
+    }
+
 }

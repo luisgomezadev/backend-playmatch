@@ -16,4 +16,5 @@ public interface PlayerUseCase {
     boolean deleteById(Long id);
     Optional<PlayerDTO> findByDocumentNumber(String documentNumber);
     Optional<PlayerDTO> findByEmail(String email);
+    boolean existsByIdAndTeamId(Long playerId, Long teamId);
 }

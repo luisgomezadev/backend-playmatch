@@ -93,4 +93,9 @@ public class PlayerService implements PlayerUseCase {
         return optionalPlayer.map(PlayerModelMapper::toDTO);
     }
 
+    @Override
+    public boolean existsByIdAndTeamId(Long playerId, Long teamId) {
+        return playerRepositoryPort.existsByIdAndTeamId(playerId, teamId);
+    }
+
 }

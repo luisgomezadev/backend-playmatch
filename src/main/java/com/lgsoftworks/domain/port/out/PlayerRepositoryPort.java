@@ -14,4 +14,5 @@ public interface PlayerRepositoryPort {
     boolean deleteById(Long id);
     Optional<Player> findByDocumentNumber(String documentNumber);
     Optional<Player> findByEmail(String email);
+    boolean existsByIdAndTeamId(Long playerId, Long teamId);
 }

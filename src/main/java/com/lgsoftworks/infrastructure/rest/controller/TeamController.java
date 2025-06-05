@@ -2,6 +2,7 @@ package com.lgsoftworks.infrastructure.rest.controller;
 
 import com.lgsoftworks.domain.dto.summary.TeamSummaryDTO;
 import com.lgsoftworks.domain.port.in.AssignTeamUseCase;
+import com.lgsoftworks.domain.port.in.DeletePlayerTeamUseCase;
 import com.lgsoftworks.domain.port.in.TeamUseCase;
 import com.lgsoftworks.domain.dto.TeamDTO;
 import com.lgsoftworks.domain.dto.request.TeamRequest;
@@ -20,6 +21,7 @@ public class TeamController {
 
     private final TeamUseCase teamUseCase;
     private final AssignTeamUseCase assignTeamUseCase;
+    private final DeletePlayerTeamUseCase deletePlayerTeamUseCase;
 
     @GetMapping
     public ResponseEntity<List<TeamDTO>> getTeams() {
@@ -37,6 +39,14 @@ public class TeamController {
             @PathVariable Long personId) {
         assignTeamUseCase.addMemberToTeam(teamId, personId);
         return ResponseEntity.ok().body(new MessageResponse("Jugador inscrito al equipo correctamente"));
+    }
+
+    @PostMapping("delete/{playerId}/team/{teamId}")
+    public ResponseEntity<MessageResponse> deletePlayerOfTeam(
+            @PathVariable Long teamId,
+            @PathVariable Long playerId) {
+        deletePlayerTeamUseCase.deletePlayerOfTeam(teamId, playerId);
+        return ResponseEntity.ok().body(new MessageResponse("Jugador eliminado del equipo correctamente"));
     }
 
     @GetMapping("/teams")
