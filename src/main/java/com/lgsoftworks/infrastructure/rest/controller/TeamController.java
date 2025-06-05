@@ -1,0 +1,58 @@
+package com.lgsoftworks.infrastructure.rest.controller;
+
+import com.lgsoftworks.domain.dto.summary.TeamSummaryDTO;
+import com.lgsoftworks.domain.port.in.AssignTeamUseCase;
+import com.lgsoftworks.domain.port.in.TeamUseCase;
+import com.lgsoftworks.domain.dto.TeamDTO;
+import com.lgsoftworks.domain.dto.request.TeamRequest;
+import com.lgsoftworks.infrastructure.rest.dto.MessageResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/team")
+@RequiredArgsConstructor
+public class TeamController {
+
+    private final TeamUseCase teamUseCase;
+    private final AssignTeamUseCase assignTeamUseCase;
+
+    @GetMapping
+    public ResponseEntity<List<TeamDTO>> getTeams() {
+        return ResponseEntity.ok().body(teamUseCase.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<TeamSummaryDTO> saveTeam(@RequestBody TeamRequest teamRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(teamUseCase.save(teamRequest));
+    }
+
+    @PostMapping("/{teamId}/member/{personId}")
+    public ResponseEntity<MessageResponse> addMemberToTeam(
+            @PathVariable Long teamId,
+            @PathVariable Long personId) {
+        assignTeamUseCase.addMemberToTeam(teamId, personId);
+        return ResponseEntity.ok().body(new MessageResponse("Jugador inscrito al equipo correctamente"));
+    }
+
+    @GetMapping("/teams")
+    public ResponseEntity<List<TeamDTO>> getTeamsByCity(@RequestParam String city) {
+        return ResponseEntity.ok().body(teamUseCase.findByCity(city));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamSummaryDTO> updateTeam(@PathVariable Long id, @RequestBody TeamRequest teamRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(teamUseCase.update(teamRequest, id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MessageResponse> deleteTeamById(@PathVariable Long id){
+        teamUseCase.deleteById(id);
+        return ResponseEntity.ok().body(new MessageResponse("Equipo eliminado exitosamente!"));
+    }
+
+}
