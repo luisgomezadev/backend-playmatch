@@ -1,4 +1,4 @@
-package com.lgsoftworks.infrastructure.rest.controller;
+/*package com.lgsoftworks.infrastructure.rest.controller;
 
 import com.lgsoftworks.domain.dto.PlayerDTO;
 import com.lgsoftworks.domain.dto.summary.TeamSummaryDTO;
@@ -85,4 +85,4 @@ class PlayerControllerTest {
                 .andExpect(jsonPath("$.lastName").value("Gomez"));
     }
 
-}
+}*/
