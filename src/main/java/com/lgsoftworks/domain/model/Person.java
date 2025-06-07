@@ -1,13 +1,9 @@
 package com.lgsoftworks.domain.model;
 
 import com.lgsoftworks.domain.enums.DocumentType;
-import com.lgsoftworks.domain.enums.Permission;
-import com.lgsoftworks.domain.enums.PersonType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @NoArgsConstructor
 @Getter

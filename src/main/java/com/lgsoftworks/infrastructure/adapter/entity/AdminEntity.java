@@ -1,14 +1,11 @@
 package com.lgsoftworks.infrastructure.adapter.entity;
 
 import com.lgsoftworks.domain.enums.DocumentType;
-import com.lgsoftworks.domain.enums.Permission;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Table(name = "admin")
