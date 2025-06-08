@@ -16,6 +16,8 @@ public class AdminDboMapper {
         admin.setDocumentType(entity.getDocumentType());
         admin.setDocumentNumber(entity.getDocumentNumber());
         admin.setEmail(entity.getEmail());
+        admin.setPassword(entity.getPassword());
+        admin.setRole(entity.getRole());
         admin.setField(FieldDboMapper.toSimpleModel(entity.getField()));
         return admin;
     }
@@ -31,6 +33,8 @@ public class AdminDboMapper {
         adminEntity.setDocumentType(admin.getDocumentType());
         adminEntity.setDocumentNumber(admin.getDocumentNumber());
         adminEntity.setEmail(admin.getEmail());
+        adminEntity.setPassword(admin.getPassword());
+        adminEntity.setRole(admin.getRole());
         adminEntity.setField(FieldDboMapper.toSimpleDbo(admin.getField()));
         return adminEntity;
     }
@@ -46,6 +50,8 @@ public class AdminDboMapper {
         admin.setDocumentType(entity.getDocumentType());
         admin.setDocumentNumber(entity.getDocumentNumber());
         admin.setEmail(entity.getEmail());
+        admin.setPassword(entity.getPassword());
+        admin.setRole(entity.getRole());
         return admin;
     }
 
@@ -60,6 +66,8 @@ public class AdminDboMapper {
         adminEntity.setDocumentType(admin.getDocumentType());
         adminEntity.setDocumentNumber(admin.getDocumentNumber());
         adminEntity.setEmail(admin.getEmail());
+        adminEntity.setPassword(admin.getPassword());
+        adminEntity.setRole(admin.getRole());
         return adminEntity;
     }
 

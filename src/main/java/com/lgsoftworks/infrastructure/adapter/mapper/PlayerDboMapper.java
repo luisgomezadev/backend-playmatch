@@ -19,6 +19,8 @@ public class PlayerDboMapper {
         player.setDocumentType(entity.getDocumentType());
         player.setDocumentNumber(entity.getDocumentNumber());
         player.setEmail(entity.getEmail());
+        player.setPassword(entity.getPassword());
+        player.setRole(entity.getRole());
         player.setTeam(TeamDboMapper.toSimpleModel(entity.getTeam()));
         return player;
     }
@@ -34,6 +36,8 @@ public class PlayerDboMapper {
         playerEntity.setDocumentType(player.getDocumentType());
         playerEntity.setDocumentNumber(player.getDocumentNumber());
         playerEntity.setEmail(player.getEmail());
+        playerEntity.setPassword(player.getPassword());
+        playerEntity.setRole(player.getRole());
         playerEntity.setTeam(TeamDboMapper.toSimpleDbo(player.getTeam()));
         return playerEntity;
     }
@@ -49,6 +53,8 @@ public class PlayerDboMapper {
         player.setDocumentType(entity.getDocumentType());
         player.setDocumentNumber(entity.getDocumentNumber());
         player.setEmail(entity.getEmail());
+        player.setPassword(entity.getPassword());
+        player.setRole(entity.getRole());
         return player;
     }
 
@@ -63,6 +69,8 @@ public class PlayerDboMapper {
         playerEntity.setDocumentType(player.getDocumentType());
         playerEntity.setDocumentNumber(player.getDocumentNumber());
         playerEntity.setEmail(player.getEmail());
+        playerEntity.setPassword(player.getPassword());
+        playerEntity.setRole(player.getRole());
         return playerEntity;
     }
 

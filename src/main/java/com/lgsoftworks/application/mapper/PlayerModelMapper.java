@@ -2,6 +2,7 @@ package com.lgsoftworks.application.mapper;
 
 import com.lgsoftworks.domain.dto.PlayerDTO;
 import com.lgsoftworks.domain.dto.request.PlayerRequest;
+import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.model.Player;
 
 public class PlayerModelMapper {
@@ -45,6 +46,8 @@ public class PlayerModelMapper {
         player.setDocumentNumber(playerRequest.getDocumentNumber());
         player.setEmail(playerRequest.getEmail());
         player.setTeam(playerRequest.getTeam());
+        player.setPassword(playerRequest.getPassword());
+        player.setRole(Role.PLAYER);
         return player;
     }
 

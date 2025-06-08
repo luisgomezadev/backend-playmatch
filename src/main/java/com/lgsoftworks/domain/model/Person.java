@@ -1,6 +1,7 @@
 package com.lgsoftworks.domain.model;
 
 import com.lgsoftworks.domain.enums.DocumentType;
+import com.lgsoftworks.domain.enums.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,4 +18,6 @@ public abstract class Person {
     private DocumentType documentType;
     private String documentNumber;
     private String email;
+    private String password;
+    private Role role;
 }

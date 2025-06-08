@@ -7,6 +7,7 @@ import com.lgsoftworks.infrastructure.adapter.entity.PlayerEntity;
 import com.lgsoftworks.infrastructure.adapter.mapper.PlayerDboMapper;
 import com.lgsoftworks.infrastructure.adapter.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

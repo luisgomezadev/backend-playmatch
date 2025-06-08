@@ -2,6 +2,7 @@ package com.lgsoftworks.application.mapper;
 
 import com.lgsoftworks.domain.dto.AdminDTO;
 import com.lgsoftworks.domain.dto.request.AdminRequest;
+import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.model.Admin;
 
 public class AdminModelMapper {
@@ -48,6 +49,8 @@ public class AdminModelMapper {
         admin.setDocumentNumber(adminRequest.getDocumentNumber());
         admin.setEmail(adminRequest.getEmail());
         admin.setField(adminRequest.getField());
+        admin.setPassword(adminRequest.getPassword());
+        admin.setRole(Role.ADMIN);
         return admin;
     }
 
