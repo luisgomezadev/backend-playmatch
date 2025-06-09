@@ -1,14 +1,10 @@
-package com.lgsoftworks.infrastructure.rest.controller;
+package com.lgsoftworks.infrastructure.security.controller;
 
-import com.lgsoftworks.application.mapper.AdminModelMapper;
-import com.lgsoftworks.application.mapper.PlayerModelMapper;
 import com.lgsoftworks.domain.dto.request.AdminRequest;
 import com.lgsoftworks.domain.dto.request.PlayerRequest;
 import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
-import com.lgsoftworks.domain.model.Admin;
-import com.lgsoftworks.domain.model.Player;
-import com.lgsoftworks.infrastructure.security.admin.AuthenticationServiceAdmin;
-import com.lgsoftworks.infrastructure.security.player.AuthenticationService;
+import com.lgsoftworks.infrastructure.security.service.AuthenticationServiceAdmin;
+import com.lgsoftworks.infrastructure.security.service.AuthenticationServicePlayer;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationRequest;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationResponse;
 import jakarta.validation.Valid;
@@ -20,16 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final AuthenticationService service;
+    private final AuthenticationServicePlayer servicePlayer;
     private final AuthenticationServiceAdmin serviceAdmin;
 
     @PostMapping("/player/register")
     public ResponseEntity<PersonSummaryDTO> registerPlayer(@Valid @RequestBody PlayerRequest request) {//@Validated
-        return ResponseEntity.ok(service.register(request));
+        return ResponseEntity.ok(servicePlayer.register(request));
     }
 
     @PostMapping("/admin/register")
@@ -39,7 +35,7 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate/player")
     public ResponseEntity<AuthenticationResponse> authenticatePlayer(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(service.authenticate(request));
+        return ResponseEntity.ok(servicePlayer.authenticate(request));
     }
 
     @PostMapping("/authenticate/admin")

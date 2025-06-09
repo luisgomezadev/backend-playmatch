@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.security.filter;
 
-import com.lgsoftworks.infrastructure.security.JwtService;
+import com.lgsoftworks.infrastructure.security.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

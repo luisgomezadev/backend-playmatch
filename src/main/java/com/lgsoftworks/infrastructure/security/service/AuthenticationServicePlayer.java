@@ -1,22 +1,17 @@
-package com.lgsoftworks.infrastructure.security.admin;
+package com.lgsoftworks.infrastructure.security.service;
 
-import com.lgsoftworks.application.mapper.AdminModelMapper;
-import com.lgsoftworks.application.mapper.PersonModelMapper;
-import com.lgsoftworks.domain.dto.AdminDTO;
-import com.lgsoftworks.domain.dto.request.AdminRequest;
+import com.lgsoftworks.domain.dto.request.PlayerRequest;
 import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.exception.InvalidCredentialsException;
 import com.lgsoftworks.domain.exception.PasswordNotNullException;
 import com.lgsoftworks.domain.exception.PersonByEmailNotFoundException;
 import com.lgsoftworks.domain.exception.PersonWithEmailExistsException;
-import com.lgsoftworks.domain.model.Admin;
-import com.lgsoftworks.domain.port.in.AdminUseCase;
+import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.in.PlayerUseCase;
-import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
-import com.lgsoftworks.infrastructure.adapter.entity.AdminEntity;
-import com.lgsoftworks.infrastructure.adapter.mapper.AdminDboMapper;
-import com.lgsoftworks.infrastructure.security.JwtService;
+import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
+import com.lgsoftworks.infrastructure.adapter.entity.PlayerEntity;
+import com.lgsoftworks.infrastructure.adapter.mapper.PlayerDboMapper;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationRequest;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,26 +23,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationServiceAdmin {
+public class AuthenticationServicePlayer {
 
-    private final AdminRepositoryPort adminRepositoryPort;
-    private final AdminUseCase adminUseCase;
+    private final PlayerRepositoryPort playerRepositoryPort;
+    private final PlayerUseCase playerUseCase;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public PersonSummaryDTO register(AdminRequest admin) {
+    public PersonSummaryDTO register(PlayerRequest player) {
 
-        if (adminRepositoryPort.findByEmail(admin.getEmail()).isPresent()) throw new PersonWithEmailExistsException(admin.getEmail());
+        if (playerRepositoryPort.findByEmail(player.getEmail()).isPresent()) throw new PersonWithEmailExistsException(player.getEmail());
 
-        if (admin.getPassword() == null) {
+        if (player.getPassword() == null) {
             throw new PasswordNotNullException();
         }
 
-        admin.setPassword(passwordEncoder.encode(admin.getPassword()));
-        admin.setRole(Role.ADMIN);
+        player.setPassword(passwordEncoder.encode(player.getPassword()));
+        player.setRole(Role.PLAYER);
 
-        return adminUseCase.save(admin);
+        //PersonSummaryDTO saved = playerUseCase.save(player);
+
+        return playerUseCase.save(player);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -63,12 +60,12 @@ public class AuthenticationServiceAdmin {
             throw new InvalidCredentialsException();
         }
 
-        Admin admin = adminRepositoryPort.findByEmail(request.getEmail())
+        Player player = playerRepositoryPort.findByEmail(request.getEmail())
                 .orElseThrow(() -> new PersonByEmailNotFoundException(request.getEmail()));
 
-        AdminEntity adminEntity = AdminDboMapper.toDbo(admin);
+        PlayerEntity playerEntity = PlayerDboMapper.toDbo(player);
 
-        String jwtToken = jwtService.generateToken(adminEntity);
+        String jwtToken = jwtService.generateToken(playerEntity);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)

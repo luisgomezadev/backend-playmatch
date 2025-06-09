@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 public class JwtProperties {
-    private String secret;
+    private String secretKey;
     private Long expiration;
     private Long refreshWindow;
 }

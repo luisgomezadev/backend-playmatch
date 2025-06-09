@@ -1,5 +1,6 @@
-package com.lgsoftworks.infrastructure.security;
+package com.lgsoftworks.infrastructure.security.service;
 
+import com.lgsoftworks.infrastructure.security.JwtProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -79,7 +80,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getSecret());
+        byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getSecretKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
