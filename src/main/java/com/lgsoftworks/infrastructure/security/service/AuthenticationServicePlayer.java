@@ -42,8 +42,6 @@ public class AuthenticationServicePlayer {
         player.setPassword(passwordEncoder.encode(player.getPassword()));
         player.setRole(Role.PLAYER);
 
-        //PersonSummaryDTO saved = playerUseCase.save(player);
-
         return playerUseCase.save(player);
     }
 

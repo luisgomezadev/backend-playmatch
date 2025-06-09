@@ -1,10 +1,12 @@
 package com.lgsoftworks.infrastructure.security;
 
+import com.lgsoftworks.infrastructure.security.exception.CustomAccessDeniedHandler;
 import com.lgsoftworks.infrastructure.security.filter.JwtAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +27,11 @@ public class SecurityConfig {
     @Autowired
     @Qualifier("handlerExceptionResolver")
     private HandlerExceptionResolver handlerExceptionResolver;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
+
+    public SecurityConfig(CustomAccessDeniedHandler accessDeniedHandler) {
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
 
     @Bean
     public JwtAuthFilter jwtAuthFilter() {
@@ -45,7 +52,12 @@ public class SecurityConfig {
                                 "/actuator/**"
                         ).permitAll()
                         .requestMatchers("/api/v1/team/**").hasAnyAuthority("PLAYER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/field/**").hasAnyAuthority("PLAYER")
+                        .requestMatchers("/api/v1/field/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler(accessDeniedHandler)
                 )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
