@@ -1,6 +1,9 @@
-package com.lgsoftworks.domain.dto.summary;
+package com.lgsoftworks.infrastructure.rest.dto.request;
 
 import com.lgsoftworks.domain.enums.StatusReservation;
+import com.lgsoftworks.domain.model.Field;
+import com.lgsoftworks.domain.model.Team;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,15 +11,16 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class ReservationFieldDTO {
+public class ReservationRequest {
     private Long id;
+    private Team team;
+    private Field field;
     private Byte hours;
-    private TeamSummaryDTO team;
     private LocalTime startTime;
-    private LocalTime endTime;
     private LocalDate reservationDate;
     private StatusReservation status;
 }

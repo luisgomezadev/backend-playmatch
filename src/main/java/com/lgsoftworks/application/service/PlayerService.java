@@ -2,16 +2,16 @@ package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.PersonModelMapper;
 import com.lgsoftworks.application.mapper.PlayerModelMapper;
-import com.lgsoftworks.domain.dto.PlayerDTO;
-import com.lgsoftworks.domain.dto.request.PlayerRequest;
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.PlayerDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.exception.PersonByDocumentNotFoundException;
 import com.lgsoftworks.domain.exception.PersonByEmailNotFoundException;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.in.PlayerUseCase;
 import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
-import com.lgsoftworks.domain.validator.ValidatePerson;
+import com.lgsoftworks.domain.validation.ValidatePerson;
 
 import java.util.List;
 import java.util.Optional;

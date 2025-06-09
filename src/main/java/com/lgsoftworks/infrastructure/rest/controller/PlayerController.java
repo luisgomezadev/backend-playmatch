@@ -1,8 +1,8 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
-import com.lgsoftworks.domain.dto.PlayerDTO;
-import com.lgsoftworks.domain.dto.request.PlayerRequest;
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.PlayerDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.port.in.PlayerUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

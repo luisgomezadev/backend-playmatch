@@ -1,7 +1,7 @@
-package com.lgsoftworks.domain.dto;
+package com.lgsoftworks.infrastructure.rest.dto;
 
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
-import com.lgsoftworks.domain.dto.summary.ReservationTeamDTO;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationTeamDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

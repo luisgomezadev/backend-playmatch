@@ -1,12 +1,12 @@
 package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.TeamModelMapper;
-import com.lgsoftworks.domain.dto.summary.TeamSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.summary.TeamSummaryDTO;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.in.AssignTeamUseCase;
 import com.lgsoftworks.domain.port.in.TeamUseCase;
-import com.lgsoftworks.domain.dto.TeamDTO;
-import com.lgsoftworks.domain.dto.request.TeamRequest;
+import com.lgsoftworks.infrastructure.rest.dto.TeamDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.TeamRequest;
 import com.lgsoftworks.domain.exception.*;
 import com.lgsoftworks.domain.model.Team;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;

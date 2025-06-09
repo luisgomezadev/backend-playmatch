@@ -1,11 +1,11 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
-import com.lgsoftworks.domain.dto.summary.TeamSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.summary.TeamSummaryDTO;
 import com.lgsoftworks.domain.port.in.AssignTeamUseCase;
 import com.lgsoftworks.domain.port.in.DeletePlayerTeamUseCase;
 import com.lgsoftworks.domain.port.in.TeamUseCase;
-import com.lgsoftworks.domain.dto.TeamDTO;
-import com.lgsoftworks.domain.dto.request.TeamRequest;
+import com.lgsoftworks.infrastructure.rest.dto.TeamDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.TeamRequest;
 import com.lgsoftworks.infrastructure.rest.dto.MessageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

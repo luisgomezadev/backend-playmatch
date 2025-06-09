@@ -1,8 +1,7 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
-import com.lgsoftworks.domain.dto.RequestPlayerDTO;
-import com.lgsoftworks.domain.dto.TeamDTO;
-import com.lgsoftworks.domain.dto.request.RequestPlayerRequest;
+import com.lgsoftworks.infrastructure.rest.dto.RequestPlayerDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.RequestPlayerRequest;
 import com.lgsoftworks.domain.enums.StatusRequest;
 import com.lgsoftworks.domain.port.in.HandleRequestUseCase;
 import com.lgsoftworks.domain.port.in.RequestPlayerUseCase;

@@ -1,7 +1,7 @@
-package com.lgsoftworks.domain.dto;
+package com.lgsoftworks.infrastructure.rest.dto.summary;
 
-import com.lgsoftworks.domain.dto.summary.FieldSummaryDTO;
 import com.lgsoftworks.domain.enums.DocumentType;
+import com.lgsoftworks.domain.enums.PersonType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AdminDTO {
+public class PersonSummaryDTO {
     private Long id;
     private String firstName;
     private String lastName;
@@ -18,5 +18,4 @@ public class AdminDTO {
     private DocumentType documentType;
     private String documentNumber;
     private String email;
-    private FieldSummaryDTO field;
 }

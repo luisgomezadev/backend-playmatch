@@ -1,8 +1,8 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
 import com.lgsoftworks.domain.port.in.FieldUseCase;
-import com.lgsoftworks.domain.dto.FieldDTO;
-import com.lgsoftworks.domain.dto.request.FieldRequest;
+import com.lgsoftworks.infrastructure.rest.dto.FieldDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.FieldRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

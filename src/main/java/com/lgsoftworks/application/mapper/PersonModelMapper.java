@@ -1,6 +1,6 @@
 package com.lgsoftworks.application.mapper;
 
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.domain.model.Person;
 import com.lgsoftworks.domain.model.Player;

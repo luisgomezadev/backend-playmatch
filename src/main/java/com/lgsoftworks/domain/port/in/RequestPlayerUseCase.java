@@ -1,7 +1,7 @@
 package com.lgsoftworks.domain.port.in;
 
-import com.lgsoftworks.domain.dto.RequestPlayerDTO;
-import com.lgsoftworks.domain.dto.request.RequestPlayerRequest;
+import com.lgsoftworks.infrastructure.rest.dto.RequestPlayerDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.RequestPlayerRequest;
 import com.lgsoftworks.domain.enums.StatusRequest;
 
 import java.util.List;

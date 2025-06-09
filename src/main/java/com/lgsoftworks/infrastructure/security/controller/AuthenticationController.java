@@ -1,8 +1,8 @@
 package com.lgsoftworks.infrastructure.security.controller;
 
-import com.lgsoftworks.domain.dto.request.AdminRequest;
-import com.lgsoftworks.domain.dto.request.PlayerRequest;
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
+import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.infrastructure.security.service.AuthenticationServiceAdmin;
 import com.lgsoftworks.infrastructure.security.service.AuthenticationServicePlayer;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationRequest;

@@ -1,8 +1,8 @@
 package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.RequestPlayerModelMapper;
-import com.lgsoftworks.domain.dto.RequestPlayerDTO;
-import com.lgsoftworks.domain.dto.request.RequestPlayerRequest;
+import com.lgsoftworks.infrastructure.rest.dto.RequestPlayerDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.RequestPlayerRequest;
 import com.lgsoftworks.domain.enums.StatusRequest;
 import com.lgsoftworks.domain.exception.PersonByIdNotFoundException;
 import com.lgsoftworks.domain.exception.PlayerAlreadyHasPendingRequestException;

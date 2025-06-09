@@ -1,4 +1,4 @@
-package com.lgsoftworks.domain.validator;
+package com.lgsoftworks.domain.validation;
 
 import com.lgsoftworks.domain.exception.PersonWithDocumentExistsException;
 import com.lgsoftworks.domain.exception.PersonWithEmailExistsException;

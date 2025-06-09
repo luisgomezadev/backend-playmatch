@@ -1,7 +1,7 @@
-package com.lgsoftworks.domain.dto;
+package com.lgsoftworks.infrastructure.rest.dto;
 
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
-import com.lgsoftworks.domain.dto.summary.TeamSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.summary.TeamSummaryDTO;
 import com.lgsoftworks.domain.enums.StatusRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

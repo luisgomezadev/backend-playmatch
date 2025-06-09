@@ -1,4 +1,4 @@
-package com.lgsoftworks.domain.dto.summary;
+package com.lgsoftworks.infrastructure.rest.dto.summary;
 
 import com.lgsoftworks.domain.enums.StatusReservation;
 import lombok.Getter;

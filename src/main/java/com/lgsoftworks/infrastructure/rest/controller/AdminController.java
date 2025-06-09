@@ -1,8 +1,8 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
-import com.lgsoftworks.domain.dto.AdminDTO;
-import com.lgsoftworks.domain.dto.request.AdminRequest;
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.port.in.AdminUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

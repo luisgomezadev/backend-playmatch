@@ -54,7 +54,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             userEmail = jwtService.extractUsername(jwt);
 
             if (userEmail == null || SecurityContextHolder.getContext().getAuthentication() != null) {
-                log.debug("The JWT doesn't contains a username");
+                log.debug("El JWT no contiene un nombre de usuario.");
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -66,14 +66,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             boolean canBeRenewed = jwtService.canTokenBeRenewed(jwt);
 
             if (!isTokenValid || (isTokenExpired && !canBeRenewed)) {
-                log.debug("The JWT is not valid");
+                log.debug("El JWT no es válido");
                 SecurityContextHolder.clearContext();
                 filterChain.doFilter(request, response);
                 return;
             }
 
             if (isTokenExpired) {
-                log.debug("The JWT is expired and is going to be renewed");
+                log.debug("El JWT ha expirado y se va a renovar");
                 String newToken = jwtService.renewToken(jwt, userDetails);
                 response.setHeader("Authorization", "Bearer " + newToken);
             }
@@ -91,7 +91,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authToken);
 
         } catch (Exception e) {
-            log.error("Error processing JWT: {}", e.getMessage());
+            log.error("Error al procesar el JWT: {}", e.getMessage());
             handlerExceptionResolver.resolveException(request, response, null, e);
         }
 

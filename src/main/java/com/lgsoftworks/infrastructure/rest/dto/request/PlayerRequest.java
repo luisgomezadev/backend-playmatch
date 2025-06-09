@@ -1,8 +1,8 @@
-package com.lgsoftworks.domain.dto.request;
+package com.lgsoftworks.infrastructure.rest.dto.request;
 
 import com.lgsoftworks.domain.enums.DocumentType;
 import com.lgsoftworks.domain.enums.Role;
-import com.lgsoftworks.domain.model.Field;
+import com.lgsoftworks.domain.model.Team;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AdminRequest {
+public class PlayerRequest {
     private Long id;
     @NotBlank(message = "El nombre no puede estar vacío")
     private String firstName;
@@ -26,7 +26,7 @@ public class AdminRequest {
     private DocumentType documentType;
     private String documentNumber;
     private String email;
-    private Field field;
+    private Team team;
     @Length(min = 5, message = "Contraseña debe tener más de 5 caracteres")
     private String password;
     private Role role;

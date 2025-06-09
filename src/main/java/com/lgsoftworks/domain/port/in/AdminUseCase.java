@@ -1,8 +1,8 @@
 package com.lgsoftworks.domain.port.in;
 
-import com.lgsoftworks.domain.dto.AdminDTO;
-import com.lgsoftworks.domain.dto.request.AdminRequest;
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 
 import java.util.List;
 import java.util.Optional;

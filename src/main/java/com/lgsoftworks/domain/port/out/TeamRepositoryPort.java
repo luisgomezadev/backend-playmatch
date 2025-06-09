@@ -1,7 +1,5 @@
 package com.lgsoftworks.domain.port.out;
 
-import com.lgsoftworks.domain.dto.TeamDTO;
-import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.model.Team;
 
 import java.util.List;

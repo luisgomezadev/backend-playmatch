@@ -1,6 +1,6 @@
-package com.lgsoftworks.domain.dto;
+package com.lgsoftworks.infrastructure.rest.dto;
 
-import com.lgsoftworks.domain.dto.summary.TeamSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.summary.FieldSummaryDTO;
 import com.lgsoftworks.domain.enums.DocumentType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PlayerDTO {
+public class AdminDTO {
     private Long id;
     private String firstName;
     private String lastName;
@@ -18,5 +18,5 @@ public class PlayerDTO {
     private DocumentType documentType;
     private String documentNumber;
     private String email;
-    private TeamSummaryDTO team;
+    private FieldSummaryDTO field;
 }

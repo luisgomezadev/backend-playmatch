@@ -1,7 +1,7 @@
 package com.lgsoftworks.domain.port.in;
 
-import com.lgsoftworks.domain.dto.ReservationDTO;
-import com.lgsoftworks.domain.dto.request.ReservationRequest;
+import com.lgsoftworks.infrastructure.rest.dto.ReservationDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
 
 import java.util.List;
 import java.util.Optional;

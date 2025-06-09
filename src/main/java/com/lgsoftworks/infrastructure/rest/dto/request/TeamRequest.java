@@ -1,4 +1,4 @@
-package com.lgsoftworks.domain.dto.request;
+package com.lgsoftworks.infrastructure.rest.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

@@ -1,7 +1,7 @@
 package com.lgsoftworks.infrastructure.security.service;
 
-import com.lgsoftworks.domain.dto.request.AdminRequest;
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.exception.InvalidCredentialsException;
 import com.lgsoftworks.domain.exception.PasswordNotNullException;

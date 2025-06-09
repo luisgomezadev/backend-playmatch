@@ -1,7 +1,7 @@
 package com.lgsoftworks.application.mapper;
 
-import com.lgsoftworks.domain.dto.RequestPlayerDTO;
-import com.lgsoftworks.domain.dto.request.RequestPlayerRequest;
+import com.lgsoftworks.infrastructure.rest.dto.RequestPlayerDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.RequestPlayerRequest;
 import com.lgsoftworks.domain.enums.StatusRequest;
 import com.lgsoftworks.domain.model.RequestPlayer;
 

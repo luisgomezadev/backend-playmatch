@@ -2,16 +2,16 @@ package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.AdminModelMapper;
 import com.lgsoftworks.application.mapper.PersonModelMapper;
-import com.lgsoftworks.domain.dto.AdminDTO;
-import com.lgsoftworks.domain.dto.request.AdminRequest;
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.exception.PersonByDocumentNotFoundException;
 import com.lgsoftworks.domain.exception.PersonByEmailNotFoundException;
 import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.domain.port.in.AdminUseCase;
 import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
-import com.lgsoftworks.domain.validator.ValidatePerson;
+import com.lgsoftworks.domain.validation.ValidatePerson;
 
 import java.util.List;
 import java.util.Optional;

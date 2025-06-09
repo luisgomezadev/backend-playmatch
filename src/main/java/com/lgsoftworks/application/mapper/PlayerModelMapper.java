@@ -1,7 +1,7 @@
 package com.lgsoftworks.application.mapper;
 
-import com.lgsoftworks.domain.dto.PlayerDTO;
-import com.lgsoftworks.domain.dto.request.PlayerRequest;
+import com.lgsoftworks.infrastructure.rest.dto.PlayerDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.model.Player;
 

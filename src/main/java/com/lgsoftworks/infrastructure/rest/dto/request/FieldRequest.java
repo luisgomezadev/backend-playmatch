@@ -1,20 +1,20 @@
-package com.lgsoftworks.domain.dto;
+package com.lgsoftworks.infrastructure.rest.dto.request;
 
-import com.lgsoftworks.domain.dto.summary.PersonSummaryDTO;
-import com.lgsoftworks.domain.dto.summary.ReservationFieldDTO;
 import com.lgsoftworks.domain.enums.Status;
+import com.lgsoftworks.domain.model.Admin;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalTime;
-import java.util.List;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class FieldDTO {
+public class FieldRequest {
     private Long id;
     private String name;
     private String city;
@@ -22,7 +22,6 @@ public class FieldDTO {
     private BigDecimal hourlyRate;
     private LocalTime openingHour;
     private LocalTime closingHour;
-    private PersonSummaryDTO admin;
+    private Admin admin;
     private Status status;
-    private List<ReservationFieldDTO> reservations;
 }

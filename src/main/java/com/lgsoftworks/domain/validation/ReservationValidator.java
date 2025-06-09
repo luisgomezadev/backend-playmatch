@@ -1,4 +1,4 @@
-package com.lgsoftworks.domain.validator;
+package com.lgsoftworks.domain.validation;
 
 import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.exception.FieldNotAvailableException;

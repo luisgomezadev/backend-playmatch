@@ -1,4 +1,4 @@
-package com.lgsoftworks.domain.dto.request;
+package com.lgsoftworks.infrastructure.rest.dto.request;
 
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.model.Team;
