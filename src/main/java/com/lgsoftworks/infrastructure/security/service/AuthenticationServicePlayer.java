@@ -1,5 +1,6 @@
 package com.lgsoftworks.infrastructure.security.service;
 
+import com.lgsoftworks.application.mapper.PersonModelMapper;
 import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
 import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.enums.Role;
@@ -67,6 +68,7 @@ public class AuthenticationServicePlayer {
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .user(PersonModelMapper.toPersonSummary(player))
                 .build();
     }
 
