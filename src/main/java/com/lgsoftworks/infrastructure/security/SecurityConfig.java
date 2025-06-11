@@ -52,7 +52,7 @@ public class SecurityConfig {
                                 "/actuator/**"
                         ).permitAll()
                         .requestMatchers("/api/v1/team/**").hasAnyAuthority("PLAYER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/field/**").hasAnyAuthority("PLAYER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/field/**").permitAll()
                         .requestMatchers("/api/v1/field/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
