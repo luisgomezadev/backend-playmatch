@@ -15,6 +15,7 @@ public class AdminDTO {
     private String lastName;
     private String city;
     private Byte age;
+    private String cellphone;
     private DocumentType documentType;
     private String documentNumber;
     private String email;

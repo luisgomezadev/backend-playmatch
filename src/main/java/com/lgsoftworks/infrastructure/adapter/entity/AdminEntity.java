@@ -29,6 +29,8 @@ public class AdminEntity extends BaseEntity implements UserDetails {
     private String city;
     @Column(nullable = false)
     private Byte age;
+    @Column(nullable = false)
+    private String cellphone;
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;
     @Column(unique = true)

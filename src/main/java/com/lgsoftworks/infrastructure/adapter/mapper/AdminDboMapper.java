@@ -13,6 +13,7 @@ public class AdminDboMapper {
         admin.setLastName(entity.getLastName());
         admin.setCity(entity.getCity());
         admin.setAge(entity.getAge());
+        admin.setCellphone(entity.getCellphone());
         admin.setDocumentType(entity.getDocumentType());
         admin.setDocumentNumber(entity.getDocumentNumber());
         admin.setEmail(entity.getEmail());
@@ -30,6 +31,7 @@ public class AdminDboMapper {
         adminEntity.setLastName(admin.getLastName());
         adminEntity.setCity(admin.getCity());
         adminEntity.setAge(admin.getAge());
+        adminEntity.setCellphone(admin.getCellphone());
         adminEntity.setDocumentType(admin.getDocumentType());
         adminEntity.setDocumentNumber(admin.getDocumentNumber());
         adminEntity.setEmail(admin.getEmail());
@@ -47,6 +49,7 @@ public class AdminDboMapper {
         admin.setLastName(entity.getLastName());
         admin.setCity(entity.getCity());
         admin.setAge(entity.getAge());
+        admin.setCellphone(entity.getCellphone());
         admin.setDocumentType(entity.getDocumentType());
         admin.setDocumentNumber(entity.getDocumentNumber());
         admin.setEmail(entity.getEmail());
@@ -63,6 +66,7 @@ public class AdminDboMapper {
         adminEntity.setLastName(admin.getLastName());
         adminEntity.setCity(admin.getCity());
         adminEntity.setAge(admin.getAge());
+        adminEntity.setCellphone(admin.getCellphone());
         adminEntity.setDocumentType(admin.getDocumentType());
         adminEntity.setDocumentNumber(admin.getDocumentNumber());
         adminEntity.setEmail(admin.getEmail());

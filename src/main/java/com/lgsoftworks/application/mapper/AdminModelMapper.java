@@ -15,6 +15,7 @@ public class AdminModelMapper {
         adminDTO.setLastName(admin.getLastName());
         adminDTO.setCity(admin.getCity());
         adminDTO.setAge(admin.getAge());
+        adminDTO.setCellphone(admin.getCellphone());
         adminDTO.setDocumentType(admin.getDocumentType());
         adminDTO.setDocumentNumber(admin.getDocumentNumber());
         adminDTO.setEmail(admin.getEmail());
@@ -30,6 +31,7 @@ public class AdminModelMapper {
         admin.setLastName(adminDTO.getLastName());
         admin.setCity(adminDTO.getCity());
         admin.setAge(adminDTO.getAge());
+        admin.setCellphone(adminDTO.getCellphone());
         admin.setDocumentType(adminDTO.getDocumentType());
         admin.setDocumentNumber(adminDTO.getDocumentNumber());
         admin.setEmail(adminDTO.getEmail());
@@ -45,6 +47,7 @@ public class AdminModelMapper {
         admin.setLastName(adminRequest.getLastName());
         admin.setCity(adminRequest.getCity());
         admin.setAge(adminRequest.getAge());
+        admin.setCellphone(adminRequest.getCellphone());
         admin.setDocumentType(adminRequest.getDocumentType());
         admin.setDocumentNumber(adminRequest.getDocumentNumber());
         admin.setEmail(adminRequest.getEmail());

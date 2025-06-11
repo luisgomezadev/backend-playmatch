@@ -23,6 +23,8 @@ public class AdminRequest {
     private String city;
     @NotNull(message = "La edad no puede ser nula")
     private Byte age;
+    @NotBlank(message = "El número de celular no puede estar vacío")
+    private String cellphone;
     private DocumentType documentType;
     private String documentNumber;
     private String email;
