@@ -7,11 +7,14 @@ C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftwor
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\mapper\TeamModelMapper.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\AdminService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\AssignTeamService.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\CountReservationService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\DeletePlayerTeamService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\FieldService.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\FinalizeReservationService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\HandleRequestService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\PlayerService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\RequestPlayerService.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\ReservationAvailabilityService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\ReservationService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\TeamService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\enums\DocumentType.java
@@ -54,11 +57,14 @@ C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftwor
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\model\Team.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\AdminUseCase.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\AssignTeamUseCase.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\CountReservationUseCase.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\DeletePlayerTeamUseCase.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\FieldUseCase.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\FinalizeReservationUseCase.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\HandleRequestUseCase.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\PlayerUseCase.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\RequestPlayerUseCase.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\ReservationAvailabilityUseCase.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\ReservationUseCase.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\in\TeamUseCase.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\domain\port\out\AdminRepositoryPort.java
@@ -93,6 +99,7 @@ C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftwor
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\repository\TeamRepository.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\RequestPlayerJpaAdapter.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\ReservationJpaAdapter.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\scheduler\ReservationFinalizerJob.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\TeamJpaAdapter.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\configuration\BeanAdminConfig.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\configuration\BeanFieldConfig.java
@@ -123,6 +130,7 @@ C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftwor
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\rest\dto\ReservationDTO.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\rest\dto\summary\FieldSummaryDTO.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\rest\dto\summary\PersonSummaryDTO.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\rest\dto\summary\ReservationAvailabilityDTO.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\rest\dto\summary\ReservationFieldDTO.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\rest\dto\summary\ReservationTeamDTO.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\rest\dto\summary\TeamSummaryDTO.java

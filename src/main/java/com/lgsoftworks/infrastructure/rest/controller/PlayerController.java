@@ -1,9 +1,11 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
+import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
 import com.lgsoftworks.infrastructure.rest.dto.PlayerDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
 import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.port.in.PlayerUseCase;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,19 +31,24 @@ public class PlayerController {
         return ResponseEntity.ok(playerUseCase.findById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<PersonSummaryDTO> savePlayer(@RequestBody PlayerRequest playerRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(playerUseCase.save(playerRequest));
-    }
-
     @PostMapping("/list")
     public ResponseEntity<List<PersonSummaryDTO>> savePlayers(@RequestBody List<PlayerRequest> playerRequests) {
         return ResponseEntity.status(HttpStatus.CREATED).body(playerUseCase.saveAll(playerRequests));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PersonSummaryDTO> updatePlayer(@PathVariable Long id, @RequestBody PlayerRequest playerRequest){
-        return ResponseEntity.ok(playerUseCase.update(playerRequest, id));
+    @PutMapping
+    public ResponseEntity<PersonSummaryDTO> updatePlayer(@RequestBody @Valid PlayerRequest playerRequest){
+        return ResponseEntity.ok(playerUseCase.update(playerRequest));
+    }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<Optional<PlayerDTO>> getPlayerByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(playerUseCase.findByEmail(email));
+    }
+
+    @GetMapping("/team/{teamId}")
+    public ResponseEntity<List<PlayerDTO>> getPlayersByTeam(@PathVariable Long teamId) {
+        return ResponseEntity.ok(playerUseCase.findAllByTeamId(teamId));
     }
 
 }

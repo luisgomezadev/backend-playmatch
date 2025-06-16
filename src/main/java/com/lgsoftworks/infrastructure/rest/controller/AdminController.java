@@ -4,6 +4,7 @@ import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
 import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.port.in.AdminUseCase;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,14 @@ public class AdminController {
         return ResponseEntity.ok(adminUseCase.findById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<PersonSummaryDTO> saveAdmin(@RequestBody AdminRequest adminRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(adminUseCase.save(adminRequest));
+    @PutMapping
+    public ResponseEntity<PersonSummaryDTO> updateAdmin(@RequestBody @Valid AdminRequest adminRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(adminUseCase.update(adminRequest));
     }
+
+    @GetMapping("/by-email")
+    public ResponseEntity<Optional<AdminDTO>> getAdminByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(adminUseCase.findByEmail(email));
+    }
+
 }

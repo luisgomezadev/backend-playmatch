@@ -1,5 +1,6 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
+import com.lgsoftworks.infrastructure.rest.dto.FieldDTO;
 import com.lgsoftworks.infrastructure.rest.dto.summary.TeamSummaryDTO;
 import com.lgsoftworks.domain.port.in.AssignTeamUseCase;
 import com.lgsoftworks.domain.port.in.DeletePlayerTeamUseCase;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/team")
@@ -26,6 +28,11 @@ public class TeamController {
     @GetMapping
     public ResponseEntity<List<TeamDTO>> getTeams() {
         return ResponseEntity.ok().body(teamUseCase.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<TeamDTO>> getTeamById(@PathVariable Long id) {
+        return ResponseEntity.ok(teamUseCase.findById(id));
     }
 
     @PostMapping
@@ -54,9 +61,9 @@ public class TeamController {
         return ResponseEntity.ok().body(teamUseCase.findByCity(city));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TeamSummaryDTO> updateTeam(@PathVariable Long id, @RequestBody TeamRequest teamRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(teamUseCase.update(teamRequest, id));
+    @PutMapping
+    public ResponseEntity<TeamSummaryDTO> updateTeam(@RequestBody TeamRequest teamRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(teamUseCase.update(teamRequest));
     }
 
     @DeleteMapping("/{id}")

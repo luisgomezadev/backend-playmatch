@@ -24,12 +24,12 @@ public class AuthenticationController {
     private final AuthenticationServiceAdmin serviceAdmin;
 
     @PostMapping("/player/register")
-    public ResponseEntity<PersonSummaryDTO> registerPlayer(@Valid @RequestBody PlayerRequest request) {//@Validated
+    public ResponseEntity<PersonSummaryDTO> registerPlayer(@RequestBody @Valid PlayerRequest request) {//@Validated
         return ResponseEntity.ok(servicePlayer.register(request));
     }
 
     @PostMapping("/admin/register")
-    public ResponseEntity<PersonSummaryDTO> registerAdmin(@Valid @RequestBody AdminRequest request) {//@Validated
+    public ResponseEntity<PersonSummaryDTO> registerAdmin(@RequestBody @Valid AdminRequest request) {//@Validated
         return ResponseEntity.ok(serviceAdmin.register(request));
     }
 

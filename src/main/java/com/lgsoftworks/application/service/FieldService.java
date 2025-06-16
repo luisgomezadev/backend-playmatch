@@ -34,6 +34,12 @@ public class FieldService implements FieldUseCase {
     }
 
     @Override
+    public Optional<FieldDTO> findByAdminId(Long id) {
+        return fieldRepositoryPort.findByAdminId(id)
+                .map(FieldModelMapper::toDTO);
+    }
+
+    @Override
     public FieldDTO save(FieldRequest fieldRequest) {
         Admin admin = adminRepositoryPort.findById(fieldRequest.getAdmin().getId())
                 .orElseThrow(() -> new PersonByIdNotFoundException(fieldRequest.getAdmin().getId()));
@@ -53,7 +59,34 @@ public class FieldService implements FieldUseCase {
 
     @Override
     public FieldDTO update(FieldRequest fieldRequest) {
-        return null;
+        Long fieldId = fieldRequest.getId();
+        if (fieldId == null) {
+            throw new IllegalArgumentException("El ID del campo es obligatorio para actualizar.");
+        }
+
+        Field existingField = fieldRepositoryPort.findById(fieldId)
+                .orElseThrow(() -> new RuntimeException("Campo con ID " + fieldId + " no encontrado."));
+
+        Admin admin = adminRepositoryPort.findById(fieldRequest.getAdmin().getId())
+                .orElseThrow(() -> new PersonByIdNotFoundException(fieldRequest.getAdmin().getId()));
+
+        // Opcional: prevenir cambiar a un admin que ya tiene otra cancha (si se está cambiando)
+        if (!existingField.getAdmin().getId().equals(admin.getId()) && existsByAdminId(admin.getId())) {
+            throw new PersonAlreadyAssignedAsAdminException(admin.getId());
+        }
+
+        // Actualizar campos
+        existingField.setName(fieldRequest.getName());
+        existingField.setAddress(fieldRequest.getAddress());
+        existingField.setCity(fieldRequest.getCity());
+        existingField.setHourlyRate(fieldRequest.getHourlyRate());
+        existingField.setOpeningHour(fieldRequest.getOpeningHour());
+        existingField.setClosingHour(fieldRequest.getClosingHour());
+        existingField.setStatus(fieldRequest.getStatus());
+        existingField.setAdmin(admin);
+
+        Field updatedField = fieldRepositoryPort.save(existingField);
+        return FieldModelMapper.toDTO(updatedField);
     }
 
     @Override

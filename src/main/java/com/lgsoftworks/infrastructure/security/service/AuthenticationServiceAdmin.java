@@ -64,7 +64,7 @@ public class AuthenticationServiceAdmin {
 
         AdminEntity adminEntity = AdminDboMapper.toDbo(admin);
 
-        String jwtToken = jwtService.generateToken(adminEntity);
+        String jwtToken = jwtService.generateToken(adminEntity, "admin");
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)

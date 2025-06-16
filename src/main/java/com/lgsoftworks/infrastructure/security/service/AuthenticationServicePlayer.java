@@ -64,7 +64,7 @@ public class AuthenticationServicePlayer {
 
         PlayerEntity playerEntity = PlayerDboMapper.toDbo(player);
 
-        String jwtToken = jwtService.generateToken(playerEntity);
+        String jwtToken = jwtService.generateToken(playerEntity, "player");
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)

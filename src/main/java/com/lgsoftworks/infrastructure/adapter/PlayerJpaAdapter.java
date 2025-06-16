@@ -1,9 +1,12 @@
 package com.lgsoftworks.infrastructure.adapter;
 
 import com.lgsoftworks.domain.exception.PersonByIdNotFoundException;
+import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
+import com.lgsoftworks.infrastructure.adapter.entity.AdminEntity;
 import com.lgsoftworks.infrastructure.adapter.entity.PlayerEntity;
+import com.lgsoftworks.infrastructure.adapter.mapper.AdminDboMapper;
 import com.lgsoftworks.infrastructure.adapter.mapper.PlayerDboMapper;
 import com.lgsoftworks.infrastructure.adapter.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,12 +52,9 @@ public class PlayerJpaAdapter implements PlayerRepositoryPort {
     }
 
     @Override
-    public Player update(Player player, Long id) {
-        if (!playerRepository.existsById(id)) {
-            throw new PersonByIdNotFoundException(id);
-        }
-        player.setId(id);
-        PlayerEntity updatedPlayer = playerRepository.save(PlayerDboMapper.toDbo(player));
+    public Player update(Player player) {
+        PlayerEntity playerEntity = PlayerDboMapper.toDbo(player);
+        PlayerEntity updatedPlayer = playerRepository.save(playerEntity);
         return PlayerDboMapper.toModel(updatedPlayer);
     }
 
@@ -82,6 +82,14 @@ public class PlayerJpaAdapter implements PlayerRepositoryPort {
     @Override
     public boolean existsByIdAndTeamId(Long playerId, Long teamId) {
         return playerRepository.existsByIdAndTeamId(playerId, teamId);
+    }
+
+    @Override
+    public List<Player> findAllByTeamId(Long teamId) {
+        List<PlayerEntity> playerEntityList = playerRepository.findAllByTeamId(teamId);
+        return playerEntityList.stream()
+                .map(PlayerDboMapper::toModel)
+                .toList();
     }
 
 }

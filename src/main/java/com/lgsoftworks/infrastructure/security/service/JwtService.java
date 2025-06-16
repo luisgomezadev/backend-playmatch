@@ -32,8 +32,10 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(UserDetails userDetails, String role) {
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("role", role);
+        return generateToken(extraClaims, userDetails);
     }
 
     public String generateToken(
@@ -52,7 +54,7 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()));
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     public boolean isTokenExpired(String token) {
@@ -100,7 +102,13 @@ public class JwtService {
         if (!canTokenBeRenewed(token)) {
             throw new IllegalArgumentException("The JWT couldn't be renewed");
         }
-        return generateToken(userDetails);
+
+        Claims claims = extractAllClaims(token);  // extraemos todos los claims originales
+        Map<String, Object> extraClaims = new HashMap<>();
+        if (claims.get("role") != null) {
+            extraClaims.put("role", claims.get("role"));
+        }
+        return generateToken(extraClaims, userDetails);
     }
 
 }

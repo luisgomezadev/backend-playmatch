@@ -16,6 +16,7 @@ public class PlayerDboMapper {
         player.setLastName(entity.getLastName());
         player.setCity(entity.getCity());
         player.setAge(entity.getAge());
+        player.setCellphone(entity.getCellphone());
         player.setDocumentType(entity.getDocumentType());
         player.setDocumentNumber(entity.getDocumentNumber());
         player.setEmail(entity.getEmail());
@@ -33,6 +34,7 @@ public class PlayerDboMapper {
         playerEntity.setLastName(player.getLastName());
         playerEntity.setCity(player.getCity());
         playerEntity.setAge(player.getAge());
+        playerEntity.setCellphone(player.getCellphone());
         playerEntity.setDocumentType(player.getDocumentType());
         playerEntity.setDocumentNumber(player.getDocumentNumber());
         playerEntity.setEmail(player.getEmail());
@@ -50,6 +52,7 @@ public class PlayerDboMapper {
         player.setLastName(entity.getLastName());
         player.setCity(entity.getCity());
         player.setAge(entity.getAge());
+        player.setCellphone(entity.getCellphone());
         player.setDocumentType(entity.getDocumentType());
         player.setDocumentNumber(entity.getDocumentNumber());
         player.setEmail(entity.getEmail());
@@ -66,6 +69,7 @@ public class PlayerDboMapper {
         playerEntity.setLastName(player.getLastName());
         playerEntity.setCity(player.getCity());
         playerEntity.setAge(player.getAge());
+        playerEntity.setCellphone(player.getCellphone());
         playerEntity.setDocumentType(player.getDocumentType());
         playerEntity.setDocumentNumber(player.getDocumentNumber());
         playerEntity.setEmail(player.getEmail());

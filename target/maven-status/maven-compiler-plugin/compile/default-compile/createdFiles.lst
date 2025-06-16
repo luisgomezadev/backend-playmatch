@@ -16,10 +16,12 @@ com\lgsoftworks\infrastructure\rest\controller\AdminController.class
 com\lgsoftworks\domain\model\Team.class
 com\lgsoftworks\domain\exception\PersonByDocumentNotFoundException.class
 com\lgsoftworks\domain\port\in\AdminUseCase.class
+com\lgsoftworks\domain\port\in\CountReservationUseCase.class
 com\lgsoftworks\infrastructure\adapter\TeamJpaAdapter.class
 com\lgsoftworks\domain\exception\CannotDeleteTeamOwnerException.class
 com\lgsoftworks\infrastructure\security\JwtProperties.class
 com\lgsoftworks\domain\exception\TeamAlreadyHasReservationException.class
+com\lgsoftworks\infrastructure\adapter\scheduler\ReservationFinalizerJob.class
 com\lgsoftworks\infrastructure\rest\dto\RequestPlayerDTO.class
 com\lgsoftworks\infrastructure\adapter\entity\TeamEntity.class
 com\lgsoftworks\infrastructure\rest\dto\request\PlayerRequest.class
@@ -41,12 +43,14 @@ com\lgsoftworks\infrastructure\configuration\BeanTeamConfig.class
 com\lgsoftworks\application\mapper\ReservationModelMapper.class
 com\lgsoftworks\infrastructure\rest\dto\summary\ReservationTeamDTO.class
 com\lgsoftworks\domain\exception\PlayerAlreadyHasPendingRequestException.class
+com\lgsoftworks\application\service\FinalizeReservationService.class
 com\lgsoftworks\application\service\RequestPlayerService.class
 com\lgsoftworks\domain\model\Admin.class
 com\lgsoftworks\infrastructure\rest\controller\PlayerController.class
 com\lgsoftworks\domain\validation\ReservationValidator.class
 com\lgsoftworks\infrastructure\security\AuthenticationConfig.class
 com\lgsoftworks\infrastructure\adapter\mapper\RequestPlayerDboMapper.class
+com\lgsoftworks\domain\port\in\ReservationAvailabilityUseCase.class
 com\lgsoftworks\domain\exception\PersonAlreadyAssignedAsAdminException.class
 com\lgsoftworks\infrastructure\adapter\entity\FieldEntity.class
 com\lgsoftworks\application\mapper\FieldModelMapper.class
@@ -77,6 +81,7 @@ com\lgsoftworks\domain\enums\DocumentType.class
 com\lgsoftworks\domain\model\Person.class
 com\lgsoftworks\domain\model\RequestPlayer.class
 com\lgsoftworks\domain\exception\PlayerAlreadyInTeamException.class
+com\lgsoftworks\application\service\CountReservationService.class
 com\lgsoftworks\infrastructure\rest\advice\GlobalExceptionHandler.class
 com\lgsoftworks\domain\exception\PersonByEmailNotFoundException.class
 com\lgsoftworks\infrastructure\adapter\repository\TeamRepository.class
@@ -110,6 +115,7 @@ com\lgsoftworks\domain\port\in\PlayerUseCase.class
 com\lgsoftworks\domain\enums\PersonType.class
 com\lgsoftworks\domain\exception\FieldNotAvailableException.class
 com\lgsoftworks\domain\exception\ReservationByIdNotFoundException.class
+com\lgsoftworks\domain\port\in\FinalizeReservationUseCase.class
 com\lgsoftworks\domain\port\out\TeamRepositoryPort.class
 com\lgsoftworks\application\mapper\AdminModelMapper.class
 com\lgsoftworks\infrastructure\rest\dto\summary\PersonSummaryDTO.class
@@ -121,6 +127,7 @@ com\lgsoftworks\infrastructure\rest\dto\PlayerDTO.class
 com\lgsoftworks\domain\exception\PersonWithDocumentExistsException.class
 com\lgsoftworks\domain\enums\StatusReservation.class
 com\lgsoftworks\domain\port\in\DeletePlayerTeamUseCase.class
+com\lgsoftworks\infrastructure\rest\dto\summary\ReservationAvailabilityDTO.class
 com\lgsoftworks\infrastructure\rest\dto\request\FieldRequest.class
 com\lgsoftworks\infrastructure\rest\dto\request\ReservationRequest.class
 com\lgsoftworks\infrastructure\security\SecurityConfig.class
@@ -135,6 +142,7 @@ com\lgsoftworks\domain\port\in\FieldUseCase.class
 com\lgsoftworks\infrastructure\adapter\entity\RequestPlayerEntity.class
 com\lgsoftworks\application\mapper\PlayerModelMapper.class
 com\lgsoftworks\infrastructure\security\dto\AuthenticationResponse.class
+com\lgsoftworks\application\service\ReservationAvailabilityService.class
 com\lgsoftworks\domain\port\out\FieldRepositoryPort.class
 com\lgsoftworks\infrastructure\adapter\FieldJpaAdapter.class
 com\lgsoftworks\infrastructure\adapter\mapper\FieldDboMapper.class

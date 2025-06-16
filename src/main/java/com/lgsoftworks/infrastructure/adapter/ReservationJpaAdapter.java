@@ -1,5 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter;
 
+import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.model.Reservation;
 import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.infrastructure.adapter.entity.ReservationEntity;
@@ -8,6 +9,7 @@ import com.lgsoftworks.infrastructure.adapter.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +23,8 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     public List<Reservation> findAll() {
         return reservationRepository.findAll()
                 .stream()
+                .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
+                        .thenComparing(ReservationEntity::getStartTime))
                 .map(ReservationDboMapper::toModel)
                 .toList();
     }
@@ -45,5 +49,55 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     @Override
     public void deleteById(Long id) {
 
+    }
+
+    @Override
+    public List<Reservation> findByFieldId(Long fieldId) {
+        return reservationRepository.findByFieldId(fieldId)
+                .stream()
+                .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
+                        .thenComparing(ReservationEntity::getStartTime))
+                .map(ReservationDboMapper::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Reservation> findByTeamId(Long teamId) {
+        return reservationRepository.findByTeamId(teamId)
+                .stream()
+                .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
+                        .thenComparing(ReservationEntity::getStartTime))
+                .map(ReservationDboMapper::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Reservation> findAllByStatus(StatusReservation status) {
+        return reservationRepository.findAllByStatus(status)
+                .stream()
+                .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
+                        .thenComparing(ReservationEntity::getStartTime))
+                .map(ReservationDboMapper::toModel)
+                .toList();
+    }
+
+    @Override
+    public Long countActiveReservationsByTeam(StatusReservation statusReservation, Long teamId) {
+        return reservationRepository.countByStatusAndTeam_Id(StatusReservation.ACTIVE, teamId);
+    }
+
+    @Override
+    public Long countFinishedReservationsByTeam(StatusReservation statusReservation, Long teamId) {
+        return reservationRepository.countByStatusAndTeam_Id(StatusReservation.FINISHED, teamId);
+    }
+
+    @Override
+    public Long countActiveReservationsByField(StatusReservation statusReservation, Long fieldId) {
+        return reservationRepository.countByStatusAndField_Id(StatusReservation.ACTIVE, fieldId);
+    }
+
+    @Override
+    public Long countFinishedReservationsByField(StatusReservation statusReservation, Long fieldId) {
+        return reservationRepository.countByStatusAndField_Id(StatusReservation.FINISHED, fieldId);
     }
 }

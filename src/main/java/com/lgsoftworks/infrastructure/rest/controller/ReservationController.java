@@ -1,15 +1,20 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
+import com.lgsoftworks.domain.model.Reservation;
+import com.lgsoftworks.domain.port.in.CountReservationUseCase;
+import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.port.in.ReservationUseCase;
 import com.lgsoftworks.infrastructure.rest.dto.ReservationDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
 import com.lgsoftworks.infrastructure.rest.dto.MessageResponse;
+import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationAvailabilityDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/reservation")
@@ -17,10 +22,22 @@ import java.util.List;
 public class ReservationController {
 
     private final ReservationUseCase reservationUseCase;
+    private final CountReservationUseCase countReservationUseCase;
+    private final ReservationAvailabilityUseCase reservationAvailabilityUseCase;
 
     @GetMapping
     public ResponseEntity<List<ReservationDTO>> getReservations() {
         return ResponseEntity.ok(reservationUseCase.findAll());
+    }
+
+    @GetMapping("/field/{fieldId}")
+    public ResponseEntity<List<ReservationDTO>> getReservationsByFieldId(@PathVariable Long fieldId) {
+        return ResponseEntity.ok(reservationUseCase.findByFieldId(fieldId));
+    }
+
+    @GetMapping("/team/{teamId}")
+    public ResponseEntity<List<ReservationDTO>> getReservationsByTeamId(@PathVariable Long teamId) {
+        return ResponseEntity.ok(reservationUseCase.findByTeamId(teamId));
     }
 
     @PostMapping
@@ -33,6 +50,38 @@ public class ReservationController {
         reservationUseCase.finalizeReservation(id);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new MessageResponse("Reserva con ID " + id + " finalizada"));
+    }
+
+    @PostMapping("/canceled/{id}")
+    public ResponseEntity<MessageResponse> canceledReservationById(@PathVariable Long id) {
+        reservationUseCase.canceledReservation(id);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new MessageResponse("Reserva con ID " + id + " cancelada"));
+    }
+
+    @GetMapping("/team/{teamId}/active")
+    public ResponseEntity<Long> getCountActiveByTeam(@PathVariable Long teamId) {
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countActiveReservationsByTeam(teamId));
+    }
+
+    @GetMapping("/team/{teamId}/finished")
+    public ResponseEntity<Long> getCountFinishedByTeam(@PathVariable Long teamId) {
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countFinishedReservationsByTeam(teamId));
+    }
+
+    @GetMapping("/field/{fieldId}/active")
+    public ResponseEntity<Long> getCountActiveByField(@PathVariable Long fieldId) {
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countActiveReservationsByField(fieldId));
+    }
+
+    @GetMapping("/field/{fieldId}/finished")
+    public ResponseEntity<Long> getCountFinishedByField(@PathVariable Long fieldId) {
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countFinishedReservationsByField(fieldId));
+    }
+
+    @PostMapping("/availability")
+    public ResponseEntity<Optional<ReservationAvailabilityDTO>> getReservationAvailability(@RequestBody ReservationRequest reservationRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(reservationAvailabilityUseCase.reservationAvailability(reservationRequest));
     }
 
 }

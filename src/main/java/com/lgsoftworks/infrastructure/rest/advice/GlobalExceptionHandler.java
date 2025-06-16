@@ -8,6 +8,7 @@ import com.lgsoftworks.domain.exception.*;
 import com.lgsoftworks.infrastructure.rest.dto.ErrorResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -48,7 +50,8 @@ public class GlobalExceptionHandler {
             FieldByIdNotFoundException.class,
             PlayerAlreadyHasPendingRequestException.class,
             RequestPlayerByIdNotFoundException.class,
-            ReservationTimeOutOfRangeException.class
+            ReservationTimeOutOfRangeException.class,
+            SQLIntegrityConstraintViolationException.class
     })
     public ResponseEntity<ErrorResponse> handleBadRequest(RuntimeException ex) {
         return ResponseEntity.badRequest().body(new ErrorResponse(ex.getMessage()));
@@ -65,6 +68,12 @@ public class GlobalExceptionHandler {
                 .findFirst().map(FieldError::getDefaultMessage)
                 .orElse("Error de validación desconocido");
         return ResponseEntity.badRequest().body(new ErrorResponse(message));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(ex.getMessage()));
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

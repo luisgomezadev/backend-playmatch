@@ -10,6 +10,7 @@ import com.lgsoftworks.domain.model.Team;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 public class ReservationValidator {
 
@@ -30,20 +31,22 @@ public class ReservationValidator {
         }
 
         if (end.isAfter(field.getClosingHour())) {
-            throw new ReservationTimeOutOfRangeException("La hora de fin está fuera del horario del campo");
+            throw new ReservationTimeOutOfRangeException("La hora de finalizado está fuera del horario del campo");
         }
     }
 
     public static void validateFieldAvailability(Reservation reservation, Field field) {
         List<Reservation> reservations = field.getReservations();
         for (Reservation r: reservations) {
-            if (r.getReservationDate().equals(reservation.getReservationDate())) {
-                if ((reservation.getStartTime().isAfter(r.getStartTime()) && reservation.getStartTime().isBefore(r.getEndTime())) ||
-                        (reservation.getEndTime().isAfter(r.getStartTime()) && reservation.getEndTime().isBefore(r.getEndTime())) ||
-                        (reservation.getStartTime().equals(r.getStartTime()) || reservation.getEndTime().equals(r.getEndTime())) ||
-                        (reservation.getStartTime().isBefore(r.getStartTime()) && reservation.getEndTime().isAfter(r.getEndTime()))
-                ) {
-                    throw new FieldNotAvailableException(field);
+            if (r.getStatus().equals(StatusReservation.ACTIVE) && Objects.equals(r.getField().getId(), field.getId())) {
+                if (r.getReservationDate().equals(reservation.getReservationDate())) {
+                    if ((reservation.getStartTime().isAfter(r.getStartTime()) && reservation.getStartTime().isBefore(r.getEndTime())) ||
+                            (reservation.getEndTime().isAfter(r.getStartTime()) && reservation.getEndTime().isBefore(r.getEndTime())) ||
+                            (reservation.getStartTime().equals(r.getStartTime()) || reservation.getEndTime().equals(r.getEndTime())) ||
+                            (reservation.getStartTime().isBefore(r.getStartTime()) && reservation.getEndTime().isAfter(r.getEndTime()))
+                    ) {
+                        throw new FieldNotAvailableException(field);
+                    }
                 }
             }
         }

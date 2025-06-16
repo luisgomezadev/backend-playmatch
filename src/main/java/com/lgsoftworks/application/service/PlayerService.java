@@ -1,8 +1,11 @@
 package com.lgsoftworks.application.service;
 
+import com.lgsoftworks.application.mapper.AdminModelMapper;
 import com.lgsoftworks.application.mapper.PersonModelMapper;
 import com.lgsoftworks.application.mapper.PlayerModelMapper;
+import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.infrastructure.rest.dto.PlayerDTO;
+import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
 import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
 import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.domain.exception.PersonByDocumentNotFoundException;
@@ -65,8 +68,8 @@ public class PlayerService implements PlayerUseCase {
     }
 
     @Override
-    public PersonSummaryDTO update(PlayerRequest playerRequest, Long id) {
-        Player updatedPlayer = playerRepositoryPort.update(PlayerModelMapper.toModelRequest(playerRequest), id);
+    public PersonSummaryDTO update(PlayerRequest playerRequest) {
+        Player updatedPlayer = playerRepositoryPort.update(PlayerModelMapper.toModelRequest(playerRequest));
         return PersonModelMapper.toPersonSummary(updatedPlayer);
     }
 
@@ -96,6 +99,14 @@ public class PlayerService implements PlayerUseCase {
     @Override
     public boolean existsByIdAndTeamId(Long playerId, Long teamId) {
         return playerRepositoryPort.existsByIdAndTeamId(playerId, teamId);
+    }
+
+    @Override
+    public List<PlayerDTO> findAllByTeamId(Long teamId) {
+        List<Player> playerList = playerRepositoryPort.findAllByTeamId(teamId);
+        return playerList.stream()
+                .map(PlayerModelMapper::toDTO)
+                .toList();
     }
 
 }

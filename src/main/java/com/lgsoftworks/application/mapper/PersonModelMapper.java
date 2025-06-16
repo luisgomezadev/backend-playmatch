@@ -18,6 +18,7 @@ public class PersonModelMapper {
         dto.setLastName(person.getLastName());
         dto.setCity(person.getCity());
         dto.setAge(person.getAge());
+        dto.setCellphone(person.getCellphone());
         dto.setDocumentType(person.getDocumentType());
         dto.setDocumentNumber(person.getDocumentNumber());
         dto.setEmail(person.getEmail());
@@ -32,6 +33,7 @@ public class PersonModelMapper {
         admin.setLastName(personSummaryDTO.getLastName());
         admin.setCity(personSummaryDTO.getCity());
         admin.setAge(personSummaryDTO.getAge());
+        admin.setCellphone(personSummaryDTO.getCellphone());
         admin.setDocumentType(personSummaryDTO.getDocumentType());
         admin.setDocumentNumber(personSummaryDTO.getDocumentNumber());
         admin.setEmail(personSummaryDTO.getEmail());
@@ -46,6 +48,7 @@ public class PersonModelMapper {
         player.setLastName(personSummaryDTO.getLastName());
         player.setCity(personSummaryDTO.getCity());
         player.setAge(personSummaryDTO.getAge());
+        player.setCellphone(personSummaryDTO.getCellphone());
         player.setDocumentType(personSummaryDTO.getDocumentType());
         player.setDocumentNumber(personSummaryDTO.getDocumentNumber());
         player.setEmail(personSummaryDTO.getEmail());

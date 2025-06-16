@@ -14,6 +14,7 @@ public class PlayerModelMapper {
         playerDTO.setLastName(player.getLastName());
         playerDTO.setCity(player.getCity());
         playerDTO.setAge(player.getAge());
+        playerDTO.setCellphone(player.getCellphone());
         playerDTO.setDocumentType(player.getDocumentType());
         playerDTO.setDocumentNumber(player.getDocumentNumber());
         playerDTO.setEmail(player.getEmail());
@@ -28,6 +29,7 @@ public class PlayerModelMapper {
         player.setLastName(playerDTO.getLastName());
         player.setCity(playerDTO.getCity());
         player.setAge(playerDTO.getAge());
+        player.setCellphone(playerDTO.getCellphone());
         player.setDocumentType(playerDTO.getDocumentType());
         player.setDocumentNumber(playerDTO.getDocumentNumber());
         player.setEmail(playerDTO.getEmail());
@@ -42,6 +44,7 @@ public class PlayerModelMapper {
         player.setLastName(playerRequest.getLastName());
         player.setCity(playerRequest.getCity());
         player.setAge(playerRequest.getAge());
+        player.setCellphone(playerRequest.getCellphone());
         player.setDocumentType(playerRequest.getDocumentType());
         player.setDocumentNumber(playerRequest.getDocumentNumber());
         player.setEmail(playerRequest.getEmail());

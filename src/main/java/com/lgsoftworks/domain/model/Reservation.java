@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @NoArgsConstructor
@@ -22,4 +23,14 @@ public class Reservation {
     private LocalTime endTime;
     private LocalDate reservationDate;
     private StatusReservation status;
+
+    public LocalDateTime getEndDateTime() {
+        return LocalDateTime.of(reservationDate, endTime);
+    }
+
+    public void finalizeIfExpired(LocalDateTime now) {
+        if (status == StatusReservation.ACTIVE && now.isAfter(getEndDateTime())) {
+            this.status = StatusReservation.FINISHED;
+        }
+    }
 }

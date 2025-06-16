@@ -2,6 +2,7 @@ package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.ReservationModelMapper;
 import com.lgsoftworks.domain.exception.ReservationByIdNotFoundException;
+import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.port.in.ReservationUseCase;
 import com.lgsoftworks.infrastructure.rest.dto.ReservationDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
@@ -15,9 +16,14 @@ import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.domain.port.out.TeamRepositoryPort;
 import com.lgsoftworks.domain.validation.ReservationValidator;
+import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationAvailabilityDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,11 +33,14 @@ public class ReservationService implements ReservationUseCase {
     private final ReservationRepositoryPort reservationRepositoryPort;
     private final FieldRepositoryPort fieldRepositoryPort;
     private final TeamRepositoryPort teamRepositoryPort;
+    private final ReservationAvailabilityUseCase reservationAvailabilityUseCase;
 
     @Override
     public List<ReservationDTO> findAll() {
         List<Reservation> reservationList = reservationRepositoryPort.findAll();
         return reservationList.stream()
+                .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
+                        .thenComparing(Reservation::getStartTime))
                 .map(ReservationModelMapper::toDTO)
                 .toList();
     }
@@ -45,27 +54,15 @@ public class ReservationService implements ReservationUseCase {
     @Override
     public ReservationDTO save(ReservationRequest reservationRequest) {
 
-        Field field = fieldRepositoryPort.findById(reservationRequest.getField().getId())
-                .orElseThrow(() -> new FieldByIdNotFoundException(reservationRequest.getField().getId()));
+        Optional<ReservationAvailabilityDTO> reservationDTO = reservationAvailabilityUseCase.reservationAvailability(reservationRequest);
 
-        Team team = teamRepositoryPort.findById(reservationRequest.getTeam().getId())
-                .orElseThrow(() -> new TeamByIdNotFoundException(reservationRequest.getTeam().getId()));
+        if (reservationDTO.isPresent()) {
+            Reservation reservation = ReservationModelMapper.toModelOfAvailability(reservationDTO.get());
 
-        LocalTime time = reservationRequest.getStartTime().plusHours(reservationRequest.getHours());
-
-        reservationRequest.setStatus(StatusReservation.ACTIVE); // Estado por defecto cuando se crea una reserva
-
-        Reservation reservation = ReservationModelMapper.toModelRequest(reservationRequest);
-        reservation.setEndTime(time);
-        reservation.setField(field);
-        reservation.setTeam(team);
-
-        ReservationValidator.validateTeamHasReservation(team);
-        ReservationValidator.validateTimeWithinFieldSchedule(reservation, field);
-        ReservationValidator.validateFieldAvailability(reservation, field);
-
-        Reservation savedReservation = reservationRepositoryPort.save(reservation);
-        return ReservationModelMapper.toDTO(savedReservation);
+            Reservation savedReservation = reservationRepositoryPort.save(reservation);
+            return ReservationModelMapper.toDTO(savedReservation);
+        }
+        return null;
     }
 
     @Override
@@ -86,5 +83,59 @@ public class ReservationService implements ReservationUseCase {
         reservation.setStatus(StatusReservation.FINISHED);
 
         reservationRepositoryPort.save(reservation);
+    }
+
+    @Override
+    public void canceledReservation(Long id) {
+        Reservation reservation = reservationRepositoryPort.findById(id)
+                .orElseThrow(() -> new ReservationByIdNotFoundException(id));
+
+        reservation.setStatus(StatusReservation.CANCELED);
+
+        reservationRepositoryPort.save(reservation);
+    }
+
+    @Override
+    public List<ReservationDTO> findByFieldId(Long fieldId) {
+        List<Reservation> reservationList = reservationRepositoryPort.findByFieldId(fieldId);
+        return reservationList.stream()
+                .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
+                        .thenComparing(Reservation::getStartTime))
+                .map(ReservationModelMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ReservationDTO> findByTeamId(Long teamId) {
+        List<Reservation> reservationList = reservationRepositoryPort.findByTeamId(teamId);
+        return reservationList.stream()
+                .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
+                        .thenComparing(Reservation::getStartTime))
+                .map(ReservationModelMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ReservationDTO> findAllByStatus(StatusReservation status) {
+        List<Reservation> reservationList = reservationRepositoryPort.findAllByStatus(status);
+        return reservationList.stream()
+                .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
+                        .thenComparing(Reservation::getStartTime))
+                .map(ReservationModelMapper::toDTO)
+                .toList();
+    }
+
+    public void autoFinalizeExpiredReservations() {
+        List<Reservation> activeReservations = reservationRepositoryPort.findAllByStatus(StatusReservation.ACTIVE);
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Reservation reservation : activeReservations) {
+            StatusReservation originalStatus = reservation.getStatus();
+            reservation.finalizeIfExpired(now);
+
+            if (reservation.getStatus() != originalStatus) {
+                reservationRepositoryPort.save(reservation);
+            }
+        }
     }
 }

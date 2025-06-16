@@ -1,6 +1,7 @@
 package com.lgsoftworks.infrastructure.configuration;
 
 import com.lgsoftworks.application.service.ReservationService;
+import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.port.in.ReservationUseCase;
 import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
@@ -13,8 +14,10 @@ public class BeanReservationConfig {
     @Bean
     ReservationUseCase reservationBeanUseCase(ReservationRepositoryPort reservationRepositoryPort,
                                               FieldRepositoryPort fieldRepositoryPort,
-                                              TeamRepositoryPort teamRepositoryPort) {
-        return new ReservationService(reservationRepositoryPort, fieldRepositoryPort, teamRepositoryPort);
+                                              TeamRepositoryPort teamRepositoryPort,
+                                              ReservationAvailabilityUseCase reservationAvailabilityUseCase) {
+        return new ReservationService(reservationRepositoryPort, fieldRepositoryPort, teamRepositoryPort,
+                reservationAvailabilityUseCase);
     }
 
 }

@@ -32,6 +32,12 @@ public class FieldJpaAdapter implements FieldRepositoryPort {
     }
 
     @Override
+    public Optional<Field> findByAdminId(Long id) {
+        return fieldRepository.findByAdminId(id)
+                .map(FieldDboMapper::toModel);
+    }
+
+    @Override
     public Field save(Field field) {
         FieldEntity savedEntity = fieldRepository.save(FieldDboMapper.toDbo(field));
         return FieldDboMapper.toModel(savedEntity);
@@ -39,7 +45,8 @@ public class FieldJpaAdapter implements FieldRepositoryPort {
 
     @Override
     public Field update(Field field) {
-        return null;
+        FieldEntity updateEntity = fieldRepository.save(FieldDboMapper.toDbo(field));
+        return FieldDboMapper.toModel(updateEntity);
     }
 
     @Override

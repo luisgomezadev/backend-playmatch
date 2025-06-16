@@ -1,7 +1,9 @@
 package com.lgsoftworks.application.mapper;
 
+import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.infrastructure.rest.dto.ReservationDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
+import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationAvailabilityDTO;
 import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationFieldDTO;
 import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationTeamDTO;
 import com.lgsoftworks.domain.model.Reservation;
@@ -20,6 +22,18 @@ public class ReservationModelMapper {
         reservation.setStartTime(reservationDTO.getStartTime());
         reservation.setEndTime(reservationDTO.getEndTime());
         reservation.setStatus(reservationDTO.getStatus());
+        reservation.setField(FieldModelMapper.dtoSummaryToField(reservationDTO.getField()));
+        return reservation;
+    }
+
+    public static Reservation toModelOfAvailability(ReservationAvailabilityDTO reservationDTO) {
+        Reservation reservation = new Reservation();
+        reservation.setHours(reservationDTO.getHours());
+        reservation.setReservationDate(reservationDTO.getReservationDate());
+        reservation.setTeam(TeamModelMapper.dtoSummaryToModel(reservationDTO.getTeam()));
+        reservation.setStartTime(reservationDTO.getStartTime());
+        reservation.setEndTime(reservationDTO.getEndTime());
+        reservation.setStatus(StatusReservation.ACTIVE);
         reservation.setField(FieldModelMapper.dtoSummaryToField(reservationDTO.getField()));
         return reservation;
     }
@@ -48,6 +62,17 @@ public class ReservationModelMapper {
         reservationDTO.setStatus(reservation.getStatus());
         reservationDTO.setTeam(TeamModelMapper.toTeamSummary(reservation.getTeam()));
         return reservationDTO;
+    }
+
+    public static ReservationAvailabilityDTO toAvailabilityDTO(Reservation reservation) {
+        ReservationAvailabilityDTO dto = new ReservationAvailabilityDTO();
+        dto.setHours(reservation.getHours());
+        dto.setField(FieldModelMapper.toFieldSummaryDTO(reservation.getField()));
+        dto.setReservationDate(reservation.getReservationDate());
+        dto.setStartTime(reservation.getStartTime());
+        dto.setEndTime(reservation.getEndTime());
+        dto.setTeam(TeamModelMapper.toTeamSummary(reservation.getTeam()));
+        return dto;
     }
 
     public static ReservationTeamDTO toReservationTeamDTO(Reservation reservation) {

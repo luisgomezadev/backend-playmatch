@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface FieldUseCase {
     List<FieldDTO> findAll();
     Optional<FieldDTO> findById(Long id);
+    Optional<FieldDTO> findByAdminId(Long id);
     FieldDTO save(FieldRequest fieldRequest);
     FieldDTO update(FieldRequest fieldRequest);
     void deleteById(Long id);

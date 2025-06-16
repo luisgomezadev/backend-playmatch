@@ -1,9 +1,12 @@
 package com.lgsoftworks.infrastructure.adapter;
 
 import com.lgsoftworks.domain.exception.TeamByIdNotFoundException;
+import com.lgsoftworks.domain.model.Field;
 import com.lgsoftworks.domain.model.Team;
 import com.lgsoftworks.domain.port.out.TeamRepositoryPort;
+import com.lgsoftworks.infrastructure.adapter.entity.FieldEntity;
 import com.lgsoftworks.infrastructure.adapter.entity.TeamEntity;
+import com.lgsoftworks.infrastructure.adapter.mapper.FieldDboMapper;
 import com.lgsoftworks.infrastructure.adapter.mapper.TeamDboMapper;
 import com.lgsoftworks.infrastructure.adapter.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,11 +42,7 @@ public class TeamJpaAdapter implements TeamRepositoryPort {
     }
 
     @Override
-    public Team update(Team team, Long id) {
-        if (!teamRepository.existsById(id)) {
-            throw new TeamByIdNotFoundException(id);
-        }
-        team.setId(id);
+    public Team update(Team team) {
         TeamEntity updated = teamRepository.save(TeamDboMapper.toDbo(team));
         return TeamDboMapper.toModel(updated);
     }

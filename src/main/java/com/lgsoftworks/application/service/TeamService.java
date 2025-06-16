@@ -50,15 +50,16 @@ public class TeamService implements TeamUseCase {
     }
 
     @Override
-    public TeamSummaryDTO update(TeamRequest teamRequest, Long id) {
-        Team existingTeam = teamRepositoryPort.findById(id)
-                .orElseThrow(() -> new TeamByIdNotFoundException(id));
+    public TeamSummaryDTO update(TeamRequest teamRequest) {
+        Long teamId = teamRequest.getId();
+        Team existingTeam = teamRepositoryPort.findById(teamId)
+                .orElseThrow(() -> new TeamByIdNotFoundException(teamId));
 
-        teamRequest.setId(id);
+        teamRequest.setId(teamId);
         teamRequest.setOwnerId(existingTeam.getOwnerId());
         validateOwnerForUpdate(teamRequest);
         Team team = TeamModelMapper.toModelRequest(teamRequest);
-        Team updateTeam = teamRepositoryPort.update(team, id);
+        Team updateTeam = teamRepositoryPort.update(team);
         return TeamModelMapper.toTeamSummary(updateTeam);
     }
 

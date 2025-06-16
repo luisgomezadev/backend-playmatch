@@ -11,7 +11,7 @@ public interface TeamUseCase {
     List<TeamDTO> findAll();
     Optional<TeamDTO> findById(Long id);
     TeamSummaryDTO save(TeamRequest teamRequest);
-    TeamSummaryDTO update(TeamRequest teamRequest, Long id);
+    TeamSummaryDTO update(TeamRequest teamRequest);
     boolean deleteById(Long id);
     boolean existsByOwnerId(Long ownerId);
     List<TeamDTO> findByCity(String city);
