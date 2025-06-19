@@ -1,6 +1,5 @@
 package com.lgsoftworks.infrastructure.rest.dto;
 
-import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationTeamDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ public class TeamDTO {
     private String neighborhood;
     private String city;
     private Integer maxPlayers;
-    private List<PersonSummaryDTO> members;
+    private List<UserDTO> members;
     private Long ownerId;
     private List<ReservationTeamDTO> reservations;
 }

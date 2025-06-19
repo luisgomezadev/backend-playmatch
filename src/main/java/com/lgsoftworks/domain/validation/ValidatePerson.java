@@ -1,7 +1,7 @@
 package com.lgsoftworks.domain.validation;
 
-import com.lgsoftworks.domain.exception.PersonWithDocumentExistsException;
-import com.lgsoftworks.domain.exception.PersonWithEmailExistsException;
+import com.lgsoftworks.domain.exception.UserWithDocumentExistsException;
+import com.lgsoftworks.domain.exception.UserWithEmailExistsException;
 import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
 
@@ -24,7 +24,7 @@ public class ValidatePerson {
         boolean exists = adminRepositoryPort.findByDocumentNumber(documentNumber).isPresent()
                 || playerRepositoryPort.findByDocumentNumber(documentNumber).isPresent();
         if (exists) {
-            throw new PersonWithDocumentExistsException(documentNumber);
+            throw new UserWithDocumentExistsException(documentNumber);
         }
     }
 
@@ -32,7 +32,7 @@ public class ValidatePerson {
         boolean exists = adminRepositoryPort.findByEmail(email).isPresent()
                 || playerRepositoryPort.findByEmail(email).isPresent();
         if (exists) {
-            throw new PersonWithEmailExistsException(email);
+            throw new UserWithEmailExistsException(email);
         }
     }
 

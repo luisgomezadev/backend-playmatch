@@ -19,7 +19,7 @@ public class AssignTeamService implements AssignTeamUseCase {
     @Override
     public void addMemberToTeam(Long teamId, Long playerId) {
         Player player = playerRepositoryPort.findById(playerId)
-                .orElseThrow(() -> new PersonByIdNotFoundException(playerId));
+                .orElseThrow(() -> new UserByIdNotFoundException(playerId));
 
         Team team = teamRepositoryPort.findById(teamId)
                 .orElseThrow(() -> new TeamByIdNotFoundException(teamId));
@@ -36,7 +36,7 @@ public class AssignTeamService implements AssignTeamUseCase {
         }
 
         if (team.getMembers().stream().anyMatch(p -> p.getId().equals(player.getId()))) {
-            throw new PersonAlreadyMemberOfTeamException(player, team);
+            throw new PlayerAlreadyMemberOfTeamException(player, team);
         }
 
         if (team.getMembers().size() >= team.getMaxPlayers()) {

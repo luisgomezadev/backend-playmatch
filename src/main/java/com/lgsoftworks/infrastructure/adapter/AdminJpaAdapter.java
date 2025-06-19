@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter;
 
-import com.lgsoftworks.domain.exception.PersonByIdNotFoundException;
+import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
 import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
 import com.lgsoftworks.infrastructure.adapter.entity.AdminEntity;
@@ -48,7 +48,7 @@ public class AdminJpaAdapter implements AdminRepositoryPort {
     @Override
     public boolean deleteById(Long id) {
         if (!adminRepository.existsById(id)) {
-            throw new PersonByIdNotFoundException(id);
+            throw new UserByIdNotFoundException(id);
         }
         adminRepository.deleteById(id);
         return true;

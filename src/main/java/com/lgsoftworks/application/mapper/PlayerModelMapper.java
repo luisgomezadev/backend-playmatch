@@ -4,6 +4,7 @@ import com.lgsoftworks.infrastructure.rest.dto.PlayerDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.model.Player;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PlayerSummaryDTO;
 
 public class PlayerModelMapper {
 
@@ -20,6 +21,20 @@ public class PlayerModelMapper {
         playerDTO.setEmail(player.getEmail());
         playerDTO.setTeam(TeamModelMapper.toTeamSummary(player.getTeam()));
         return playerDTO;
+    }
+
+    public static PlayerSummaryDTO toSummaryDTO(Player player) {
+        PlayerSummaryDTO dto = new PlayerSummaryDTO();
+        dto.setId(player.getId());
+        dto.setFirstName(player.getFirstName());
+        dto.setLastName(player.getLastName());
+        dto.setCity(player.getCity());
+        dto.setAge(player.getAge());
+        dto.setCellphone(player.getCellphone());
+        dto.setDocumentType(player.getDocumentType());
+        dto.setDocumentNumber(player.getDocumentNumber());
+        dto.setTeam(TeamModelMapper.toTeamSummary(player.getTeam()));
+        return dto;
     }
 
     public static Player toModel(PlayerDTO playerDTO) {

@@ -76,23 +76,8 @@ public class ReservationService implements ReservationUseCase {
     }
 
     @Override
-    public void finalizeReservation(Long id) {
-        Reservation reservation = reservationRepositoryPort.findById(id)
-                .orElseThrow(() -> new ReservationByIdNotFoundException(id));
-
-        reservation.setStatus(StatusReservation.FINISHED);
-
-        reservationRepositoryPort.save(reservation);
-    }
-
-    @Override
-    public void canceledReservation(Long id) {
-        Reservation reservation = reservationRepositoryPort.findById(id)
-                .orElseThrow(() -> new ReservationByIdNotFoundException(id));
-
-        reservation.setStatus(StatusReservation.CANCELED);
-
-        reservationRepositoryPort.save(reservation);
+    public void updateStatus(Long id, StatusReservation status) {
+        reservationRepositoryPort.updateStatus(id, status);
     }
 
     @Override

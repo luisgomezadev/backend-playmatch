@@ -1,6 +1,5 @@
 package com.lgsoftworks.infrastructure.rest.dto;
 
-import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
 import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationFieldDTO;
 import com.lgsoftworks.domain.enums.Status;
 import lombok.Getter;
@@ -22,7 +21,7 @@ public class FieldDTO {
     private BigDecimal hourlyRate;
     private LocalTime openingHour;
     private LocalTime closingHour;
-    private PersonSummaryDTO admin;
+    private UserDTO admin;
     private Status status;
     private List<ReservationFieldDTO> reservations;
 }

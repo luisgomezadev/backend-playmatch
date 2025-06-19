@@ -1,7 +1,6 @@
-package com.lgsoftworks.domain.model;
+package com.lgsoftworks.infrastructure.rest.dto;
 
 import com.lgsoftworks.domain.enums.DocumentType;
-import com.lgsoftworks.domain.enums.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public abstract class Person {
+public class UserDTO {
     private Long id;
     private String firstName;
     private String lastName;
@@ -19,6 +18,4 @@ public abstract class Person {
     private DocumentType documentType;
     private String documentNumber;
     private String email;
-    private String password;
-    private Role role;
 }

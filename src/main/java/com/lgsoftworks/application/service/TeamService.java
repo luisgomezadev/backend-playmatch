@@ -96,7 +96,7 @@ public class TeamService implements TeamUseCase {
 
     public Player validateOwner(TeamRequest teamRequest) {
         Player player = playerRepositoryPort.findById(teamRequest.getOwnerId())
-                .orElseThrow(() -> new PersonByIdNotFoundException(teamRequest.getOwnerId()));
+                .orElseThrow(() -> new UserByIdNotFoundException(teamRequest.getOwnerId()));
 
         if (teamRepositoryPort.existsByOwnerId(player.getId())) {
             throw new DuplicateOwnerException(player);
@@ -107,7 +107,7 @@ public class TeamService implements TeamUseCase {
 
     public void validateOwnerForUpdate(TeamRequest teamRequest) {
         Player player = playerRepositoryPort.findById(teamRequest.getOwnerId())
-                .orElseThrow(() -> new PersonByIdNotFoundException(teamRequest.getOwnerId()));
+                .orElseThrow(() -> new UserByIdNotFoundException(teamRequest.getOwnerId()));
 
         Optional<Team> existingTeamWithOwner = teamRepositoryPort.findByOwnerId(player.getId());
 

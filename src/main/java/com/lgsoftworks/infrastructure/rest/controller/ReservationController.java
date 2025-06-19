@@ -1,5 +1,6 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
+import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.model.Reservation;
 import com.lgsoftworks.domain.port.in.CountReservationUseCase;
 import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
@@ -45,18 +46,11 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationUseCase.save(reservationRequest));
     }
 
-    @PostMapping("/finalize/{id}")
-    public ResponseEntity<MessageResponse> finalizeReservationById(@PathVariable Long id) {
-        reservationUseCase.finalizeReservation(id);
+    @PutMapping("/{id}/status")
+    public ResponseEntity<MessageResponse> updateStatus(@PathVariable Long id, @RequestBody StatusReservation status) {
+        reservationUseCase.updateStatus(id, status);
         return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse("Reserva con ID " + id + " finalizada"));
-    }
-
-    @PostMapping("/canceled/{id}")
-    public ResponseEntity<MessageResponse> canceledReservationById(@PathVariable Long id) {
-        reservationUseCase.canceledReservation(id);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse("Reserva con ID " + id + " cancelada"));
+                new MessageResponse("Se ha actualizado el estado de la reserva"));
     }
 
     @GetMapping("/team/{teamId}/active")

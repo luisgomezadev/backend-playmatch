@@ -4,7 +4,7 @@ import com.lgsoftworks.application.mapper.RequestPlayerModelMapper;
 import com.lgsoftworks.infrastructure.rest.dto.RequestPlayerDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.RequestPlayerRequest;
 import com.lgsoftworks.domain.enums.StatusRequest;
-import com.lgsoftworks.domain.exception.PersonByIdNotFoundException;
+import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
 import com.lgsoftworks.domain.exception.PlayerAlreadyHasPendingRequestException;
 import com.lgsoftworks.domain.exception.TeamByIdNotFoundException;
 import com.lgsoftworks.domain.model.Player;
@@ -35,7 +35,7 @@ public class RequestPlayerService implements RequestPlayerUseCase {
     public RequestPlayerDTO save(RequestPlayerRequest requestPlayerRequest) {
 
         Player player = playerRepositoryPort.findById(requestPlayerRequest.getPlayer().getId())
-                .orElseThrow(() -> new PersonByIdNotFoundException(requestPlayerRequest.getPlayer().getId()));
+                .orElseThrow(() -> new UserByIdNotFoundException(requestPlayerRequest.getPlayer().getId()));
 
         Team team = teamRepositoryPort.findById(requestPlayerRequest.getTeam().getId())
                 .orElseThrow(() -> new TeamByIdNotFoundException(requestPlayerRequest.getTeam().getId()));

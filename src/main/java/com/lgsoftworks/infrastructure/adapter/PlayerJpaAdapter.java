@@ -1,16 +1,12 @@
 package com.lgsoftworks.infrastructure.adapter;
 
-import com.lgsoftworks.domain.exception.PersonByIdNotFoundException;
-import com.lgsoftworks.domain.model.Admin;
+import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
-import com.lgsoftworks.infrastructure.adapter.entity.AdminEntity;
 import com.lgsoftworks.infrastructure.adapter.entity.PlayerEntity;
-import com.lgsoftworks.infrastructure.adapter.mapper.AdminDboMapper;
 import com.lgsoftworks.infrastructure.adapter.mapper.PlayerDboMapper;
 import com.lgsoftworks.infrastructure.adapter.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -61,7 +57,7 @@ public class PlayerJpaAdapter implements PlayerRepositoryPort {
     @Override
     public boolean deleteById(Long id) {
         if (!playerRepository.existsById(id)) {
-            throw new PersonByIdNotFoundException(id);
+            throw new UserByIdNotFoundException(id);
         }
         playerRepository.deleteById(id);
         return true;

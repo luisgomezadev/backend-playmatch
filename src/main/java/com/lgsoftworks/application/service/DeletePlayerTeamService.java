@@ -21,7 +21,7 @@ public class DeletePlayerTeamService implements DeletePlayerTeamUseCase {
     @Override
     public void deletePlayerOfTeam(Long teamId, Long playerId) {
         Player player = playerRepositoryPort.findById(playerId)
-                .orElseThrow(() -> new PersonByIdNotFoundException(playerId));
+                .orElseThrow(() -> new UserByIdNotFoundException(playerId));
 
         Team team = teamRepositoryPort.findById(teamId)
                 .orElseThrow(() -> new TeamByIdNotFoundException(teamId));

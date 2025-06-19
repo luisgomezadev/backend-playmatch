@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.security;
 
-import com.lgsoftworks.domain.exception.PersonByEmailNotFoundException;
+import com.lgsoftworks.domain.exception.UserByEmailNotFoundException;
 import com.lgsoftworks.infrastructure.adapter.repository.AdminRepository;
 import com.lgsoftworks.infrastructure.adapter.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class AuthenticationConfig {
                 .map(user -> (UserDetails) user)
                 .or(() -> adminRepository.findByEmail(username)
                         .map(admin -> (UserDetails) admin))
-                .orElseThrow(() -> new PersonByEmailNotFoundException(username));
+                .orElseThrow(() -> new UserByEmailNotFoundException(username));
     }
 
     @Bean

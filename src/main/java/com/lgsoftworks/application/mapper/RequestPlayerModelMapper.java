@@ -13,7 +13,7 @@ public class RequestPlayerModelMapper {
         RequestPlayer requestPlayer = new RequestPlayer();
         requestPlayer.setId(requestPlayerDTO.getId());
         requestPlayer.setDescription(requestPlayerDTO.getDescription());
-        requestPlayer.setPlayer(PersonModelMapper.toPlayer(requestPlayerDTO.getPlayer()));
+        requestPlayer.setPlayer(UserModelMapper.toPlayer(requestPlayerDTO.getPlayer()));
         requestPlayer.setTeam(TeamModelMapper.dtoSummaryToModel(requestPlayerDTO.getTeam()));
         requestPlayer.setRequestDate(requestPlayerDTO.getRequestDate());
         requestPlayer.setStatusRequest(requestPlayerDTO.getStatusRequest());
@@ -35,7 +35,7 @@ public class RequestPlayerModelMapper {
         RequestPlayerDTO requestPlayerDTO = new RequestPlayerDTO();
         requestPlayerDTO.setId(requestPlayer.getId());
         requestPlayerDTO.setDescription(requestPlayer.getDescription());
-        requestPlayerDTO.setPlayer(PersonModelMapper.toPersonSummary(requestPlayer.getPlayer()));
+        requestPlayerDTO.setPlayer(UserModelMapper.toPersonSummary(requestPlayer.getPlayer()));
         requestPlayerDTO.setTeam(TeamModelMapper.toTeamSummary(requestPlayer.getTeam()));
         requestPlayerDTO.setRequestDate(requestPlayer.getRequestDate());
         requestPlayerDTO.setStatusRequest(requestPlayer.getStatusRequest());

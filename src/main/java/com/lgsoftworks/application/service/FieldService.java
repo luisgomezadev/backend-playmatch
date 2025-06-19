@@ -5,8 +5,8 @@ import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.domain.port.in.FieldUseCase;
 import com.lgsoftworks.infrastructure.rest.dto.FieldDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.FieldRequest;
-import com.lgsoftworks.domain.exception.PersonAlreadyAssignedAsAdminException;
-import com.lgsoftworks.domain.exception.PersonByIdNotFoundException;
+import com.lgsoftworks.domain.exception.UserAlreadyAssignedAsAdminException;
+import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
 import com.lgsoftworks.domain.model.Field;
 import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
 import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
@@ -42,10 +42,10 @@ public class FieldService implements FieldUseCase {
     @Override
     public FieldDTO save(FieldRequest fieldRequest) {
         Admin admin = adminRepositoryPort.findById(fieldRequest.getAdmin().getId())
-                .orElseThrow(() -> new PersonByIdNotFoundException(fieldRequest.getAdmin().getId()));
+                .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdmin().getId()));
 
         if (existsByAdminId(admin.getId())) {
-            throw new PersonAlreadyAssignedAsAdminException(admin.getId());
+            throw new UserAlreadyAssignedAsAdminException(admin.getId());
         }
 
         Field field = FieldModelMapper.toModelRequest(fieldRequest);
@@ -68,11 +68,11 @@ public class FieldService implements FieldUseCase {
                 .orElseThrow(() -> new RuntimeException("Campo con ID " + fieldId + " no encontrado."));
 
         Admin admin = adminRepositoryPort.findById(fieldRequest.getAdmin().getId())
-                .orElseThrow(() -> new PersonByIdNotFoundException(fieldRequest.getAdmin().getId()));
+                .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdmin().getId()));
 
         // Opcional: prevenir cambiar a un admin que ya tiene otra cancha (si se está cambiando)
         if (!existingField.getAdmin().getId().equals(admin.getId()) && existsByAdminId(admin.getId())) {
-            throw new PersonAlreadyAssignedAsAdminException(admin.getId());
+            throw new UserAlreadyAssignedAsAdminException(admin.getId());
         }
 
         // Actualizar campos

@@ -20,11 +20,8 @@ public class FinalizeReservationService {
         LocalDateTime now = LocalDateTime.now();
 
         for (Reservation reservation : activeReservations) {
-            StatusReservation originalStatus = reservation.getStatus();
-            reservation.finalizeIfExpired(now);
-
-            if (reservation.getStatus() != originalStatus) {
-                reservationRepositoryPort.save(reservation);
+            if (now.isAfter(reservation.getEndDateTime())) {
+                reservationRepositoryPort.updateStatus(reservation.getId(), StatusReservation.FINISHED);
             }
         }
     }

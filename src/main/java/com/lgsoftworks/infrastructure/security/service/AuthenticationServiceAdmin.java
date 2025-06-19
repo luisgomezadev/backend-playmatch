@@ -1,13 +1,13 @@
 package com.lgsoftworks.infrastructure.security.service;
 
-import com.lgsoftworks.application.mapper.PersonModelMapper;
+import com.lgsoftworks.application.mapper.UserModelMapper;
 import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.exception.InvalidCredentialsException;
 import com.lgsoftworks.domain.exception.PasswordNotNullException;
-import com.lgsoftworks.domain.exception.PersonByEmailNotFoundException;
-import com.lgsoftworks.domain.exception.PersonWithEmailExistsException;
+import com.lgsoftworks.domain.exception.UserByEmailNotFoundException;
+import com.lgsoftworks.domain.exception.UserWithEmailExistsException;
 import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.domain.port.in.AdminUseCase;
 import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
@@ -32,9 +32,9 @@ public class AuthenticationServiceAdmin {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public PersonSummaryDTO register(AdminRequest admin) {
+    public UserDTO register(AdminRequest admin) {
 
-        if (adminRepositoryPort.findByEmail(admin.getEmail()).isPresent()) throw new PersonWithEmailExistsException(admin.getEmail());
+        if (adminRepositoryPort.findByEmail(admin.getEmail()).isPresent()) throw new UserWithEmailExistsException(admin.getEmail());
 
         if (admin.getPassword() == null) {
             throw new PasswordNotNullException();
@@ -60,7 +60,7 @@ public class AuthenticationServiceAdmin {
         }
 
         Admin admin = adminRepositoryPort.findByEmail(request.getEmail())
-                .orElseThrow(() -> new PersonByEmailNotFoundException(request.getEmail()));
+                .orElseThrow(() -> new UserByEmailNotFoundException(request.getEmail()));
 
         AdminEntity adminEntity = AdminDboMapper.toDbo(admin);
 
@@ -68,7 +68,7 @@ public class AuthenticationServiceAdmin {
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .user(PersonModelMapper.toPersonSummary(admin))
+                .user(UserModelMapper.toPersonSummary(admin))
                 .build();
     }
 

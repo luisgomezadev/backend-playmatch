@@ -1,12 +1,12 @@
 package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.AdminModelMapper;
-import com.lgsoftworks.application.mapper.PersonModelMapper;
+import com.lgsoftworks.application.mapper.UserModelMapper;
 import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
-import com.lgsoftworks.domain.exception.PersonByDocumentNotFoundException;
-import com.lgsoftworks.domain.exception.PersonByEmailNotFoundException;
+import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
+import com.lgsoftworks.domain.exception.UserByDocumentNotFoundException;
+import com.lgsoftworks.domain.exception.UserByEmailNotFoundException;
 import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.domain.port.in.AdminUseCase;
 import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
@@ -40,17 +40,17 @@ public class AdminService implements AdminUseCase {
     }
 
     @Override
-    public PersonSummaryDTO save(AdminRequest adminRequest) {
+    public UserDTO save(AdminRequest adminRequest) {
         validatePerson.validate(adminRequest.getDocumentNumber(),
                 adminRequest.getEmail());
         Admin savedPerson = adminRepositoryPort.save(AdminModelMapper.toModelRequest(adminRequest));
-        return PersonModelMapper.toPersonSummary(savedPerson);
+        return UserModelMapper.toPersonSummary(savedPerson);
     }
 
     @Override
-    public PersonSummaryDTO update(AdminRequest adminRequest) {
+    public UserDTO update(AdminRequest adminRequest) {
         Admin updatedAdmin = adminRepositoryPort.update(AdminModelMapper.toModelRequest(adminRequest));
-        return PersonModelMapper.toPersonSummary(updatedAdmin);
+        return UserModelMapper.toPersonSummary(updatedAdmin);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class AdminService implements AdminUseCase {
     public Optional<AdminDTO> findByDocumentNumber(String documentNumber) {
         Optional<Admin> optionalAdmin = adminRepositoryPort.findByDocumentNumber(documentNumber);
         if (optionalAdmin.isEmpty()) {
-            throw new PersonByDocumentNotFoundException(documentNumber);
+            throw new UserByDocumentNotFoundException(documentNumber);
         }
         return optionalAdmin.map(AdminModelMapper::toDTO);
     }
@@ -71,7 +71,7 @@ public class AdminService implements AdminUseCase {
     public Optional<AdminDTO> findByEmail(String email) {
         Optional<Admin> optionalAdmin = adminRepositoryPort.findByEmail(email);
         if (optionalAdmin.isEmpty()) {
-            throw new PersonByEmailNotFoundException(email);
+            throw new UserByEmailNotFoundException(email);
         }
         return optionalAdmin.map(AdminModelMapper::toDTO);
     }

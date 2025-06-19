@@ -2,7 +2,7 @@ package com.lgsoftworks.infrastructure.security.controller;
 
 import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
 import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
 import com.lgsoftworks.infrastructure.security.service.AuthenticationServiceAdmin;
 import com.lgsoftworks.infrastructure.security.service.AuthenticationServicePlayer;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationRequest;
@@ -24,12 +24,12 @@ public class AuthenticationController {
     private final AuthenticationServiceAdmin serviceAdmin;
 
     @PostMapping("/player/register")
-    public ResponseEntity<PersonSummaryDTO> registerPlayer(@RequestBody @Valid PlayerRequest request) {//@Validated
+    public ResponseEntity<UserDTO> registerPlayer(@RequestBody @Valid PlayerRequest request) {//@Validated
         return ResponseEntity.ok(servicePlayer.register(request));
     }
 
     @PostMapping("/admin/register")
-    public ResponseEntity<PersonSummaryDTO> registerAdmin(@RequestBody @Valid AdminRequest request) {//@Validated
+    public ResponseEntity<UserDTO> registerAdmin(@RequestBody @Valid AdminRequest request) {//@Validated
         return ResponseEntity.ok(serviceAdmin.register(request));
     }
 

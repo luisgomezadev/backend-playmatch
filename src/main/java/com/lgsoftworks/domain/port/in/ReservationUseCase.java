@@ -13,8 +13,7 @@ public interface ReservationUseCase {
     ReservationDTO save(ReservationRequest reservationRequest);
     ReservationDTO update(ReservationRequest reservationRequest);
     void deleteById(Long id);
-    void finalizeReservation(Long id);
-    void canceledReservation(Long id);
+    void updateStatus(Long id, StatusReservation status);
     List<ReservationDTO> findByFieldId(Long fieldId);
     List<ReservationDTO> findByTeamId(Long teamId);
     List<ReservationDTO> findAllByStatus(StatusReservation status);

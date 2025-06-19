@@ -1,10 +1,10 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
-import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
 import com.lgsoftworks.infrastructure.rest.dto.PlayerDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
 import com.lgsoftworks.domain.port.in.PlayerUseCase;
+import com.lgsoftworks.infrastructure.rest.dto.summary.PlayerSummaryDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,22 +22,22 @@ public class PlayerController {
     private final PlayerUseCase playerUseCase;
 
     @GetMapping
-    public ResponseEntity<List<PlayerDTO>> getPlayers() {
+    public ResponseEntity<List<PlayerSummaryDTO>> getPlayers() {
         return ResponseEntity.ok(playerUseCase.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<PlayerDTO>> getPlayerById(@PathVariable Long id) {
+    public ResponseEntity<Optional<PlayerSummaryDTO>> getPlayerById(@PathVariable Long id) {
         return ResponseEntity.ok(playerUseCase.findById(id));
     }
 
     @PostMapping("/list")
-    public ResponseEntity<List<PersonSummaryDTO>> savePlayers(@RequestBody List<PlayerRequest> playerRequests) {
+    public ResponseEntity<List<UserDTO>> savePlayers(@RequestBody List<PlayerRequest> playerRequests) {
         return ResponseEntity.status(HttpStatus.CREATED).body(playerUseCase.saveAll(playerRequests));
     }
 
     @PutMapping
-    public ResponseEntity<PersonSummaryDTO> updatePlayer(@RequestBody @Valid PlayerRequest playerRequest){
+    public ResponseEntity<UserDTO> updatePlayer(@RequestBody @Valid PlayerRequest playerRequest){
         return ResponseEntity.ok(playerUseCase.update(playerRequest));
     }
 
@@ -47,7 +47,7 @@ public class PlayerController {
     }
 
     @GetMapping("/team/{teamId}")
-    public ResponseEntity<List<PlayerDTO>> getPlayersByTeam(@PathVariable Long teamId) {
+    public ResponseEntity<List<PlayerSummaryDTO>> getPlayersByTeam(@PathVariable Long teamId) {
         return ResponseEntity.ok(playerUseCase.findAllByTeamId(teamId));
     }
 

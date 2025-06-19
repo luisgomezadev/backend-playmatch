@@ -82,6 +82,11 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     }
 
     @Override
+    public void updateStatus(Long reservationId, StatusReservation status) {
+        reservationRepository.updateStatusById(reservationId, status);
+    }
+
+    @Override
     public Long countActiveReservationsByTeam(StatusReservation statusReservation, Long teamId) {
         return reservationRepository.countByStatusAndTeam_Id(StatusReservation.ACTIVE, teamId);
     }

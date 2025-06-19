@@ -2,7 +2,7 @@ package com.lgsoftworks.infrastructure.rest.controller;
 
 import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
 import com.lgsoftworks.domain.port.in.AdminUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class AdminController {
     }
 
     @PutMapping
-    public ResponseEntity<PersonSummaryDTO> updateAdmin(@RequestBody @Valid AdminRequest adminRequest) {
+    public ResponseEntity<UserDTO> updateAdmin(@RequestBody @Valid AdminRequest adminRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(adminUseCase.update(adminRequest));
     }
 

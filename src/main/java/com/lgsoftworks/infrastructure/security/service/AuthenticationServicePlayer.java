@@ -1,13 +1,13 @@
 package com.lgsoftworks.infrastructure.security.service;
 
-import com.lgsoftworks.application.mapper.PersonModelMapper;
+import com.lgsoftworks.application.mapper.UserModelMapper;
 import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.PersonSummaryDTO;
+import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.exception.InvalidCredentialsException;
 import com.lgsoftworks.domain.exception.PasswordNotNullException;
-import com.lgsoftworks.domain.exception.PersonByEmailNotFoundException;
-import com.lgsoftworks.domain.exception.PersonWithEmailExistsException;
+import com.lgsoftworks.domain.exception.UserByEmailNotFoundException;
+import com.lgsoftworks.domain.exception.UserWithEmailExistsException;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.in.PlayerUseCase;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
@@ -32,9 +32,9 @@ public class AuthenticationServicePlayer {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public PersonSummaryDTO register(PlayerRequest player) {
+    public UserDTO register(PlayerRequest player) {
 
-        if (playerRepositoryPort.findByEmail(player.getEmail()).isPresent()) throw new PersonWithEmailExistsException(player.getEmail());
+        if (playerRepositoryPort.findByEmail(player.getEmail()).isPresent()) throw new UserWithEmailExistsException(player.getEmail());
 
         if (player.getPassword() == null) {
             throw new PasswordNotNullException();
@@ -60,7 +60,7 @@ public class AuthenticationServicePlayer {
         }
 
         Player player = playerRepositoryPort.findByEmail(request.getEmail())
-                .orElseThrow(() -> new PersonByEmailNotFoundException(request.getEmail()));
+                .orElseThrow(() -> new UserByEmailNotFoundException(request.getEmail()));
 
         PlayerEntity playerEntity = PlayerDboMapper.toDbo(player);
 
@@ -68,7 +68,7 @@ public class AuthenticationServicePlayer {
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .user(PersonModelMapper.toPersonSummary(player))
+                .user(UserModelMapper.toPersonSummary(player))
                 .build();
     }
 

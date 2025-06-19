@@ -25,7 +25,7 @@ public class TeamModelMapper {
         teamDTO.setName(team.getName());
         teamDTO.setCity(team.getCity());
         teamDTO.setNeighborhood(team.getNeighborhood());
-        teamDTO.setMembers(PersonModelMapper.toPersonSummaryList(team.getMembers()));
+        teamDTO.setMembers(UserModelMapper.toPersonSummaryList(team.getMembers()));
         teamDTO.setMaxPlayers(team.getMaxPlayers());
         teamDTO.setOwnerId(team.getOwnerId());
         teamDTO.setReservations(ReservationModelMapper.toReservationTeamDTOList(team.getReservations()));
@@ -39,7 +39,7 @@ public class TeamModelMapper {
         team.setName(teamDTO.getName());
         team.setCity(teamDTO.getCity());
         team.setNeighborhood(teamDTO.getNeighborhood());
-        team.setMembers(PersonModelMapper.toPlayerList(teamDTO.getMembers()));
+        team.setMembers(UserModelMapper.toPlayerList(teamDTO.getMembers()));
         team.setMaxPlayers(teamDTO.getMaxPlayers());
         team.setOwnerId(teamDTO.getOwnerId());
         team.setReservations(ReservationModelMapper.toReservationTeamList(teamDTO.getReservations()));
