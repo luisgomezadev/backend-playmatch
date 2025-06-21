@@ -77,12 +77,15 @@ public class JwtService {
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         } catch (UnsupportedJwtException | MalformedJwtException | SignatureException | IllegalArgumentException e) {
-            throw new RuntimeException("Invalid JWT token or mal formed", e);
+            throw new RuntimeException("JWT token invalido o mal formado", e);
         }
     }
 
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.getSecretKey());
+        if (keyBytes.length < 32) {
+            throw new IllegalArgumentException("La clave decodificada tiene menos de 256 bits (32 bytes).");
+        }
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -103,7 +106,7 @@ public class JwtService {
             throw new IllegalArgumentException("The JWT couldn't be renewed");
         }
 
-        Claims claims = extractAllClaims(token);  // extraemos todos los claims originales
+        Claims claims = extractAllClaims(token);
         Map<String, Object> extraClaims = new HashMap<>();
         if (claims.get("role") != null) {
             extraClaims.put("role", claims.get("role"));

@@ -1,28 +1,19 @@
 package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.ReservationModelMapper;
-import com.lgsoftworks.domain.exception.ReservationByIdNotFoundException;
 import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.port.in.ReservationUseCase;
 import com.lgsoftworks.infrastructure.rest.dto.ReservationDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
 import com.lgsoftworks.domain.enums.StatusReservation;
-import com.lgsoftworks.domain.exception.FieldByIdNotFoundException;
-import com.lgsoftworks.domain.exception.TeamByIdNotFoundException;
-import com.lgsoftworks.domain.model.Field;
 import com.lgsoftworks.domain.model.Reservation;
-import com.lgsoftworks.domain.model.Team;
 import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.domain.port.out.TeamRepositoryPort;
-import com.lgsoftworks.domain.validation.ReservationValidator;
 import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationAvailabilityDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;

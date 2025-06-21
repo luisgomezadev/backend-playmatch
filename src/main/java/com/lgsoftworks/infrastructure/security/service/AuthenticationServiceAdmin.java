@@ -15,10 +15,12 @@ import com.lgsoftworks.infrastructure.adapter.entity.AdminEntity;
 import com.lgsoftworks.infrastructure.adapter.mapper.AdminDboMapper;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationRequest;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationResponse;
+import com.lgsoftworks.infrastructure.security.dto.RefreshTokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,11 +66,31 @@ public class AuthenticationServiceAdmin {
 
         AdminEntity adminEntity = AdminDboMapper.toDbo(admin);
 
-        String jwtToken = jwtService.generateToken(adminEntity, "admin");
+        String jwtToken = jwtService.generateToken(adminEntity, "ADMIN");
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .user(UserModelMapper.toPersonSummary(admin))
+                .build();
+    }
+
+    public AuthenticationResponse refreshToken(RefreshTokenRequest request) {
+        Admin admin = adminRepositoryPort.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UserByEmailNotFoundException(request.getEmail()));
+
+        String newToken = jwtService.renewToken(request.getToken(), adminEntityToUserDetails(admin));
+
+        return AuthenticationResponse.builder()
+                .token(newToken)
+                .user(UserModelMapper.toPersonSummary(admin))
+                .build();
+    }
+
+    private UserDetails adminEntityToUserDetails(Admin admin) {
+        return org.springframework.security.core.userdetails.User
+                .withUsername(admin.getEmail())
+                .password(admin.getPassword())
+                .authorities("ADMIN")
                 .build();
     }
 

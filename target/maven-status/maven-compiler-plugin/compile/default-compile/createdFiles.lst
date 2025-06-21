@@ -3,6 +3,7 @@ com\lgsoftworks\domain\exception\UserByEmailNotFoundException.class
 com\lgsoftworks\domain\model\User.class
 com\lgsoftworks\infrastructure\adapter\ReservationJpaAdapter.class
 com\lgsoftworks\infrastructure\rest\controller\ReservationController.class
+com\lgsoftworks\infrastructure\security\dto\RefreshTokenRequest.class
 com\lgsoftworks\infrastructure\rest\dto\ReservationDTO.class
 com\lgsoftworks\infrastructure\security\dto\AuthenticationRequest.class
 com\lgsoftworks\application\mapper\UserModelMapper.class
@@ -148,5 +149,6 @@ com\lgsoftworks\domain\port\out\FieldRepositoryPort.class
 com\lgsoftworks\infrastructure\adapter\FieldJpaAdapter.class
 com\lgsoftworks\infrastructure\adapter\mapper\FieldDboMapper.class
 com\lgsoftworks\infrastructure\rest\dto\AdminDTO.class
+com\lgsoftworks\infrastructure\security\dto\RefreshTokenRequest$RefreshTokenRequestBuilder.class
 com\lgsoftworks\infrastructure\rest\dto\TeamDTO.class
 com\lgsoftworks\infrastructure\security\dto\AuthenticationRequest$AuthenticationRequestBuilder.class

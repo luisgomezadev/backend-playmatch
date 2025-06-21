@@ -15,10 +15,12 @@ import com.lgsoftworks.infrastructure.adapter.entity.PlayerEntity;
 import com.lgsoftworks.infrastructure.adapter.mapper.PlayerDboMapper;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationRequest;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationResponse;
+import com.lgsoftworks.infrastructure.security.dto.RefreshTokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,11 +66,31 @@ public class AuthenticationServicePlayer {
 
         PlayerEntity playerEntity = PlayerDboMapper.toDbo(player);
 
-        String jwtToken = jwtService.generateToken(playerEntity, "player");
+        String jwtToken = jwtService.generateToken(playerEntity, "PLAYER");
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .user(UserModelMapper.toPersonSummary(player))
+                .build();
+    }
+
+    public AuthenticationResponse refreshToken(RefreshTokenRequest request) {
+        Player player = playerRepositoryPort.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UserByEmailNotFoundException(request.getEmail()));
+
+        String newToken = jwtService.renewToken(request.getToken(), playerEntityToUserDetails(player));
+
+        return AuthenticationResponse.builder()
+                .token(newToken)
+                .user(UserModelMapper.toPersonSummary(player))
+                .build();
+    }
+
+    private UserDetails playerEntityToUserDetails(Player player) {
+        return org.springframework.security.core.userdetails.User
+                .withUsername(player.getEmail())
+                .password(player.getPassword())
+                .authorities("PLAYER")
                 .build();
     }
 

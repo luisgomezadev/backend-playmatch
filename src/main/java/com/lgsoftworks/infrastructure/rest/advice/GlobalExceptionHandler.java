@@ -1,9 +1,6 @@
 package com.lgsoftworks.infrastructure.rest.advice;
 
-import com.lgsoftworks.domain.enums.DocumentType;
-import com.lgsoftworks.domain.enums.Role;
-import com.lgsoftworks.domain.enums.Status;
-import com.lgsoftworks.domain.enums.StatusRequest;
+import com.lgsoftworks.domain.enums.*;
 import com.lgsoftworks.domain.exception.*;
 import com.lgsoftworks.infrastructure.rest.dto.ErrorResponse;
 import jakarta.validation.ConstraintViolation;
@@ -108,14 +105,19 @@ public class GlobalExceptionHandler {
             return "Tipo de documento inválido. Valores válidos: " + values + ".";
         }
 
-        if (cause.getMessage().contains("Status")) {
-            String values = Arrays.stream(Status.values()).map(Enum::name).collect(Collectors.joining(", "));
-            return "Estado de campo inválido. Valores válidos: " + values + ".";
+        if (cause.getMessage().contains("StatusReservation")) {
+            String values = Arrays.stream(StatusReservation.values()).map(Enum::name).collect(Collectors.joining(", "));
+            return "Estado de reserva inválido. Valores válidos: " + values + ".";
         }
 
         if (cause.getMessage().contains("StatusRequest")) {
             String values = Arrays.stream(StatusRequest.values()).map(Enum::name).collect(Collectors.joining(", "));
             return "Respuesta de solicitud de ingreso a equipo inválida. Valores válidos: " + values + ".";
+        }
+
+        if (cause.getMessage().contains("Status")) {
+            String values = Arrays.stream(Status.values()).map(Enum::name).collect(Collectors.joining(", "));
+            return "Estado de campo inválido. Valores válidos: " + values + ".";
         }
 
         if (cause.getMessage().contains("Role")) {

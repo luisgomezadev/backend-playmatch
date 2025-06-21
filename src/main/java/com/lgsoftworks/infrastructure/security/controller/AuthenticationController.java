@@ -3,6 +3,7 @@ package com.lgsoftworks.infrastructure.security.controller;
 import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
 import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
 import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
+import com.lgsoftworks.infrastructure.security.dto.RefreshTokenRequest;
 import com.lgsoftworks.infrastructure.security.service.AuthenticationServiceAdmin;
 import com.lgsoftworks.infrastructure.security.service.AuthenticationServicePlayer;
 import com.lgsoftworks.infrastructure.security.dto.AuthenticationRequest;
@@ -41,6 +42,16 @@ public class AuthenticationController {
     @PostMapping("/authenticate/admin")
     public ResponseEntity<AuthenticationResponse> authenticateAdmin(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(serviceAdmin.authenticate(request));
+    }
+
+    @PostMapping("/refresh/player")
+    public ResponseEntity<AuthenticationResponse> refreshPlayerToken(@RequestBody @Valid RefreshTokenRequest request) {
+        return ResponseEntity.ok(servicePlayer.refreshToken(request));
+    }
+
+    @PostMapping("/refresh/admin")
+    public ResponseEntity<AuthenticationResponse> refreshAdminToken(@RequestBody @Valid RefreshTokenRequest request) {
+        return ResponseEntity.ok(serviceAdmin.refreshToken(request));
     }
 
 }
