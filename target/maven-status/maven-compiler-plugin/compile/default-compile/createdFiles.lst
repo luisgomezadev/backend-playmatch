@@ -7,6 +7,7 @@ com\lgsoftworks\infrastructure\security\dto\RefreshTokenRequest.class
 com\lgsoftworks\infrastructure\rest\dto\ReservationDTO.class
 com\lgsoftworks\infrastructure\security\dto\AuthenticationRequest.class
 com\lgsoftworks\application\mapper\UserModelMapper.class
+com\lgsoftworks\domain\exception\ForbiddenException.class
 com\lgsoftworks\infrastructure\rest\controller\RequestPlayerController.class
 com\lgsoftworks\application\service\FieldService.class
 com\lgsoftworks\infrastructure\adapter\PlayerJpaAdapter.class

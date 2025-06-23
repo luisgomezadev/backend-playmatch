@@ -8,6 +8,7 @@ import com.lgsoftworks.domain.port.in.TeamUseCase;
 import com.lgsoftworks.infrastructure.rest.dto.TeamDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.TeamRequest;
 import com.lgsoftworks.infrastructure.rest.dto.MessageResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<TeamSummaryDTO> saveTeam(@RequestBody TeamRequest teamRequest) {
+    public ResponseEntity<TeamSummaryDTO> saveTeam(@Valid @RequestBody TeamRequest teamRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(teamUseCase.save(teamRequest));
     }
 
@@ -62,7 +63,7 @@ public class TeamController {
     }
 
     @PutMapping
-    public ResponseEntity<TeamSummaryDTO> updateTeam(@RequestBody TeamRequest teamRequest) {
+    public ResponseEntity<TeamSummaryDTO> updateTeam(@Valid @RequestBody TeamRequest teamRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(teamUseCase.update(teamRequest));
     }
 

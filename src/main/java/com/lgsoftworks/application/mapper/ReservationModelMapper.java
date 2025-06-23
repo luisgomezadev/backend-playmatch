@@ -43,9 +43,7 @@ public class ReservationModelMapper {
         reservation.setId(reservationRequest.getId());
         reservation.setHours(reservationRequest.getHours());
         reservation.setReservationDate(reservationRequest.getReservationDate());
-        reservation.setTeam(reservationRequest.getTeam());
         reservation.setStartTime(reservationRequest.getStartTime());
-        reservation.setField(reservationRequest.getField());
         reservation.setStatus(reservationRequest.getStatus());
         return reservation;
     }

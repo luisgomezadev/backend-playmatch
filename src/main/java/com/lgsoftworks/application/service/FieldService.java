@@ -1,6 +1,7 @@
 package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.FieldModelMapper;
+import com.lgsoftworks.domain.exception.FieldByIdNotFoundException;
 import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.domain.port.in.FieldUseCase;
 import com.lgsoftworks.infrastructure.rest.dto.FieldDTO;
@@ -41,8 +42,8 @@ public class FieldService implements FieldUseCase {
 
     @Override
     public FieldDTO save(FieldRequest fieldRequest) {
-        Admin admin = adminRepositoryPort.findById(fieldRequest.getAdmin().getId())
-                .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdmin().getId()));
+        Admin admin = adminRepositoryPort.findById(fieldRequest.getAdminId())
+                .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdminId()));
 
         if (existsByAdminId(admin.getId())) {
             throw new UserAlreadyAssignedAsAdminException(admin.getId());
@@ -65,10 +66,10 @@ public class FieldService implements FieldUseCase {
         }
 
         Field existingField = fieldRepositoryPort.findById(fieldId)
-                .orElseThrow(() -> new RuntimeException("Campo con ID " + fieldId + " no encontrado."));
+                .orElseThrow(() -> new FieldByIdNotFoundException(fieldId));
 
-        Admin admin = adminRepositoryPort.findById(fieldRequest.getAdmin().getId())
-                .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdmin().getId()));
+        Admin admin = adminRepositoryPort.findById(fieldRequest.getAdminId())
+                .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdminId()));
 
         // Opcional: prevenir cambiar a un admin que ya tiene otra cancha (si se está cambiando)
         if (!existingField.getAdmin().getId().equals(admin.getId()) && existsByAdminId(admin.getId())) {
@@ -91,6 +92,9 @@ public class FieldService implements FieldUseCase {
 
     @Override
     public void deleteById(Long id) {
+        if (fieldRepositoryPort.findById(id).isEmpty()) {
+            throw new FieldByIdNotFoundException(id);
+        }
         fieldRepositoryPort.deleteById(id);
     }
 

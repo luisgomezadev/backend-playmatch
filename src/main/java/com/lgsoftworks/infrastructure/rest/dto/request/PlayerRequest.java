@@ -16,29 +16,31 @@ import org.hibernate.validator.constraints.Length;
 public class PlayerRequest {
     private Long id;
 
-    @NotBlank(message = "El nombre no puede estar vacío")
+    @NotBlank(message = "El nombre es requerido")
     private String firstName;
 
-    @NotBlank(message = "El apellido no puede estar vacío")
+    @NotBlank(message = "El apellido es requerido")
     private String lastName;
 
-    @NotBlank(message = "La ciudad no puede estar vacía")
+    @NotBlank(message = "La ciudad es requerida")
     private String city;
 
-    @NotNull(message = "La edad no puede ser nula")
+    @NotNull(message = "La edad es requerida")
     private Byte age;
 
-    @NotBlank(message = "El número de celular no puede estar vacío")
+    @NotBlank(message = "El número de celular es requerido")
     private String cellphone;
 
     private DocumentType documentType;
 
-    @NotBlank(message = "El número de documento no puede estar vacío")
+    @NotBlank(message = "El número de documento es requerido")
     private String documentNumber;
 
-    @NotBlank(message = "El email no puede estar vacío")
+    @NotBlank(message = "El email es requerido")
     private String email;
     private Team team;
+
+    @NotBlank(message = "La contraseña es requerida")
     @Length(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String password;
     private Role role;

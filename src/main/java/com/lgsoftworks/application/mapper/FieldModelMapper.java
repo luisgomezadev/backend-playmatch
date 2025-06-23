@@ -52,7 +52,6 @@ public class FieldModelMapper {
         field.setOpeningHour(fieldRequest.getOpeningHour());
         field.setClosingHour(fieldRequest.getClosingHour());
         field.setStatus(fieldRequest.getStatus());
-        field.setAdmin(fieldRequest.getAdmin());
 
         return field;
     }

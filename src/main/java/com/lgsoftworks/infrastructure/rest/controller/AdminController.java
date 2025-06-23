@@ -31,7 +31,7 @@ public class AdminController {
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> updateAdmin(@RequestBody @Valid AdminRequest adminRequest) {
+    public ResponseEntity<UserDTO> updateAdmin(@Valid @RequestBody AdminRequest adminRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(adminUseCase.update(adminRequest));
     }
 

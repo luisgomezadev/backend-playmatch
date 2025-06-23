@@ -1,5 +1,13 @@
 package com.lgsoftworks.infrastructure.rest.dto;
 
-public record ErrorResponse(String errorMessage) {
+import java.time.LocalDateTime;
 
+public record ErrorResponse(
+        Integer statusCode,
+        String errorMessage,
+        LocalDateTime timestamp
+) {
+    public ErrorResponse(Integer statusCode, String errorMessage) {
+        this(statusCode, errorMessage, LocalDateTime.now());
+    }
 }

@@ -64,6 +64,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/field/**").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/field/**").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/field/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/team/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/team/**").hasAnyAuthority("PLAYER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/team/**").hasAnyAuthority("PLAYER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/team/**").hasAnyAuthority("PLAYER")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

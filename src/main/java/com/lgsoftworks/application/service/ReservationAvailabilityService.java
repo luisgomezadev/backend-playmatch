@@ -28,11 +28,11 @@ public class ReservationAvailabilityService implements ReservationAvailabilityUs
 
     @Override
     public Optional<ReservationAvailabilityDTO> reservationAvailability(ReservationRequest reservationRequest) {
-        Field field = fieldRepositoryPort.findById(reservationRequest.getField().getId())
-                .orElseThrow(() -> new FieldByIdNotFoundException(reservationRequest.getField().getId()));
+        Field field = fieldRepositoryPort.findById(reservationRequest.getFieldId())
+                .orElseThrow(() -> new FieldByIdNotFoundException(reservationRequest.getFieldId()));
 
-        Team team = teamRepositoryPort.findById(reservationRequest.getTeam().getId())
-                .orElseThrow(() -> new TeamByIdNotFoundException(reservationRequest.getTeam().getId()));
+        Team team = teamRepositoryPort.findById(reservationRequest.getTeamId())
+                .orElseThrow(() -> new TeamByIdNotFoundException(reservationRequest.getTeamId()));
 
         LocalTime time = reservationRequest.getStartTime().plusHours(reservationRequest.getHours());
 

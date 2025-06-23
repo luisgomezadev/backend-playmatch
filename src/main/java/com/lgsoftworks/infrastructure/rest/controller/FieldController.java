@@ -4,6 +4,7 @@ import com.lgsoftworks.domain.port.in.FieldUseCase;
 import com.lgsoftworks.infrastructure.rest.dto.FieldDTO;
 import com.lgsoftworks.infrastructure.rest.dto.MessageResponse;
 import com.lgsoftworks.infrastructure.rest.dto.request.FieldRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class FieldController {
     }
 
     @PostMapping
-    public ResponseEntity<FieldDTO> saveField(@RequestBody FieldRequest fieldRequest) {
+    public ResponseEntity<FieldDTO> saveField(@Valid @RequestBody FieldRequest fieldRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(fieldUseCase.save(fieldRequest));
     }
 
@@ -46,7 +47,7 @@ public class FieldController {
     }
 
     @PutMapping
-    public ResponseEntity<FieldDTO> updateField(@RequestBody FieldRequest fieldRequest) {
+    public ResponseEntity<FieldDTO> updateField(@Valid @RequestBody FieldRequest fieldRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(fieldUseCase.update(fieldRequest));
     }
 }

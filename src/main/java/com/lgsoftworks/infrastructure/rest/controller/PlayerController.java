@@ -37,7 +37,7 @@ public class PlayerController {
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> updatePlayer(@RequestBody @Valid PlayerRequest playerRequest){
+    public ResponseEntity<UserDTO> updatePlayer(@Valid @RequestBody PlayerRequest playerRequest){
         return ResponseEntity.ok(playerUseCase.update(playerRequest));
     }
 

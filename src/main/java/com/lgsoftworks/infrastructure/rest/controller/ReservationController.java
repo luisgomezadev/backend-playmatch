@@ -8,6 +8,7 @@ import com.lgsoftworks.infrastructure.rest.dto.ReservationDTO;
 import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
 import com.lgsoftworks.infrastructure.rest.dto.MessageResponse;
 import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationAvailabilityDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationDTO> saveReservation(@RequestBody ReservationRequest reservationRequest) {
+    public ResponseEntity<ReservationDTO> saveReservation(@Valid @RequestBody ReservationRequest reservationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationUseCase.save(reservationRequest));
     }
 

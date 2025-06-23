@@ -17,6 +17,6 @@ public class AuthenticationRequest {
     @Email(message = "Correo invalido")
     private String email;
     @NotNull(message = "Contraseña obligatoria")
-    @Length(min = 5, message = "Contraseña debe tener más de 5 caracteres")
+    @Length(min = 8, message = "Contraseña debe tener más de 8 caracteres")
     private String password;
 }

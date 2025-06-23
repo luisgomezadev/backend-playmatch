@@ -7,6 +7,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
@@ -18,6 +19,15 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType("application/json");
-        response.getWriter().write("{\"error\": \"No tienes permisos para acceder a este recurso.\"}");
+
+        String json = """
+            {
+              "statusCode": 403,
+              "errorMessage": "No tienes permiso para acceder a este recurso.",
+              "timestamp": "%s"
+            }
+            """.formatted(LocalDateTime.now());
+
+        response.getWriter().write(json);
     }
 }
