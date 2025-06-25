@@ -1,8 +1,8 @@
 package com.lgsoftworks.application.mapper;
 
-import com.lgsoftworks.infrastructure.rest.dto.FieldDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.FieldRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.FieldSummaryDTO;
+import com.lgsoftworks.application.dto.FieldDTO;
+import com.lgsoftworks.application.dto.request.FieldRequest;
+import com.lgsoftworks.application.dto.summary.FieldSummaryDTO;
 import com.lgsoftworks.domain.model.Field;
 
 public class FieldModelMapper {

@@ -1,8 +1,8 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
-import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
-import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
+import com.lgsoftworks.application.dto.AdminDTO;
+import com.lgsoftworks.application.dto.request.AdminRequest;
+import com.lgsoftworks.application.dto.UserDTO;
 import com.lgsoftworks.domain.port.in.AdminUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

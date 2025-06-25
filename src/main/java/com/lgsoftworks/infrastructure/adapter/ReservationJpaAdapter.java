@@ -42,11 +42,6 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     }
 
     @Override
-    public Reservation update(Reservation reservation) {
-        return null;
-    }
-
-    @Override
     public void deleteById(Long id) {
 
     }
@@ -87,22 +82,12 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     }
 
     @Override
-    public Long countActiveReservationsByTeam(StatusReservation statusReservation, Long teamId) {
-        return reservationRepository.countByStatusAndTeam_Id(StatusReservation.ACTIVE, teamId);
+    public Long countReservationsByTeamAndStatus(StatusReservation statusReservation, Long teamId) {
+        return reservationRepository.countByStatusAndTeam_Id(statusReservation, teamId);
     }
 
     @Override
-    public Long countFinishedReservationsByTeam(StatusReservation statusReservation, Long teamId) {
-        return reservationRepository.countByStatusAndTeam_Id(StatusReservation.FINISHED, teamId);
-    }
-
-    @Override
-    public Long countActiveReservationsByField(StatusReservation statusReservation, Long fieldId) {
-        return reservationRepository.countByStatusAndField_Id(StatusReservation.ACTIVE, fieldId);
-    }
-
-    @Override
-    public Long countFinishedReservationsByField(StatusReservation statusReservation, Long fieldId) {
-        return reservationRepository.countByStatusAndField_Id(StatusReservation.FINISHED, fieldId);
+    public Long countReservationsByFieldAndStatus(StatusReservation statusReservation, Long fieldId) {
+        return reservationRepository.countByStatusAndField_Id(statusReservation, fieldId);
     }
 }

@@ -1,8 +1,8 @@
 package com.lgsoftworks.infrastructure.security.service;
 
 import com.lgsoftworks.application.mapper.UserModelMapper;
-import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
-import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
+import com.lgsoftworks.application.dto.request.AdminRequest;
+import com.lgsoftworks.application.dto.UserDTO;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.exception.InvalidCredentialsException;
 import com.lgsoftworks.domain.exception.PasswordNotNullException;

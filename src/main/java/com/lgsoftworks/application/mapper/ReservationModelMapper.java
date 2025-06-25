@@ -1,11 +1,11 @@
 package com.lgsoftworks.application.mapper;
 
 import com.lgsoftworks.domain.enums.StatusReservation;
-import com.lgsoftworks.infrastructure.rest.dto.ReservationDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationAvailabilityDTO;
-import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationFieldDTO;
-import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationTeamDTO;
+import com.lgsoftworks.application.dto.ReservationDTO;
+import com.lgsoftworks.application.dto.request.ReservationRequest;
+import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
+import com.lgsoftworks.application.dto.summary.ReservationFieldDTO;
+import com.lgsoftworks.application.dto.summary.ReservationTeamDTO;
 import com.lgsoftworks.domain.model.Reservation;
 
 import java.util.List;

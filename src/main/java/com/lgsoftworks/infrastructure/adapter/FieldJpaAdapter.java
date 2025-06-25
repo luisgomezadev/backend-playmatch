@@ -44,12 +44,6 @@ public class FieldJpaAdapter implements FieldRepositoryPort {
     }
 
     @Override
-    public Field update(Field field) {
-        FieldEntity updateEntity = fieldRepository.save(FieldDboMapper.toDbo(field));
-        return FieldDboMapper.toModel(updateEntity);
-    }
-
-    @Override
     public void deleteById(Long id) {
         fieldRepository.deleteById(id);
     }

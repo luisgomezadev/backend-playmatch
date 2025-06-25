@@ -2,9 +2,9 @@ package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.AdminModelMapper;
 import com.lgsoftworks.application.mapper.UserModelMapper;
-import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
-import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
+import com.lgsoftworks.application.dto.AdminDTO;
+import com.lgsoftworks.application.dto.request.AdminRequest;
+import com.lgsoftworks.application.dto.UserDTO;
 import com.lgsoftworks.domain.exception.UserByDocumentNotFoundException;
 import com.lgsoftworks.domain.exception.UserByEmailNotFoundException;
 import com.lgsoftworks.domain.model.Admin;
@@ -49,7 +49,7 @@ public class AdminService implements AdminUseCase {
 
     @Override
     public UserDTO update(AdminRequest adminRequest) {
-        Admin updatedAdmin = adminRepositoryPort.update(AdminModelMapper.toModelRequest(adminRequest));
+        Admin updatedAdmin = adminRepositoryPort.save(AdminModelMapper.toModelRequest(adminRequest));
         return UserModelMapper.toPersonSummary(updatedAdmin);
     }
 

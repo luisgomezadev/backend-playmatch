@@ -20,7 +20,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.nio.file.AccessDeniedException;
 import java.sql.SQLIntegrityConstraintViolationException;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -52,7 +51,8 @@ public class GlobalExceptionHandler {
             PlayerAlreadyHasPendingRequestException.class,
             RequestPlayerByIdNotFoundException.class,
             ReservationTimeOutOfRangeException.class,
-            SQLIntegrityConstraintViolationException.class
+            SQLIntegrityConstraintViolationException.class,
+            TeamCapacityBelowCurrentPlayersException.class
     })
     public ResponseEntity<ErrorResponse> handleBadRequest(RuntimeException ex) {
         return ResponseEntity.badRequest()

@@ -1,12 +1,12 @@
 package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.TeamModelMapper;
-import com.lgsoftworks.infrastructure.rest.dto.summary.TeamSummaryDTO;
+import com.lgsoftworks.application.dto.summary.TeamSummaryDTO;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.in.AssignTeamUseCase;
 import com.lgsoftworks.domain.port.in.TeamUseCase;
-import com.lgsoftworks.infrastructure.rest.dto.TeamDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.TeamRequest;
+import com.lgsoftworks.application.dto.TeamDTO;
+import com.lgsoftworks.application.dto.request.TeamRequest;
 import com.lgsoftworks.domain.exception.*;
 import com.lgsoftworks.domain.model.Team;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
@@ -58,8 +58,9 @@ public class TeamService implements TeamUseCase {
         teamRequest.setId(teamId);
         teamRequest.setOwnerId(existingTeam.getOwnerId());
         validateOwnerForUpdate(teamRequest);
+        validMembers(existingTeam, teamRequest.getMaxPlayers());
         Team team = TeamModelMapper.toModelRequest(teamRequest);
-        Team updateTeam = teamRepositoryPort.update(team);
+        Team updateTeam = teamRepositoryPort.save(team);
         return TeamModelMapper.toTeamSummary(updateTeam);
     }
 
@@ -105,7 +106,14 @@ public class TeamService implements TeamUseCase {
         return player;
     }
 
-    public void validateOwnerForUpdate(TeamRequest teamRequest) {
+    private void validMembers(Team team, Integer maxPlayers) {
+        int membersSize = team.getMembers().size();
+        if (maxPlayers < membersSize) {
+            throw new TeamCapacityBelowCurrentPlayersException(membersSize, maxPlayers);
+        }
+    }
+
+    private void validateOwnerForUpdate(TeamRequest teamRequest) {
         Player player = playerRepositoryPort.findById(teamRequest.getOwnerId())
                 .orElseThrow(() -> new UserByIdNotFoundException(teamRequest.getOwnerId()));
 

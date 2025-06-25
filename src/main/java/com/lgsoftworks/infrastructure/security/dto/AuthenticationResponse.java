@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.security.dto;
 
-import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
+import com.lgsoftworks.application.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

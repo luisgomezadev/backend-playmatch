@@ -1,7 +1,7 @@
 package com.lgsoftworks.domain.port.in;
 
-import com.lgsoftworks.infrastructure.rest.dto.FieldDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.FieldRequest;
+import com.lgsoftworks.application.dto.FieldDTO;
+import com.lgsoftworks.application.dto.request.FieldRequest;
 
 import java.util.List;
 import java.util.Optional;

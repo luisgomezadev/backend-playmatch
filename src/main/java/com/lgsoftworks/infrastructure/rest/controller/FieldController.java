@@ -1,9 +1,9 @@
 package com.lgsoftworks.infrastructure.rest.controller;
 
 import com.lgsoftworks.domain.port.in.FieldUseCase;
-import com.lgsoftworks.infrastructure.rest.dto.FieldDTO;
+import com.lgsoftworks.application.dto.FieldDTO;
 import com.lgsoftworks.infrastructure.rest.dto.MessageResponse;
-import com.lgsoftworks.infrastructure.rest.dto.request.FieldRequest;
+import com.lgsoftworks.application.dto.request.FieldRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

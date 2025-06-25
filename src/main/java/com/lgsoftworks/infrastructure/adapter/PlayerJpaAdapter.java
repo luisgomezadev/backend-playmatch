@@ -48,13 +48,6 @@ public class PlayerJpaAdapter implements PlayerRepositoryPort {
     }
 
     @Override
-    public Player update(Player player) {
-        PlayerEntity playerEntity = PlayerDboMapper.toDbo(player);
-        PlayerEntity updatedPlayer = playerRepository.save(playerEntity);
-        return PlayerDboMapper.toModel(updatedPlayer);
-    }
-
-    @Override
     public boolean deleteById(Long id) {
         if (!playerRepository.existsById(id)) {
             throw new UserByIdNotFoundException(id);

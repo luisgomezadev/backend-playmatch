@@ -1,7 +1,7 @@
 package com.lgsoftworks.application.mapper;
 
-import com.lgsoftworks.infrastructure.rest.dto.AdminDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.AdminRequest;
+import com.lgsoftworks.application.dto.AdminDTO;
+import com.lgsoftworks.application.dto.request.AdminRequest;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.model.Admin;
 

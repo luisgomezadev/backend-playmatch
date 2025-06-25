@@ -4,8 +4,8 @@ import com.lgsoftworks.application.mapper.FieldModelMapper;
 import com.lgsoftworks.domain.exception.FieldByIdNotFoundException;
 import com.lgsoftworks.domain.model.Admin;
 import com.lgsoftworks.domain.port.in.FieldUseCase;
-import com.lgsoftworks.infrastructure.rest.dto.FieldDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.FieldRequest;
+import com.lgsoftworks.application.dto.FieldDTO;
+import com.lgsoftworks.application.dto.request.FieldRequest;
 import com.lgsoftworks.domain.exception.UserAlreadyAssignedAsAdminException;
 import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
 import com.lgsoftworks.domain.model.Field;
@@ -71,12 +71,11 @@ public class FieldService implements FieldUseCase {
         Admin admin = adminRepositoryPort.findById(fieldRequest.getAdminId())
                 .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdminId()));
 
-        // Opcional: prevenir cambiar a un admin que ya tiene otra cancha (si se está cambiando)
+        // Prevenir cambiar a un admin que ya tiene otra cancha (si se está cambiando)
         if (!existingField.getAdmin().getId().equals(admin.getId()) && existsByAdminId(admin.getId())) {
             throw new UserAlreadyAssignedAsAdminException(admin.getId());
         }
 
-        // Actualizar campos
         existingField.setName(fieldRequest.getName());
         existingField.setAddress(fieldRequest.getAddress());
         existingField.setCity(fieldRequest.getCity());

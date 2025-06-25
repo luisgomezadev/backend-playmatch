@@ -3,14 +3,14 @@ package com.lgsoftworks.application.service;
 import com.lgsoftworks.application.mapper.ReservationModelMapper;
 import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.port.in.ReservationUseCase;
-import com.lgsoftworks.infrastructure.rest.dto.ReservationDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
+import com.lgsoftworks.application.dto.ReservationDTO;
+import com.lgsoftworks.application.dto.request.ReservationRequest;
 import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.model.Reservation;
 import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.domain.port.out.TeamRepositoryPort;
-import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationAvailabilityDTO;
+import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;

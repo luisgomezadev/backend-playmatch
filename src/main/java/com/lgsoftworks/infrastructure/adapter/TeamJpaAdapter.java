@@ -42,12 +42,6 @@ public class TeamJpaAdapter implements TeamRepositoryPort {
     }
 
     @Override
-    public Team update(Team team) {
-        TeamEntity updated = teamRepository.save(TeamDboMapper.toDbo(team));
-        return TeamDboMapper.toModel(updated);
-    }
-
-    @Override
     public boolean deleteById(Long id) {
         teamRepository.deleteById(id);
         return true;

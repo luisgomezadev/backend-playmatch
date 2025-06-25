@@ -11,8 +11,8 @@ import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.domain.port.out.TeamRepositoryPort;
 import com.lgsoftworks.domain.validation.ReservationValidator;
-import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationAvailabilityDTO;
+import com.lgsoftworks.application.dto.request.ReservationRequest;
+import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

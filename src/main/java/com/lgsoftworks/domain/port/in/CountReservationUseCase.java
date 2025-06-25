@@ -1,8 +1,8 @@
 package com.lgsoftworks.domain.port.in;
 
+import com.lgsoftworks.domain.enums.StatusReservation;
+
 public interface CountReservationUseCase {
-    Long countActiveReservationsByTeam(Long teamId);
-    Long countFinishedReservationsByTeam(Long teamId);
-    Long countActiveReservationsByField(Long fieldId);
-    Long countFinishedReservationsByField(Long fieldId);
+    Long countReservationsByTeamAndStatus(Long teamId, StatusReservation status);
+    Long countReservationsByFieldAndStatus(Long fieldId, StatusReservation status);
 }

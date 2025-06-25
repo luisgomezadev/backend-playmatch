@@ -2,9 +2,9 @@ package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.UserModelMapper;
 import com.lgsoftworks.application.mapper.PlayerModelMapper;
-import com.lgsoftworks.infrastructure.rest.dto.PlayerDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
-import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
+import com.lgsoftworks.application.dto.PlayerDTO;
+import com.lgsoftworks.application.dto.request.PlayerRequest;
+import com.lgsoftworks.application.dto.UserDTO;
 import com.lgsoftworks.domain.exception.UserByDocumentNotFoundException;
 import com.lgsoftworks.domain.exception.UserByEmailNotFoundException;
 import com.lgsoftworks.domain.model.Player;
@@ -12,7 +12,7 @@ import com.lgsoftworks.domain.port.in.PlayerUseCase;
 import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
 import com.lgsoftworks.domain.validation.ValidatePerson;
-import com.lgsoftworks.infrastructure.rest.dto.summary.PlayerSummaryDTO;
+import com.lgsoftworks.application.dto.summary.PlayerSummaryDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +67,7 @@ public class PlayerService implements PlayerUseCase {
 
     @Override
     public UserDTO update(PlayerRequest playerRequest) {
-        Player updatedPlayer = playerRepositoryPort.update(PlayerModelMapper.toModelRequest(playerRequest));
+        Player updatedPlayer = playerRepositoryPort.save(PlayerModelMapper.toModelRequest(playerRequest));
         return UserModelMapper.toPersonSummary(updatedPlayer);
     }
 

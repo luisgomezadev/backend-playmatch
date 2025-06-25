@@ -1,8 +1,8 @@
 package com.lgsoftworks.domain.port.in;
 
-import com.lgsoftworks.infrastructure.rest.dto.TeamDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.TeamRequest;
-import com.lgsoftworks.infrastructure.rest.dto.summary.TeamSummaryDTO;
+import com.lgsoftworks.application.dto.TeamDTO;
+import com.lgsoftworks.application.dto.request.TeamRequest;
+import com.lgsoftworks.application.dto.summary.TeamSummaryDTO;
 
 import java.util.List;
 import java.util.Optional;

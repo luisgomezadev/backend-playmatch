@@ -39,13 +39,6 @@ public class AdminJpaAdapter implements AdminRepositoryPort {
     }
 
     @Override
-    public Admin update(Admin admin) {
-        AdminEntity adminEntity = AdminDboMapper.toDbo(admin);
-        AdminEntity updatedAdmin = adminRepository.save(adminEntity);
-        return AdminDboMapper.toModel(updatedAdmin);
-    }
-
-    @Override
     public boolean deleteById(Long id) {
         if (!adminRepository.existsById(id)) {
             throw new UserByIdNotFoundException(id);

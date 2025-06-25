@@ -1,9 +1,9 @@
 package com.lgsoftworks.domain.port.in;
 
-import com.lgsoftworks.infrastructure.rest.dto.PlayerDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.PlayerRequest;
-import com.lgsoftworks.infrastructure.rest.dto.UserDTO;
-import com.lgsoftworks.infrastructure.rest.dto.summary.PlayerSummaryDTO;
+import com.lgsoftworks.application.dto.PlayerDTO;
+import com.lgsoftworks.application.dto.request.PlayerRequest;
+import com.lgsoftworks.application.dto.UserDTO;
+import com.lgsoftworks.application.dto.summary.PlayerSummaryDTO;
 
 import java.util.List;
 import java.util.Optional;

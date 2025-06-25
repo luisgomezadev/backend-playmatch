@@ -10,7 +10,6 @@ public interface PlayerRepositoryPort {
     Optional<Player> findById(Long id);
     Player save(Player player);
     List<Player> saveAll(List<Player> players);
-    Player update(Player player);
     boolean deleteById(Long id);
     Optional<Player> findByDocumentNumber(String documentNumber);
     Optional<Player> findByEmail(String email);

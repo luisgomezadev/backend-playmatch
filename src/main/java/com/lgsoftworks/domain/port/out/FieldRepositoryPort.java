@@ -11,7 +11,6 @@ public interface FieldRepositoryPort {
     Optional<Field> findById(Long id);
     Optional<Field> findByAdminId(Long id);
     Field save(Field field);
-    Field update(Field field);
     void deleteById(Long id);
     boolean existsByAdminId(Long id);
 }

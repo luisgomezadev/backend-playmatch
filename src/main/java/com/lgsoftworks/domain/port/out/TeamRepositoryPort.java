@@ -9,7 +9,6 @@ public interface TeamRepositoryPort {
     List<Team> findAll();
     Optional<Team> findById(Long id);
     Team save(Team team);
-    Team update(Team team);
     boolean deleteById(Long id);
     boolean existsByOwnerId(Long ownerId);
     List<Team> findByCity(String city);

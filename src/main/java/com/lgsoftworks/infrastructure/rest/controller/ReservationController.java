@@ -4,10 +4,10 @@ import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.port.in.CountReservationUseCase;
 import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.port.in.ReservationUseCase;
-import com.lgsoftworks.infrastructure.rest.dto.ReservationDTO;
-import com.lgsoftworks.infrastructure.rest.dto.request.ReservationRequest;
+import com.lgsoftworks.application.dto.ReservationDTO;
+import com.lgsoftworks.application.dto.request.ReservationRequest;
 import com.lgsoftworks.infrastructure.rest.dto.MessageResponse;
-import com.lgsoftworks.infrastructure.rest.dto.summary.ReservationAvailabilityDTO;
+import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -62,22 +62,32 @@ public class ReservationController {
 
     @GetMapping("/team/{teamId}/active")
     public ResponseEntity<Long> getCountActiveByTeam(@PathVariable Long teamId) {
-        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countActiveReservationsByTeam(teamId));
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countReservationsByTeamAndStatus(teamId, StatusReservation.ACTIVE));
+    }
+
+    @GetMapping("/team/{teamId}/canceled")
+    public ResponseEntity<Long> getCountCanceledByTeam(@PathVariable Long teamId) {
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countReservationsByTeamAndStatus(teamId, StatusReservation.CANCELED));
     }
 
     @GetMapping("/team/{teamId}/finished")
     public ResponseEntity<Long> getCountFinishedByTeam(@PathVariable Long teamId) {
-        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countFinishedReservationsByTeam(teamId));
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countReservationsByTeamAndStatus(teamId, StatusReservation.FINISHED));
     }
 
     @GetMapping("/field/{fieldId}/active")
     public ResponseEntity<Long> getCountActiveByField(@PathVariable Long fieldId) {
-        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countActiveReservationsByField(fieldId));
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countReservationsByFieldAndStatus(fieldId, StatusReservation.ACTIVE));
+    }
+
+    @GetMapping("/field/{fieldId}/canceled")
+    public ResponseEntity<Long> getCountCanceledByField(@PathVariable Long fieldId) {
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countReservationsByFieldAndStatus(fieldId, StatusReservation.CANCELED));
     }
 
     @GetMapping("/field/{fieldId}/finished")
     public ResponseEntity<Long> getCountFinishedByField(@PathVariable Long fieldId) {
-        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countFinishedReservationsByField(fieldId));
+        return ResponseEntity.status(HttpStatus.OK).body(countReservationUseCase.countReservationsByFieldAndStatus(fieldId, StatusReservation.FINISHED));
     }
 
     @PostMapping("/availability")
