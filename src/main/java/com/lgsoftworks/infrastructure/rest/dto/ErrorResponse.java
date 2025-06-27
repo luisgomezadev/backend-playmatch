@@ -1,13 +1,24 @@
 package com.lgsoftworks.infrastructure.rest.dto;
 
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record ErrorResponse(
-        Integer statusCode,
-        String errorMessage,
-        LocalDateTime timestamp
-) {
-    public ErrorResponse(Integer statusCode, String errorMessage) {
-        this(statusCode, errorMessage, LocalDateTime.now());
-    }
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class ErrorResponse {
+
+    private Integer code;
+    private String message;
+    private List<String> details;
+    private LocalDateTime timestamp;
+
 }

@@ -120,7 +120,7 @@ public class TeamService implements TeamUseCase {
         Optional<Team> existingTeamWithOwner = teamRepositoryPort.findByOwnerId(player.getId());
 
         if (existingTeamWithOwner.isPresent()) {
-            // Si existe un equipo con este owner y no es el mismo equipo que estamos actualizando
+            // Si existe un equipo con este dueño y no es el mismo equipo que estamos actualizando
             if (!existingTeamWithOwner.get().getId().equals(teamRequest.getId())) {
                 throw new DuplicateOwnerException(player);
             }

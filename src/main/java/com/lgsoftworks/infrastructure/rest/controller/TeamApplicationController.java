@@ -28,7 +28,7 @@ public class TeamApplicationController {
     }
 
     @GetMapping("/player/{playerId}")
-    public ResponseEntity<Optional<TeamApplicationDTO>> getTeamApplicationByPlayer(@PathVariable Long playerId) {
+    public ResponseEntity<List<TeamApplicationDTO>> getTeamApplicationByPlayer(@PathVariable Long playerId) {
         return ResponseEntity.ok().body(teamApplicationUseCase.findByPlayer(playerId));
     }
 

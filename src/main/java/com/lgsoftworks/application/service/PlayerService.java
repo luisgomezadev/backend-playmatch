@@ -45,7 +45,7 @@ public class PlayerService implements PlayerUseCase {
     public UserDTO save(PlayerRequest playerRequest) {
         validatePerson.validate(playerRequest.getDocumentNumber(), playerRequest.getEmail());
         Player savedPerson = playerRepositoryPort.save(PlayerModelMapper.toModelRequest(playerRequest));
-        return UserModelMapper.toPersonSummary(savedPerson);
+        return UserModelMapper.toUserDTO(savedPerson);
     }
 
     @Override
@@ -61,14 +61,14 @@ public class PlayerService implements PlayerUseCase {
         List<Player> savedPlayers = playerRepositoryPort.saveAll(players);
 
         return savedPlayers.stream()
-                .map(UserModelMapper::toPersonSummary)
+                .map(UserModelMapper::toUserDTO)
                 .toList();
     }
 
     @Override
     public UserDTO update(PlayerRequest playerRequest) {
         Player updatedPlayer = playerRepositoryPort.save(PlayerModelMapper.toModelRequest(playerRequest));
-        return UserModelMapper.toPersonSummary(updatedPlayer);
+        return UserModelMapper.toUserDTO(updatedPlayer);
     }
 
     @Override

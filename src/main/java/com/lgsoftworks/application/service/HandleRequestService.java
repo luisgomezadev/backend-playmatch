@@ -1,7 +1,7 @@
 package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.domain.enums.StatusRequest;
-import com.lgsoftworks.domain.exception.RequestPlayerByIdNotFoundException;
+import com.lgsoftworks.domain.exception.TeamApplicationByIdNotFoundException;
 import com.lgsoftworks.domain.model.TeamApplication;
 import com.lgsoftworks.domain.port.in.AssignTeamUseCase;
 import com.lgsoftworks.domain.port.in.HandleRequestUseCase;
@@ -19,7 +19,7 @@ public class HandleRequestService implements HandleRequestUseCase {
     @Override
     public void handleRequest(StatusRequest statusRequest, Long id) {
         TeamApplication teamApplication = teamApplicationRepositoryPort.findById(id)
-                .orElseThrow(() -> new RequestPlayerByIdNotFoundException(id));
+                .orElseThrow(() -> new TeamApplicationByIdNotFoundException(id));
 
         teamApplication.setStatusRequest(statusRequest);
 

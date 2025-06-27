@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface TeamApplicationUseCase {
     Optional<TeamApplicationDTO> findById(Long id);
     TeamApplicationDTO save(TeamApplicationRequest requestPlayer);
-    Optional<TeamApplicationDTO> findByPlayer(Long playerId);
+    List<TeamApplicationDTO> findByPlayer(Long playerId);
     List<TeamApplicationDTO> findByTeam(Long teamId);
     boolean existsByPlayerIdAndStatusRequest(Long playerId, StatusRequest statusRequest);
 }

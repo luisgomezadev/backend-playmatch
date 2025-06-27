@@ -18,7 +18,7 @@ public class FieldModelMapper {
         fieldDTO.setOpeningHour(field.getOpeningHour());
         fieldDTO.setClosingHour(field.getClosingHour());
         fieldDTO.setStatus(field.getStatus());
-        fieldDTO.setAdmin(UserModelMapper.toPersonSummary(field.getAdmin()));
+        fieldDTO.setAdmin(UserModelMapper.toUserDTO(field.getAdmin()));
         fieldDTO.setReservations(ReservationModelMapper.toReservationFieldDTOList(field.getReservations()));
 
         return fieldDTO;

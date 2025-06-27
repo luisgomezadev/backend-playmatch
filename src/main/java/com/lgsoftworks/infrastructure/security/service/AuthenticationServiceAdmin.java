@@ -70,7 +70,7 @@ public class AuthenticationServiceAdmin {
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .user(UserModelMapper.toPersonSummary(admin))
+                .user(UserModelMapper.toUserDTO(admin))
                 .build();
     }
 
@@ -82,7 +82,7 @@ public class AuthenticationServiceAdmin {
 
         return AuthenticationResponse.builder()
                 .token(newToken)
-                .user(UserModelMapper.toPersonSummary(admin))
+                .user(UserModelMapper.toUserDTO(admin))
                 .build();
     }
 

@@ -13,7 +13,7 @@ public class TeamApplicationModelMapper {
         TeamApplication teamApplication = new TeamApplication();
         teamApplication.setId(teamApplicationDTO.getId());
         teamApplication.setDescription(teamApplicationDTO.getDescription());
-        teamApplication.setPlayer(UserModelMapper.toPlayer(teamApplicationDTO.getPlayer()));
+        teamApplication.setPlayer(PlayerModelMapper.summaryToModel(teamApplicationDTO.getPlayer()));
         teamApplication.setTeam(TeamModelMapper.dtoSummaryToModel(teamApplicationDTO.getTeam()));
         teamApplication.setApplicationDate(teamApplicationDTO.getApplicationDate());
         teamApplication.setStatusRequest(teamApplicationDTO.getStatusRequest());
@@ -24,8 +24,6 @@ public class TeamApplicationModelMapper {
         TeamApplication teamApplication = new TeamApplication();
         teamApplication.setId(teamApplicationRequest.getId());
         teamApplication.setDescription(teamApplicationRequest.getDescription());
-        teamApplication.setPlayer(teamApplicationRequest.getPlayer());
-        teamApplication.setTeam(teamApplicationRequest.getTeam());
         teamApplication.setApplicationDate(LocalDateTime.now());
         teamApplication.setStatusRequest(StatusRequest.PENDING);
         return teamApplication;
@@ -35,7 +33,7 @@ public class TeamApplicationModelMapper {
         TeamApplicationDTO teamApplicationDTO = new TeamApplicationDTO();
         teamApplicationDTO.setId(teamApplication.getId());
         teamApplicationDTO.setDescription(teamApplication.getDescription());
-        teamApplicationDTO.setPlayer(UserModelMapper.toPersonSummary(teamApplication.getPlayer()));
+        teamApplicationDTO.setPlayer(PlayerModelMapper.toSummaryDTO(teamApplication.getPlayer()));
         teamApplicationDTO.setTeam(TeamModelMapper.toTeamSummary(teamApplication.getTeam()));
         teamApplicationDTO.setApplicationDate(teamApplication.getApplicationDate());
         teamApplicationDTO.setStatusRequest(teamApplication.getStatusRequest());

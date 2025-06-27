@@ -52,6 +52,20 @@ public class PlayerModelMapper {
         return player;
     }
 
+    public static Player summaryToModel(PlayerSummaryDTO dto) {
+        Player player = new Player();
+        player.setId(dto.getId());
+        player.setFirstName(dto.getFirstName());
+        player.setLastName(dto.getLastName());
+        player.setCity(dto.getCity());
+        player.setAge(dto.getAge());
+        player.setCellphone(dto.getCellphone());
+        player.setDocumentType(dto.getDocumentType());
+        player.setDocumentNumber(dto.getDocumentNumber());
+        player.setTeam(TeamModelMapper.dtoSummaryToModel(dto.getTeam()));
+        return player;
+    }
+
     public static Player toModelRequest(PlayerRequest playerRequest) {
         Player player = new Player();
         player.setId(playerRequest.getId());

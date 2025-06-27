@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface TeamApplicationRepositoryPort {
     Optional<TeamApplication> findById(Long id);
     TeamApplication save(TeamApplication teamApplication);
-    Optional<TeamApplication> findByPlayer(Long playerId);
+    List<TeamApplication> findByPlayer(Long playerId);
     List<TeamApplication> findByTeam(Long teamId);
     boolean existsByPlayerIdAndStatusRequest(Long playerId, StatusRequest statusRequest);
 }

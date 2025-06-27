@@ -29,6 +29,7 @@ public class PlayerRequest {
     private Byte age;
 
     @NotBlank(message = "El número de celular es requerido")
+    @Length(min = 6, message = "El celular debe tener al menos 6 números")
     private String cellphone;
 
     private DocumentType documentType;

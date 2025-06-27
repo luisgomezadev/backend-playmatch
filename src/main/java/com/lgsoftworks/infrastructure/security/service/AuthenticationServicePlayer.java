@@ -70,7 +70,7 @@ public class AuthenticationServicePlayer {
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .user(UserModelMapper.toPersonSummary(player))
+                .user(UserModelMapper.toUserDTO(player))
                 .build();
     }
 
@@ -82,7 +82,7 @@ public class AuthenticationServicePlayer {
 
         return AuthenticationResponse.builder()
                 .token(newToken)
-                .user(UserModelMapper.toPersonSummary(player))
+                .user(UserModelMapper.toUserDTO(player))
                 .build();
     }
 

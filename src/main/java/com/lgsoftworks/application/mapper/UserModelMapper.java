@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class UserModelMapper {
 
-    public static UserDTO toPersonSummary(User user) {
+    public static UserDTO toUserDTO(User user) {
         if (user == null) return null;
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
@@ -55,16 +55,16 @@ public class UserModelMapper {
         return player;
     }
 
-    public static List<UserDTO> toPersonSummaryList(List<Player> persons) {
-        if (persons == null) return null;
-        return persons.stream()
-                .map(UserModelMapper::toPersonSummary)
+    public static List<UserDTO> toUserSummaryList(List<Player> players) {
+        if (players == null) return null;
+        return players.stream()
+                .map(UserModelMapper::toUserDTO)
                 .collect(Collectors.toList());
     }
 
-    public static List<Player> toPlayerList(List<UserDTO> persons) {
-        if (persons == null) return null;
-        return persons.stream()
+    public static List<Player> toPlayerList(List<UserDTO> users) {
+        if (users == null) return null;
+        return users.stream()
                 .map(UserModelMapper::toPlayer)
                 .collect(Collectors.toList());
     }

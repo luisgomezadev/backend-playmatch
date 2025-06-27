@@ -34,20 +34,16 @@ public class TeamApplicationService implements TeamApplicationUseCase {
     @Override
     public TeamApplicationDTO save(TeamApplicationRequest teamApplicationRequest) {
 
-        Player player = playerRepositoryPort.findById(teamApplicationRequest.getPlayer().getId())
-                .orElseThrow(() -> new UserByIdNotFoundException(teamApplicationRequest.getPlayer().getId()));
+        Player player = playerRepositoryPort.findById(teamApplicationRequest.getPlayerId())
+                .orElseThrow(() -> new UserByIdNotFoundException(teamApplicationRequest.getPlayerId()));
 
-        Team team = teamRepositoryPort.findById(teamApplicationRequest.getTeam().getId())
-                .orElseThrow(() -> new TeamByIdNotFoundException(teamApplicationRequest.getTeam().getId()));
+        Team team = teamRepositoryPort.findById(teamApplicationRequest.getTeamId())
+                .orElseThrow(() -> new TeamByIdNotFoundException(teamApplicationRequest.getTeamId()));
 
-        boolean hasPending = teamApplicationRepositoryPort.existsByPlayerIdAndStatusRequest(teamApplicationRequest.getPlayer().getId(), StatusRequest.PENDING);
-        if (hasPending) {
-            throw new PlayerAlreadyHasPendingRequestException(player, team);
-        }
+        boolean hasPending = teamApplicationRepositoryPort.existsByPlayerIdAndStatusRequest(teamApplicationRequest.getPlayerId(), StatusRequest.PENDING);
+        if (hasPending) throw new PlayerAlreadyHasPendingRequestException();
 
         TeamApplication teamApplication = TeamApplicationModelMapper.toModelRequest(teamApplicationRequest);
-        teamApplication.setApplicationDate(LocalDateTime.now());
-        teamApplication.setStatusRequest(StatusRequest.PENDING);
         teamApplication.setPlayer(player);
         teamApplication.setTeam(team);
         TeamApplication savedTeamApplication = teamApplicationRepositoryPort.save(teamApplication);
@@ -56,9 +52,11 @@ public class TeamApplicationService implements TeamApplicationUseCase {
     }
 
     @Override
-    public Optional<TeamApplicationDTO> findByPlayer(Long playerId) {
-        Optional<TeamApplication> optionalRequestPlayer = teamApplicationRepositoryPort.findByPlayer(playerId);
-        return optionalRequestPlayer.map(TeamApplicationModelMapper::toDTO);
+    public List<TeamApplicationDTO> findByPlayer(Long playerId) {
+        List<TeamApplication> playerApplicationList = teamApplicationRepositoryPort.findByPlayer(playerId);
+        return playerApplicationList.stream()
+                .map(TeamApplicationModelMapper::toDTO)
+                .toList();
     }
 
     @Override

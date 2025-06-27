@@ -1,11 +1,12 @@
 package com.lgsoftworks.application.dto.request;
 
-import com.lgsoftworks.domain.model.Player;
-import com.lgsoftworks.domain.model.Team;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,7 +14,14 @@ import lombok.Setter;
 @Setter
 public class TeamApplicationRequest {
     private Long id;
+
+    @NotBlank(message = "La descripción de la solicitud es requerida")
+    @Length(min = 3, max = 200, message = "La descripción debe tener entre 3 a 200 caracteres")
     private String description;
-    private Player player;
-    private Team team;
+
+    @NotNull(message = "El ID del jugador es requerido")
+    private Long playerId;
+
+    @NotNull(message = "El ID del equipo es requerido")
+    private Long teamId;
 }

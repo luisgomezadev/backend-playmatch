@@ -44,13 +44,13 @@ public class AdminService implements AdminUseCase {
         validatePerson.validate(adminRequest.getDocumentNumber(),
                 adminRequest.getEmail());
         Admin savedPerson = adminRepositoryPort.save(AdminModelMapper.toModelRequest(adminRequest));
-        return UserModelMapper.toPersonSummary(savedPerson);
+        return UserModelMapper.toUserDTO(savedPerson);
     }
 
     @Override
     public UserDTO update(AdminRequest adminRequest) {
         Admin updatedAdmin = adminRepositoryPort.save(AdminModelMapper.toModelRequest(adminRequest));
-        return UserModelMapper.toPersonSummary(updatedAdmin);
+        return UserModelMapper.toUserDTO(updatedAdmin);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.lgsoftworks.application.dto;
 
+import com.lgsoftworks.application.dto.summary.PlayerSummaryDTO;
 import com.lgsoftworks.application.dto.summary.TeamSummaryDTO;
 import com.lgsoftworks.domain.enums.StatusRequest;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 public class TeamApplicationDTO {
     private Long id;
     private String description;
-    private UserDTO player;
+    private PlayerSummaryDTO player;
     private TeamSummaryDTO team;
     private LocalDateTime applicationDate;
     private StatusRequest statusRequest;
