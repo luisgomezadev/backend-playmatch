@@ -18,5 +18,6 @@ public class TeamDTO {
     private Integer maxPlayers;
     private List<UserDTO> members;
     private Long ownerId;
+    private String imageUrl;
     private List<ReservationTeamDTO> reservations;
 }

@@ -13,11 +13,13 @@ import com.lgsoftworks.domain.model.Team;
 import com.lgsoftworks.domain.port.in.TeamApplicationUseCase;
 import com.lgsoftworks.domain.port.out.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
 public class TeamApplicationService implements TeamApplicationUseCase {
 

@@ -9,14 +9,15 @@ public class TeamModelMapper {
 
     public static TeamSummaryDTO toTeamSummary(Team team) {
         if (team == null) return null;
-        TeamSummaryDTO dto = new TeamSummaryDTO();
-        dto.setId(team.getId());
-        dto.setName(team.getName());
-        dto.setCity(team.getCity());
-        dto.setNeighborhood(team.getNeighborhood());
-        dto.setMaxPlayers(team.getMaxPlayers());
-        dto.setOwnerId(team.getOwnerId());
-        return dto;
+        TeamSummaryDTO teamSummaryDTO = new TeamSummaryDTO();
+        teamSummaryDTO.setId(team.getId());
+        teamSummaryDTO.setName(team.getName());
+        teamSummaryDTO.setCity(team.getCity());
+        teamSummaryDTO.setNeighborhood(team.getNeighborhood());
+        teamSummaryDTO.setMaxPlayers(team.getMaxPlayers());
+        teamSummaryDTO.setOwnerId(team.getOwnerId());
+        teamSummaryDTO.setImageUrl(team.getImageUrl());
+        return teamSummaryDTO;
     }
 
     public static TeamDTO toDTO(Team team) {
@@ -28,6 +29,7 @@ public class TeamModelMapper {
         teamDTO.setMembers(UserModelMapper.toUserSummaryList(team.getMembers()));
         teamDTO.setMaxPlayers(team.getMaxPlayers());
         teamDTO.setOwnerId(team.getOwnerId());
+        teamDTO.setImageUrl(team.getImageUrl());
         teamDTO.setReservations(ReservationModelMapper.toReservationTeamDTOList(team.getReservations()));
         return teamDTO;
     }
@@ -42,6 +44,7 @@ public class TeamModelMapper {
         team.setMembers(UserModelMapper.toPlayerList(teamDTO.getMembers()));
         team.setMaxPlayers(teamDTO.getMaxPlayers());
         team.setOwnerId(teamDTO.getOwnerId());
+        team.setImageUrl(teamDTO.getImageUrl());
         team.setReservations(ReservationModelMapper.toReservationTeamList(teamDTO.getReservations()));
         return team;
     }
@@ -55,6 +58,7 @@ public class TeamModelMapper {
         team.setNeighborhood(teamRequest.getNeighborhood());
         team.setMaxPlayers(teamRequest.getMaxPlayers());
         team.setOwnerId(teamRequest.getOwnerId());
+        team.setImageUrl(teamRequest.getImageUrl());
         return team;
     }
 
@@ -67,6 +71,7 @@ public class TeamModelMapper {
         team.setNeighborhood(teamSummaryDTO.getNeighborhood());
         team.setMaxPlayers(teamSummaryDTO.getMaxPlayers());
         team.setOwnerId(teamSummaryDTO.getOwnerId());
+        team.setImageUrl(teamSummaryDTO.getImageUrl());
         return team;
     }
 

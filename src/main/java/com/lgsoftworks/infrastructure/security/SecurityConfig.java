@@ -57,13 +57,14 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/proxy/**",
-                                "/actuator/**"
+                                "/actuator/**",
+                                "/uploads/**"
                         ).permitAll()
                         .requestMatchers("/api/v1/team/**").hasAnyAuthority("PLAYER")
                         .requestMatchers(HttpMethod.GET, "/api/v1/field/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/field/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/field/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/field/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/field/**").hasAnyAuthority("FIELD_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/field/**").hasAnyAuthority("FIELD_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/field/**").hasAnyAuthority("FIELD_ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/team/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/team/**").hasAnyAuthority("PLAYER")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/team/**").hasAnyAuthority("PLAYER")

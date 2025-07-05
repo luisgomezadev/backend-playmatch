@@ -62,40 +62,40 @@ public class ReservationModelMapper {
     }
 
     public static ReservationAvailabilityDTO toAvailabilityDTO(Reservation reservation) {
-        ReservationAvailabilityDTO dto = new ReservationAvailabilityDTO();
-        dto.setHours(reservation.getHours());
-        dto.setField(FieldModelMapper.toFieldSummaryDTO(reservation.getField()));
-        dto.setReservationDate(reservation.getReservationDate());
-        dto.setStartTime(reservation.getStartTime());
-        dto.setEndTime(reservation.getEndTime());
-        dto.setTeam(TeamModelMapper.toTeamSummary(reservation.getTeam()));
-        return dto;
+        ReservationAvailabilityDTO reservationDTO = new ReservationAvailabilityDTO();
+        reservationDTO.setHours(reservation.getHours());
+        reservationDTO.setField(FieldModelMapper.toFieldSummaryDTO(reservation.getField()));
+        reservationDTO.setReservationDate(reservation.getReservationDate());
+        reservationDTO.setStartTime(reservation.getStartTime());
+        reservationDTO.setEndTime(reservation.getEndTime());
+        reservationDTO.setTeam(TeamModelMapper.toTeamSummary(reservation.getTeam()));
+        return reservationDTO;
     }
 
     public static ReservationTeamDTO toReservationTeamDTO(Reservation reservation) {
         if (reservation == null) return null;
-        ReservationTeamDTO dto = new ReservationTeamDTO();
-        dto.setId(reservation.getId());
-        dto.setHours(reservation.getHours());
-        dto.setField(FieldModelMapper.toFieldSummaryDTO(reservation.getField()));
-        dto.setReservationDate(reservation.getReservationDate());
-        dto.setStartTime(reservation.getStartTime());
-        dto.setEndTime(reservation.getEndTime());
-        dto.setStatus(reservation.getStatus());
-        return dto;
+        ReservationTeamDTO reservationDTO = new ReservationTeamDTO();
+        reservationDTO.setId(reservation.getId());
+        reservationDTO.setHours(reservation.getHours());
+        reservationDTO.setField(FieldModelMapper.toFieldSummaryDTO(reservation.getField()));
+        reservationDTO.setReservationDate(reservation.getReservationDate());
+        reservationDTO.setStartTime(reservation.getStartTime());
+        reservationDTO.setEndTime(reservation.getEndTime());
+        reservationDTO.setStatus(reservation.getStatus());
+        return reservationDTO;
     }
 
     public static ReservationFieldDTO toReservationFieldDTO(Reservation reservation) {
         if (reservation == null) return null;
-        ReservationFieldDTO dto = new ReservationFieldDTO();
-        dto.setId(reservation.getId());
-        dto.setHours(reservation.getHours());
-        dto.setReservationDate(reservation.getReservationDate());
-        dto.setTeam(TeamModelMapper.toTeamSummary(reservation.getTeam()));
-        dto.setStartTime(reservation.getStartTime());
-        dto.setEndTime(reservation.getEndTime());
-        dto.setStatus(reservation.getStatus());
-        return dto;
+        ReservationFieldDTO reservationDTO = new ReservationFieldDTO();
+        reservationDTO.setId(reservation.getId());
+        reservationDTO.setHours(reservation.getHours());
+        reservationDTO.setReservationDate(reservation.getReservationDate());
+        reservationDTO.setTeam(TeamModelMapper.toTeamSummary(reservation.getTeam()));
+        reservationDTO.setStartTime(reservation.getStartTime());
+        reservationDTO.setEndTime(reservation.getEndTime());
+        reservationDTO.setStatus(reservation.getStatus());
+        return reservationDTO;
     }
 
     public static Reservation toReservationField(ReservationFieldDTO reservationFieldDTO) {

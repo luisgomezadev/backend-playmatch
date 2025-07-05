@@ -2,6 +2,7 @@ package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.TeamModelMapper;
 import com.lgsoftworks.application.dto.summary.TeamSummaryDTO;
+import com.lgsoftworks.application.mapper.UserModelMapper;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.in.AssignTeamUseCase;
 import com.lgsoftworks.domain.port.in.TeamUseCase;
@@ -9,20 +10,26 @@ import com.lgsoftworks.application.dto.TeamDTO;
 import com.lgsoftworks.application.dto.request.TeamRequest;
 import com.lgsoftworks.domain.exception.*;
 import com.lgsoftworks.domain.model.Team;
+import com.lgsoftworks.domain.port.in.UploadTeamImageUseCase;
+import com.lgsoftworks.domain.port.out.CloudinaryImageUploaderPort;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
 import com.lgsoftworks.domain.port.out.TeamRepositoryPort;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
-public class TeamService implements TeamUseCase {
+public class TeamService implements TeamUseCase, UploadTeamImageUseCase {
 
     private final TeamRepositoryPort teamRepositoryPort;
     private final PlayerRepositoryPort playerRepositoryPort;
+    private final CloudinaryImageUploaderPort imageUploader;
     private final AssignTeamUseCase assignTeamUseCase;
 
     @Override
@@ -125,5 +132,17 @@ public class TeamService implements TeamUseCase {
                 throw new DuplicateOwnerException(player);
             }
         }
+    }
+
+    @Override
+    public TeamDTO uploadTeamImage(Long teamId, MultipartFile imageFile) {
+        String imageUrl = imageUploader.uploadImage(imageFile);
+
+        Team team = teamRepositoryPort.findById(teamId)
+                .orElseThrow(() -> new TeamByIdNotFoundException(teamId));
+
+        team.setImageUrl(imageUrl);
+        teamRepositoryPort.save(team);
+        return TeamModelMapper.toDTO(team);
     }
 }

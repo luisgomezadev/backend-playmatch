@@ -23,5 +23,6 @@ public class FieldDTO {
     private LocalTime closingHour;
     private UserDTO admin;
     private Status status;
+    private String imageUrl;
     private List<ReservationFieldDTO> reservations;
 }

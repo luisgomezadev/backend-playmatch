@@ -18,7 +18,8 @@ public class FieldModelMapper {
         fieldDTO.setOpeningHour(field.getOpeningHour());
         fieldDTO.setClosingHour(field.getClosingHour());
         fieldDTO.setStatus(field.getStatus());
-        fieldDTO.setAdmin(UserModelMapper.toUserDTO(field.getAdmin()));
+        fieldDTO.setImageUrl(field.getImageUrl());
+        fieldDTO.setAdmin(UserModelMapper.toUserDTO(field.getFieldAdmin()));
         fieldDTO.setReservations(ReservationModelMapper.toReservationFieldDTOList(field.getReservations()));
 
         return fieldDTO;
@@ -35,7 +36,8 @@ public class FieldModelMapper {
         field.setOpeningHour(fieldDTO.getOpeningHour());
         field.setClosingHour(fieldDTO.getClosingHour());
         field.setStatus(fieldDTO.getStatus());
-        field.setAdmin(UserModelMapper.toAdmin(fieldDTO.getAdmin()));
+        field.setImageUrl(fieldDTO.getImageUrl());
+        field.setFieldAdmin(UserModelMapper.toAdmin(fieldDTO.getAdmin()));
         field.setReservations(ReservationModelMapper.toReservationFieldList(fieldDTO.getReservations()));
 
         return field;
@@ -52,6 +54,7 @@ public class FieldModelMapper {
         field.setOpeningHour(fieldRequest.getOpeningHour());
         field.setClosingHour(fieldRequest.getClosingHour());
         field.setStatus(fieldRequest.getStatus());
+        field.setImageUrl(fieldRequest.getImageUrl());
 
         return field;
     }
@@ -67,6 +70,7 @@ public class FieldModelMapper {
         fieldSummaryDTO.setOpeningHour(field.getOpeningHour());
         fieldSummaryDTO.setClosingHour(field.getClosingHour());
         fieldSummaryDTO.setStatus(field.getStatus());
+        fieldSummaryDTO.setImageUrl(field.getImageUrl());
         return fieldSummaryDTO;
     }
 
@@ -81,6 +85,7 @@ public class FieldModelMapper {
         field.setOpeningHour(fieldSummaryDTO.getOpeningHour());
         field.setClosingHour(fieldSummaryDTO.getClosingHour());
         field.setStatus(fieldSummaryDTO.getStatus());
+        field.setImageUrl(fieldSummaryDTO.getImageUrl());
         return field;
     }
 

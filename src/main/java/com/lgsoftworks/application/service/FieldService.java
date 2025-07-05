@@ -1,26 +1,36 @@
 package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.FieldModelMapper;
+import com.lgsoftworks.application.mapper.TeamModelMapper;
 import com.lgsoftworks.domain.exception.FieldByIdNotFoundException;
-import com.lgsoftworks.domain.model.Admin;
+import com.lgsoftworks.domain.exception.TeamByIdNotFoundException;
+import com.lgsoftworks.domain.model.FieldAdmin;
+import com.lgsoftworks.domain.model.Team;
 import com.lgsoftworks.domain.port.in.FieldUseCase;
 import com.lgsoftworks.application.dto.FieldDTO;
 import com.lgsoftworks.application.dto.request.FieldRequest;
 import com.lgsoftworks.domain.exception.UserAlreadyAssignedAsAdminException;
 import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
 import com.lgsoftworks.domain.model.Field;
-import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
+import com.lgsoftworks.domain.port.in.UploadFieldImageUseCase;
+import com.lgsoftworks.domain.port.out.CloudinaryImageUploaderPort;
+import com.lgsoftworks.domain.port.out.FieldAdminRepositoryPort;
 import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
-public class FieldService implements FieldUseCase {
+public class FieldService implements FieldUseCase, UploadFieldImageUseCase {
 
     private final FieldRepositoryPort fieldRepositoryPort;
-    private final AdminRepositoryPort adminRepositoryPort;
+    private final FieldAdminRepositoryPort fieldAdminRepositoryPort;
+    private final CloudinaryImageUploaderPort imageUploader;
 
     @Override
     public List<FieldDTO> findAll() {
@@ -41,19 +51,26 @@ public class FieldService implements FieldUseCase {
     }
 
     @Override
+    public List<FieldDTO> findAllActive() {
+        List<Field> fieldList = fieldRepositoryPort.findAllActive();
+        return fieldList.stream().map(FieldModelMapper::toDTO).toList();
+    }
+
+    @Override
     public FieldDTO save(FieldRequest fieldRequest) {
-        Admin admin = adminRepositoryPort.findById(fieldRequest.getAdminId())
+        FieldAdmin fieldAdmin = fieldAdminRepositoryPort.findById(fieldRequest.getAdminId())
                 .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdminId()));
 
-        if (existsByAdminId(admin.getId())) {
-            throw new UserAlreadyAssignedAsAdminException(admin.getId());
+        if (existsByAdminId(fieldAdmin.getId())) {
+            throw new UserAlreadyAssignedAsAdminException(fieldAdmin.getId());
         }
 
         Field field = FieldModelMapper.toModelRequest(fieldRequest);
-        field.setAdmin(admin);
+        field.setFieldAdmin(fieldAdmin);
         Field savedField = fieldRepositoryPort.save(field);
 
-        admin.setField(savedField);
+        fieldAdmin.setField(savedField);
+        fieldAdminRepositoryPort.save(fieldAdmin);
 
         return FieldModelMapper.toDTO(savedField);
     }
@@ -61,44 +78,57 @@ public class FieldService implements FieldUseCase {
     @Override
     public FieldDTO update(FieldRequest fieldRequest) {
         Long fieldId = fieldRequest.getId();
-        if (fieldId == null) {
-            throw new IllegalArgumentException("El ID del campo es obligatorio para actualizar.");
-        }
-
         Field existingField = fieldRepositoryPort.findById(fieldId)
                 .orElseThrow(() -> new FieldByIdNotFoundException(fieldId));
 
-        Admin admin = adminRepositoryPort.findById(fieldRequest.getAdminId())
+        FieldAdmin fieldAdmin = fieldAdminRepositoryPort.findById(fieldRequest.getAdminId())
                 .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdminId()));
 
         // Prevenir cambiar a un admin que ya tiene otra cancha (si se está cambiando)
-        if (!existingField.getAdmin().getId().equals(admin.getId()) && existsByAdminId(admin.getId())) {
-            throw new UserAlreadyAssignedAsAdminException(admin.getId());
+        if (!existingField.getFieldAdmin().getId().equals(fieldAdmin.getId()) && existsByAdminId(fieldAdmin.getId())) {
+            throw new UserAlreadyAssignedAsAdminException(fieldAdmin.getId());
         }
 
-        existingField.setName(fieldRequest.getName());
-        existingField.setAddress(fieldRequest.getAddress());
-        existingField.setCity(fieldRequest.getCity());
-        existingField.setHourlyRate(fieldRequest.getHourlyRate());
-        existingField.setOpeningHour(fieldRequest.getOpeningHour());
-        existingField.setClosingHour(fieldRequest.getClosingHour());
-        existingField.setStatus(fieldRequest.getStatus());
-        existingField.setAdmin(admin);
+        Field field = FieldModelMapper.toModelRequest(fieldRequest);
 
-        Field updatedField = fieldRepositoryPort.save(existingField);
+        Field updatedField = fieldRepositoryPort.save(field);
         return FieldModelMapper.toDTO(updatedField);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
-        if (fieldRepositoryPort.findById(id).isEmpty()) {
-            throw new FieldByIdNotFoundException(id);
+        Field field = fieldRepositoryPort.findById(id)
+                .orElseThrow(() -> new FieldByIdNotFoundException(id));
+
+        if (field.getFieldAdmin() != null) {
+            field.getFieldAdmin().setField(null);
         }
+
+        // Actualizar el administrador sin la cancha
+        fieldAdminRepositoryPort.save(field.getFieldAdmin());
+
         fieldRepositoryPort.deleteById(id);
     }
 
     @Override
     public boolean existsByAdminId(Long id) {
         return fieldRepositoryPort.existsByAdminId(id);
+    }
+
+    public String uploadFieldImage(MultipartFile file) {
+        return imageUploader.uploadImage(file);
+    }
+
+    @Override
+    public FieldDTO uploadFieldImage(Long fieldId, MultipartFile imageFile) {
+        String imageUrl = imageUploader.uploadImage(imageFile);
+
+        Field field = fieldRepositoryPort.findById(fieldId)
+                .orElseThrow(() -> new FieldByIdNotFoundException(fieldId));
+
+        field.setImageUrl(imageUrl);
+        fieldRepositoryPort.save(field);
+        return FieldModelMapper.toDTO(field);
     }
 }

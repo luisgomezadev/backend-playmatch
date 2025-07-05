@@ -1,7 +1,7 @@
 package com.lgsoftworks.infrastructure.security.service;
 
 import com.lgsoftworks.application.mapper.UserModelMapper;
-import com.lgsoftworks.application.dto.request.PlayerRequest;
+import com.lgsoftworks.application.dto.request.UserRequest;
 import com.lgsoftworks.application.dto.UserDTO;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.exception.InvalidCredentialsException;
@@ -11,11 +11,11 @@ import com.lgsoftworks.domain.exception.UserWithEmailExistsException;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.in.PlayerUseCase;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
-import com.lgsoftworks.infrastructure.adapter.entity.PlayerEntity;
-import com.lgsoftworks.infrastructure.adapter.mapper.PlayerDboMapper;
-import com.lgsoftworks.infrastructure.security.dto.AuthenticationRequest;
-import com.lgsoftworks.infrastructure.security.dto.AuthenticationResponse;
-import com.lgsoftworks.infrastructure.security.dto.RefreshTokenRequest;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.PlayerEntity;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.PlayerDboMapper;
+import com.lgsoftworks.infrastructure.adapter.in.security.dto.AuthenticationRequest;
+import com.lgsoftworks.infrastructure.adapter.in.security.dto.AuthenticationResponse;
+import com.lgsoftworks.infrastructure.adapter.in.security.dto.RefreshTokenRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -34,7 +34,7 @@ public class AuthenticationServicePlayer {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public UserDTO register(PlayerRequest player) {
+    public UserDTO register(UserRequest player) {
 
         if (playerRepositoryPort.findByEmail(player.getEmail()).isPresent()) throw new UserWithEmailExistsException(player.getEmail());
 

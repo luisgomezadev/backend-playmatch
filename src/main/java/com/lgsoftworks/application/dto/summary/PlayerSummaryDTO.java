@@ -17,5 +17,6 @@ public class PlayerSummaryDTO {
     private String cellphone;
     private DocumentType documentType;
     private String documentNumber;
+    private String imageUrl;
     private TeamSummaryDTO team;
 }

@@ -1,8 +1,8 @@
 package com.lgsoftworks.infrastructure.security;
 
 import com.lgsoftworks.domain.exception.UserByEmailNotFoundException;
-import com.lgsoftworks.infrastructure.adapter.repository.AdminRepository;
-import com.lgsoftworks.infrastructure.adapter.repository.PlayerRepository;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.FieldAdminRepository;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,13 +20,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AuthenticationConfig {
 
     private final PlayerRepository playerRepository;
-    private final AdminRepository adminRepository;
+    private final FieldAdminRepository fieldAdminRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> playerRepository.findByEmail(username)
                 .map(user -> (UserDetails) user)
-                .or(() -> adminRepository.findByEmail(username)
+                .or(() -> fieldAdminRepository.findByEmail(username)
                         .map(admin -> (UserDetails) admin))
                 .orElseThrow(() -> new UserByEmailNotFoundException(username));
     }

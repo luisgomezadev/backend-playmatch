@@ -1,7 +1,7 @@
 package com.lgsoftworks.application.mapper;
 
 import com.lgsoftworks.application.dto.UserDTO;
-import com.lgsoftworks.domain.model.Admin;
+import com.lgsoftworks.domain.model.FieldAdmin;
 import com.lgsoftworks.domain.model.User;
 import com.lgsoftworks.domain.model.Player;
 
@@ -12,32 +12,34 @@ public class UserModelMapper {
 
     public static UserDTO toUserDTO(User user) {
         if (user == null) return null;
-        UserDTO dto = new UserDTO();
-        dto.setId(user.getId());
-        dto.setFirstName(user.getFirstName());
-        dto.setLastName(user.getLastName());
-        dto.setCity(user.getCity());
-        dto.setAge(user.getAge());
-        dto.setCellphone(user.getCellphone());
-        dto.setDocumentType(user.getDocumentType());
-        dto.setDocumentNumber(user.getDocumentNumber());
-        dto.setEmail(user.getEmail());
-        return dto;
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setCity(user.getCity());
+        userDTO.setAge(user.getAge());
+        userDTO.setCellphone(user.getCellphone());
+        userDTO.setDocumentType(user.getDocumentType());
+        userDTO.setDocumentNumber(user.getDocumentNumber());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setImageUrl(user.getImageUrl());
+        return userDTO;
     }
 
-    public static Admin toAdmin(UserDTO userDTO) {
+    public static FieldAdmin toAdmin(UserDTO userDTO) {
         if (userDTO == null) return null;
-        Admin admin = new Admin();
-        admin.setId(userDTO.getId());
-        admin.setFirstName(userDTO.getFirstName());
-        admin.setLastName(userDTO.getLastName());
-        admin.setCity(userDTO.getCity());
-        admin.setAge(userDTO.getAge());
-        admin.setCellphone(userDTO.getCellphone());
-        admin.setDocumentType(userDTO.getDocumentType());
-        admin.setDocumentNumber(userDTO.getDocumentNumber());
-        admin.setEmail(userDTO.getEmail());
-        return admin;
+        FieldAdmin fieldAdmin = new FieldAdmin();
+        fieldAdmin.setId(userDTO.getId());
+        fieldAdmin.setFirstName(userDTO.getFirstName());
+        fieldAdmin.setLastName(userDTO.getLastName());
+        fieldAdmin.setCity(userDTO.getCity());
+        fieldAdmin.setAge(userDTO.getAge());
+        fieldAdmin.setCellphone(userDTO.getCellphone());
+        fieldAdmin.setDocumentType(userDTO.getDocumentType());
+        fieldAdmin.setDocumentNumber(userDTO.getDocumentNumber());
+        fieldAdmin.setEmail(userDTO.getEmail());
+        fieldAdmin.setImageUrl(userDTO.getImageUrl());
+        return fieldAdmin;
     }
 
     public static Player toPlayer(UserDTO userDTO) {
@@ -52,6 +54,7 @@ public class UserModelMapper {
         player.setDocumentType(userDTO.getDocumentType());
         player.setDocumentNumber(userDTO.getDocumentNumber());
         player.setEmail(userDTO.getEmail());
+        player.setImageUrl(userDTO.getImageUrl());
         return player;
     }
 

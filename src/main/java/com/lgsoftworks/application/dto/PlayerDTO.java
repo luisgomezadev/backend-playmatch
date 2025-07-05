@@ -19,5 +19,6 @@ public class PlayerDTO {
     private DocumentType documentType;
     private String documentNumber;
     private String email;
+    private String imageUrl;
     private TeamSummaryDTO team;
 }

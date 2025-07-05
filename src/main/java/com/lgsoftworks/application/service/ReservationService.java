@@ -12,12 +12,14 @@ import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.domain.port.out.TeamRepositoryPort;
 import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
 public class ReservationService implements ReservationUseCase {
 

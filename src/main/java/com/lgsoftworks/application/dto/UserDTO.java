@@ -18,4 +18,5 @@ public class UserDTO {
     private DocumentType documentType;
     private String documentNumber;
     private String email;
+    private String imageUrl;
 }

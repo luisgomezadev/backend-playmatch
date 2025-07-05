@@ -17,6 +17,7 @@ public class Team {
     private String city;
     private Integer maxPlayers;
     private Long ownerId;
+    private String imageUrl;
     private List<Player> members = new ArrayList<>();
     private List<Reservation> reservations = new ArrayList<>();
 }

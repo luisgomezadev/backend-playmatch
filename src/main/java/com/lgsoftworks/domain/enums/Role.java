@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum Role {
     PLAYER("PLAYER"),
-    ADMIN("ADMIN");
+    FIELD_ADMIN("FIELD_ADMIN");
 
     private final String description;
 

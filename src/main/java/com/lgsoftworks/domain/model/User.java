@@ -20,5 +20,6 @@ public abstract class User {
     private String documentNumber;
     private String email;
     private String password;
+    private String imageUrl;
     private Role role;
 }

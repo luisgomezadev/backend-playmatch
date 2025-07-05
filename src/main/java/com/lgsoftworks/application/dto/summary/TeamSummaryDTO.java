@@ -14,4 +14,5 @@ public class TeamSummaryDTO {
     private String city;
     private Integer maxPlayers;
     private Long ownerId;
+    private String imageUrl;
 }

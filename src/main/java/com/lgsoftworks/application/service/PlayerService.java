@@ -3,28 +3,43 @@ package com.lgsoftworks.application.service;
 import com.lgsoftworks.application.mapper.UserModelMapper;
 import com.lgsoftworks.application.mapper.PlayerModelMapper;
 import com.lgsoftworks.application.dto.PlayerDTO;
-import com.lgsoftworks.application.dto.request.PlayerRequest;
+import com.lgsoftworks.application.dto.request.UserRequest;
 import com.lgsoftworks.application.dto.UserDTO;
+import com.lgsoftworks.domain.exception.UserByCellphoneNotFoundException;
 import com.lgsoftworks.domain.exception.UserByDocumentNotFoundException;
 import com.lgsoftworks.domain.exception.UserByEmailNotFoundException;
+import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.domain.port.in.PlayerUseCase;
-import com.lgsoftworks.domain.port.out.AdminRepositoryPort;
+import com.lgsoftworks.domain.port.in.UploadAdminImageUseCase;
+import com.lgsoftworks.domain.port.in.UploadPlayerImageUseCase;
+import com.lgsoftworks.domain.port.out.CloudinaryImageUploaderPort;
+import com.lgsoftworks.domain.port.out.FieldAdminRepositoryPort;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
-import com.lgsoftworks.domain.validation.ValidatePerson;
+import com.lgsoftworks.domain.validation.ValidateUser;
 import com.lgsoftworks.application.dto.summary.PlayerSummaryDTO;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
-public class PlayerService implements PlayerUseCase {
+@Service
+public class PlayerService implements PlayerUseCase, UploadPlayerImageUseCase {
 
     private final PlayerRepositoryPort playerRepositoryPort;
-    private final ValidatePerson validatePerson;
+    private final CloudinaryImageUploaderPort imageUploader;
+    private final ValidateUser validateUser;
 
-    public PlayerService(PlayerRepositoryPort playerRepositoryPort, AdminRepositoryPort adminRepositoryPort) {
+    private final Path uploadDir = Paths.get("uploads");
+
+    public PlayerService(PlayerRepositoryPort playerRepositoryPort, FieldAdminRepositoryPort fieldAdminRepositoryPort,
+                         CloudinaryImageUploaderPort cloudinaryImageUploaderPort) {
         this.playerRepositoryPort = playerRepositoryPort;
-        this.validatePerson = new ValidatePerson(adminRepositoryPort, playerRepositoryPort);
+        this.imageUploader = cloudinaryImageUploaderPort;
+        this.validateUser = new ValidateUser(fieldAdminRepositoryPort, playerRepositoryPort);
     }
 
     @Override
@@ -42,16 +57,17 @@ public class PlayerService implements PlayerUseCase {
     }
 
     @Override
-    public UserDTO save(PlayerRequest playerRequest) {
-        validatePerson.validate(playerRequest.getDocumentNumber(), playerRequest.getEmail());
-        Player savedPerson = playerRepositoryPort.save(PlayerModelMapper.toModelRequest(playerRequest));
-        return UserModelMapper.toUserDTO(savedPerson);
+    public UserDTO save(UserRequest playerRequest) {
+        validateUser.validate(playerRequest.getDocumentNumber(),
+                playerRequest.getEmail(), playerRequest.getCellphone());
+        Player savedUser = playerRepositoryPort.save(PlayerModelMapper.toModelRequest(playerRequest));
+        return UserModelMapper.toUserDTO(savedUser);
     }
 
     @Override
-    public List<UserDTO> saveAll(List<PlayerRequest> playerRequests) {
-        for (PlayerRequest p : playerRequests) {
-            validatePerson.validate(p.getDocumentNumber(), p.getEmail());
+    public List<UserDTO> saveAll(List<UserRequest> playerRequests) {
+        for (UserRequest p : playerRequests) {
+            validateUser.validate(p.getDocumentNumber(), p.getEmail(), p.getCellphone());
         }
 
         List<Player> players = playerRequests.stream()
@@ -66,7 +82,9 @@ public class PlayerService implements PlayerUseCase {
     }
 
     @Override
-    public UserDTO update(PlayerRequest playerRequest) {
+    public UserDTO update(UserRequest playerRequest) {
+        validateUser.validate(playerRequest.getDocumentNumber(),
+                playerRequest.getEmail(), playerRequest.getCellphone());
         Player updatedPlayer = playerRepositoryPort.save(PlayerModelMapper.toModelRequest(playerRequest));
         return UserModelMapper.toUserDTO(updatedPlayer);
     }
@@ -95,6 +113,15 @@ public class PlayerService implements PlayerUseCase {
     }
 
     @Override
+    public Optional<PlayerDTO> findByCellphone(String cellphone) {
+        Optional<Player> optionalPlayer = playerRepositoryPort.findByCellphone(cellphone);
+        if (optionalPlayer.isEmpty()) {
+            throw new UserByCellphoneNotFoundException(cellphone);
+        }
+        return optionalPlayer.map(PlayerModelMapper::toDTO);
+    }
+
+    @Override
     public boolean existsByIdAndTeamId(Long playerId, Long teamId) {
         return playerRepositoryPort.existsByIdAndTeamId(playerId, teamId);
     }
@@ -105,6 +132,18 @@ public class PlayerService implements PlayerUseCase {
         return playerList.stream()
                 .map(PlayerModelMapper::toSummaryDTO)
                 .toList();
+    }
+
+    @Override
+    public UserDTO uploadPlayerImage(Long userId, MultipartFile imageFile) {
+        String imageUrl = imageUploader.uploadImage(imageFile);
+
+        Player player = playerRepositoryPort.findById(userId)
+                .orElseThrow(() -> new UserByIdNotFoundException(userId));
+
+        player.setImageUrl(imageUrl);
+        playerRepositoryPort.save(player);
+        return UserModelMapper.toUserDTO(player);
     }
 
 }

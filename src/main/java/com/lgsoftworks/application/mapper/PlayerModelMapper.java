@@ -1,7 +1,7 @@
 package com.lgsoftworks.application.mapper;
 
 import com.lgsoftworks.application.dto.PlayerDTO;
-import com.lgsoftworks.application.dto.request.PlayerRequest;
+import com.lgsoftworks.application.dto.request.UserRequest;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.model.Player;
 import com.lgsoftworks.application.dto.summary.PlayerSummaryDTO;
@@ -19,22 +19,24 @@ public class PlayerModelMapper {
         playerDTO.setDocumentType(player.getDocumentType());
         playerDTO.setDocumentNumber(player.getDocumentNumber());
         playerDTO.setEmail(player.getEmail());
+        playerDTO.setImageUrl(player.getImageUrl());
         playerDTO.setTeam(TeamModelMapper.toTeamSummary(player.getTeam()));
         return playerDTO;
     }
 
     public static PlayerSummaryDTO toSummaryDTO(Player player) {
-        PlayerSummaryDTO dto = new PlayerSummaryDTO();
-        dto.setId(player.getId());
-        dto.setFirstName(player.getFirstName());
-        dto.setLastName(player.getLastName());
-        dto.setCity(player.getCity());
-        dto.setAge(player.getAge());
-        dto.setCellphone(player.getCellphone());
-        dto.setDocumentType(player.getDocumentType());
-        dto.setDocumentNumber(player.getDocumentNumber());
-        dto.setTeam(TeamModelMapper.toTeamSummary(player.getTeam()));
-        return dto;
+        PlayerSummaryDTO playerSummaryDTO = new PlayerSummaryDTO();
+        playerSummaryDTO.setId(player.getId());
+        playerSummaryDTO.setFirstName(player.getFirstName());
+        playerSummaryDTO.setLastName(player.getLastName());
+        playerSummaryDTO.setCity(player.getCity());
+        playerSummaryDTO.setAge(player.getAge());
+        playerSummaryDTO.setCellphone(player.getCellphone());
+        playerSummaryDTO.setDocumentType(player.getDocumentType());
+        playerSummaryDTO.setDocumentNumber(player.getDocumentNumber());
+        playerSummaryDTO.setImageUrl(player.getImageUrl());
+        playerSummaryDTO.setTeam(TeamModelMapper.toTeamSummary(player.getTeam()));
+        return playerSummaryDTO;
     }
 
     public static Player toModel(PlayerDTO playerDTO) {
@@ -48,25 +50,27 @@ public class PlayerModelMapper {
         player.setDocumentType(playerDTO.getDocumentType());
         player.setDocumentNumber(playerDTO.getDocumentNumber());
         player.setEmail(playerDTO.getEmail());
+        player.setImageUrl(playerDTO.getImageUrl());
         player.setTeam(TeamModelMapper.dtoSummaryToModel(playerDTO.getTeam()));
         return player;
     }
 
-    public static Player summaryToModel(PlayerSummaryDTO dto) {
+    public static Player summaryToModel(PlayerSummaryDTO playerSummaryDTO) {
         Player player = new Player();
-        player.setId(dto.getId());
-        player.setFirstName(dto.getFirstName());
-        player.setLastName(dto.getLastName());
-        player.setCity(dto.getCity());
-        player.setAge(dto.getAge());
-        player.setCellphone(dto.getCellphone());
-        player.setDocumentType(dto.getDocumentType());
-        player.setDocumentNumber(dto.getDocumentNumber());
-        player.setTeam(TeamModelMapper.dtoSummaryToModel(dto.getTeam()));
+        player.setId(playerSummaryDTO.getId());
+        player.setFirstName(playerSummaryDTO.getFirstName());
+        player.setLastName(playerSummaryDTO.getLastName());
+        player.setCity(playerSummaryDTO.getCity());
+        player.setAge(playerSummaryDTO.getAge());
+        player.setCellphone(playerSummaryDTO.getCellphone());
+        player.setDocumentType(playerSummaryDTO.getDocumentType());
+        player.setDocumentNumber(playerSummaryDTO.getDocumentNumber());
+        player.setImageUrl(playerSummaryDTO.getImageUrl());
+        player.setTeam(TeamModelMapper.dtoSummaryToModel(playerSummaryDTO.getTeam()));
         return player;
     }
 
-    public static Player toModelRequest(PlayerRequest playerRequest) {
+    public static Player toModelRequest(UserRequest playerRequest) {
         Player player = new Player();
         player.setId(playerRequest.getId());
         player.setFirstName(playerRequest.getFirstName());
@@ -77,7 +81,6 @@ public class PlayerModelMapper {
         player.setDocumentType(playerRequest.getDocumentType());
         player.setDocumentNumber(playerRequest.getDocumentNumber());
         player.setEmail(playerRequest.getEmail());
-        player.setTeam(playerRequest.getTeam());
         player.setPassword(playerRequest.getPassword());
         player.setRole(Role.PLAYER);
         return player;

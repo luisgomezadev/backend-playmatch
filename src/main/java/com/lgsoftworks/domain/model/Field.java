@@ -23,7 +23,8 @@ public class Field {
     private BigDecimal hourlyRate;
     private LocalTime openingHour;
     private LocalTime closingHour;
-    private Admin admin;
+    private FieldAdmin fieldAdmin;
     private Status status;
+    private String imageUrl;
     private List<Reservation> reservations = new ArrayList<>();
 }

@@ -10,6 +10,7 @@ public interface FieldRepositoryPort {
     List<Field> findAll();
     Optional<Field> findById(Long id);
     Optional<Field> findByAdminId(Long id);
+    List<Field> findAllActive();
     Field save(Field field);
     void deleteById(Long id);
     boolean existsByAdminId(Long id);

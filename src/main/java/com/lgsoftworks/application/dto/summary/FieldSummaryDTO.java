@@ -20,4 +20,5 @@ public class FieldSummaryDTO {
     private LocalTime openingHour;
     private LocalTime closingHour;
     private Status status;
+    private String imageUrl;
 }
