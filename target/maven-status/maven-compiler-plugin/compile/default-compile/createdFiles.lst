@@ -94,6 +94,7 @@ com\lgsoftworks\application\dto\request\TeamRequest.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\FieldJpaAdapter.class
 com\lgsoftworks\domain\enums\StatusRequest.class
 com\lgsoftworks\infrastructure\adapter\in\rest\controller\TeamController.class
+com\lgsoftworks\infrastructure\adapter\out\persistence\cloudinary\CloudinaryProperties.class
 com\lgsoftworks\domain\exception\DuplicateOwnerException.class
 com\lgsoftworks\domain\port\in\HandleRequestUseCase.class
 com\lgsoftworks\domain\exception\UserByCellphoneNotFoundException.class

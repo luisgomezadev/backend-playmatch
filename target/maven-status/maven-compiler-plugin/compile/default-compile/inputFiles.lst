@@ -117,6 +117,7 @@ C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftwor
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\in\security\dto\RefreshTokenRequest.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\cloudinary\CloudinaryConfig.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\cloudinary\CloudinaryImageUploaderAdapter.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\cloudinary\CloudinaryProperties.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\entity\BaseEntity.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\entity\FieldAdminEntity.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\entity\FieldEntity.java
