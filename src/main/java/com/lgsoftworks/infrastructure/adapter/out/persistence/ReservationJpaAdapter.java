@@ -9,6 +9,7 @@ import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.Reserva
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +23,16 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     @Override
     public List<Reservation> findAll() {
         return reservationRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
+                        .thenComparing(ReservationEntity::getStartTime))
+                .map(ReservationDboMapper::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Reservation> findByFilters(LocalDate date, StatusReservation status, Long teamId, Long fieldId) {
+        return reservationRepository.findByFilters(date, status, teamId, fieldId)
                 .stream()
                 .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
                         .thenComparing(ReservationEntity::getStartTime))

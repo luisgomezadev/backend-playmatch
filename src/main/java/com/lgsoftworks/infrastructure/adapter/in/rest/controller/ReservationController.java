@@ -10,11 +10,13 @@ import com.lgsoftworks.infrastructure.adapter.in.rest.dto.MessageResponse;
 import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +33,17 @@ public class ReservationController {
     @GetMapping
     public ResponseEntity<List<ReservationDTO>> getReservations() {
         return ResponseEntity.ok(reservationUseCase.findAll());
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<ReservationDTO>> getFilteredReservations(
+            @RequestParam(value = "date", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date,
+            @RequestParam(value = "status", required = false) StatusReservation status,
+            @RequestParam(value = "teamId", required = false) Long teamId,
+            @RequestParam(value = "fieldId", required = false) Long fieldId
+            ) {
+        return ResponseEntity.ok(reservationUseCase.findByFilters(date, status, teamId, fieldId));
     }
 
     @GetMapping("/field/{fieldId}")

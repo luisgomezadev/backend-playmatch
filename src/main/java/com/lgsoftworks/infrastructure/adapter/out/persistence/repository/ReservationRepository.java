@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -18,6 +19,20 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     List<ReservationEntity> findAllByStatus(StatusReservation status);
     Long countByStatusAndTeam_Id(StatusReservation status, Long teamId);
     Long countByStatusAndField_Id(StatusReservation status, Long fieldId);
+
+    @Query("""
+    SELECT r FROM ReservationEntity r
+    WHERE (:date IS NULL OR r.reservationDate = :date)
+        AND (:status IS NULL OR r.status = :status)
+        AND (:teamId IS NULL OR r.team.id = :teamId)
+        AND (:fieldId IS NULL OR r.field.id = :fieldId)
+    """)
+    List<ReservationEntity> findByFilters(
+            @Param("date") LocalDate date,
+            @Param("status") StatusReservation status,
+            @Param("teamId") Long teamId,
+            @Param("fieldId") Long fieldId
+    );
 
     @Modifying
     @Transactional

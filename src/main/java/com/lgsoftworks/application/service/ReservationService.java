@@ -14,6 +14,7 @@ import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -31,6 +32,16 @@ public class ReservationService implements ReservationUseCase {
     @Override
     public List<ReservationDTO> findAll() {
         List<Reservation> reservationList = reservationRepositoryPort.findAll();
+        return reservationList.stream()
+                .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
+                        .thenComparing(Reservation::getStartTime))
+                .map(ReservationModelMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ReservationDTO> findByFilters(LocalDate date, StatusReservation status, Long teamId, Long fieldId) {
+        List<Reservation> reservationList = reservationRepositoryPort.findByFilters(date, status, teamId, fieldId);
         return reservationList.stream()
                 .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
                         .thenComparing(Reservation::getStartTime))
