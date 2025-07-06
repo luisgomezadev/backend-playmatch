@@ -21,7 +21,6 @@ com\lgsoftworks\infrastructure\security\JwtProperties.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\repository\TeamRepository.class
 com\lgsoftworks\domain\exception\TeamAlreadyHasReservationException.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\entity\FieldEntity.class
-com\lgsoftworks\infrastructure\adapter\scheduler\ReservationFinalizerJob.class
 com\lgsoftworks\application\dto\summary\ReservationTeamDTO.class
 com\lgsoftworks\application\dto\request\ReservationRequest.class
 com\lgsoftworks\application\dto\summary\FieldSummaryDTO.class
@@ -45,7 +44,6 @@ com\lgsoftworks\application\mapper\ReservationModelMapper.class
 com\lgsoftworks\domain\exception\PlayerAlreadyHasPendingRequestException.class
 com\lgsoftworks\domain\port\in\UploadFieldImageUseCase.class
 com\lgsoftworks\infrastructure\adapter\in\rest\controller\FieldController.class
-com\lgsoftworks\application\service\FinalizeReservationService.class
 com\lgsoftworks\domain\port\in\UploadAdminImageUseCase.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\entity\TeamEntity.class
 com\lgsoftworks\infrastructure\adapter\in\security\dto\AuthenticationRequest.class

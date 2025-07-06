@@ -28,7 +28,6 @@ C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftwor
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\DeletePlayerTeamService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\FieldAdminService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\FieldService.java
-C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\FinalizeReservationService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\HandleRequestService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\PlayerService.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\service\ReservationAvailabilityService.java
@@ -110,7 +109,6 @@ C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftwor
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\in\rest\controller\TeamController.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\in\rest\dto\ErrorResponse.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\in\rest\dto\MessageResponse.java
-C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\in\scheduler\ReservationFinalizerJob.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\in\security\controller\AuthenticationController.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\in\security\dto\AuthenticationRequest.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\in\security\dto\AuthenticationResponse.java
