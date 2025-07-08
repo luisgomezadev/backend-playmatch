@@ -18,6 +18,10 @@ import com.lgsoftworks.domain.port.out.FieldAdminRepositoryPort;
 import com.lgsoftworks.domain.port.out.PlayerRepositoryPort;
 import com.lgsoftworks.domain.validation.ValidateUser;
 import com.lgsoftworks.application.dto.summary.PlayerSummaryDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,8 +37,6 @@ public class PlayerService implements PlayerUseCase, UploadPlayerImageUseCase {
     private final CloudinaryImageUploaderPort imageUploader;
     private final ValidateUser validateUser;
 
-    private final Path uploadDir = Paths.get("uploads");
-
     public PlayerService(PlayerRepositoryPort playerRepositoryPort, FieldAdminRepositoryPort fieldAdminRepositoryPort,
                          CloudinaryImageUploaderPort cloudinaryImageUploaderPort) {
         this.playerRepositoryPort = playerRepositoryPort;
@@ -43,11 +45,10 @@ public class PlayerService implements PlayerUseCase, UploadPlayerImageUseCase {
     }
 
     @Override
-    public List<PlayerSummaryDTO> findAll() {
-        List<Player> playerList = playerRepositoryPort.findAll();
-        return playerList.stream()
-                .map(PlayerModelMapper::toSummaryDTO)
-                .toList();
+    public Page<PlayerSummaryDTO> findAll(Pageable pageable) {
+        String email = getAuthenticatedEmail();
+        Page<Player> page = playerRepositoryPort.findAllExcludingEmail(email, pageable);
+        return page.map(PlayerModelMapper::toSummaryDTO);
     }
 
     @Override
@@ -144,6 +145,14 @@ public class PlayerService implements PlayerUseCase, UploadPlayerImageUseCase {
         player.setImageUrl(imageUrl);
         playerRepositoryPort.save(player);
         return UserModelMapper.toUserDTO(player);
+    }
+
+    private String getAuthenticatedEmail() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails userDetails) {
+            return userDetails.getUsername();
+        }
+        return principal.toString();
     }
 
 }

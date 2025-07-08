@@ -9,6 +9,9 @@ import com.lgsoftworks.domain.port.in.UploadAdminImageUseCase;
 import com.lgsoftworks.domain.port.in.UploadPlayerImageUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,8 +31,11 @@ public class PlayerController {
     private final UploadPlayerImageUseCase uploadPlayerImageUseCase;
 
     @GetMapping
-    public ResponseEntity<List<PlayerSummaryDTO>> getPlayers() {
-        return ResponseEntity.ok(playerUseCase.findAll());
+    public ResponseEntity<Page<PlayerSummaryDTO>> getPlayers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(playerUseCase.findAll(pageable));
     }
 
     @GetMapping("/{id}")

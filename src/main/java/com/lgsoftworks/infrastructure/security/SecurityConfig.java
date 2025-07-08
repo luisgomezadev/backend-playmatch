@@ -60,7 +60,6 @@ public class SecurityConfig {
                                 "/actuator/**",
                                 "/uploads/**"
                         ).permitAll()
-                        .requestMatchers("/api/v1/team/**").hasAnyAuthority("PLAYER")
                         .requestMatchers(HttpMethod.GET, "/api/v1/field/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/field/**").hasAnyAuthority("FIELD_ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/field/**").hasAnyAuthority("FIELD_ADMIN")
@@ -69,6 +68,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/team/**").hasAnyAuthority("PLAYER")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/team/**").hasAnyAuthority("PLAYER")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/team/**").hasAnyAuthority("PLAYER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/reservation/**").hasAnyAuthority("PLAYER","FIELD_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/reservation/**").hasAnyAuthority("PLAYER")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/reservation/**").hasAnyAuthority("PLAYER","FIELD_ADMIN")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

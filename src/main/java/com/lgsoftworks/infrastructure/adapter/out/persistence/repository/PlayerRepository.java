@@ -1,6 +1,8 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.repository;
 
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.PlayerEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<PlayerEntity, Long> {
+    Page<PlayerEntity> findByEmailNot(String excludedEmail, Pageable pageable);
     Optional<PlayerEntity> findByDocumentNumber(String documentNumber);
     Optional<PlayerEntity> findByEmail(String email);
     Optional<PlayerEntity> findByCellphone(String cellphone);

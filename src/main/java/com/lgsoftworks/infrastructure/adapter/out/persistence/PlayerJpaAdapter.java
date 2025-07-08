@@ -7,6 +7,8 @@ import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.PlayerEntit
 import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.PlayerDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,11 +21,10 @@ public class PlayerJpaAdapter implements PlayerRepositoryPort {
     private final PlayerRepository playerRepository;
 
     @Override
-    public List<Player> findAll() {
-        List<PlayerEntity> playerEntityList = playerRepository.findAll();
-        return playerEntityList.stream()
-                .map(PlayerDboMapper::toModel)
-                .toList();
+    public Page<Player> findAllExcludingEmail(String excludedEmail, Pageable pageable) {
+        return playerRepository
+                .findByEmailNot(excludedEmail, pageable)
+                .map(PlayerDboMapper::toModel);
     }
 
     @Override
