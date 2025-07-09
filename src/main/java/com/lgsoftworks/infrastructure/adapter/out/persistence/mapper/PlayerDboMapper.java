@@ -58,6 +58,7 @@ public class PlayerDboMapper {
         player.setDocumentType(entity.getDocumentType());
         player.setDocumentNumber(entity.getDocumentNumber());
         player.setEmail(entity.getEmail());
+        player.setImageUrl(entity.getImageUrl());
         player.setPassword(entity.getPassword());
         player.setRole(entity.getRole());
         return player;
@@ -75,6 +76,7 @@ public class PlayerDboMapper {
         playerEntity.setDocumentType(player.getDocumentType());
         playerEntity.setDocumentNumber(player.getDocumentNumber());
         playerEntity.setEmail(player.getEmail());
+        playerEntity.setImageUrl(player.getImageUrl());
         playerEntity.setPassword(player.getPassword());
         playerEntity.setRole(player.getRole());
         return playerEntity;
