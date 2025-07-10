@@ -7,6 +7,10 @@ import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.Reservation
 import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.ReservationDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -31,13 +35,13 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     }
 
     @Override
-    public List<Reservation> findByFilters(LocalDate date, StatusReservation status, Long teamId, Long fieldId) {
-        return reservationRepository.findByFilters(date, status, teamId, fieldId)
-                .stream()
-                .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
-                        .thenComparing(ReservationEntity::getStartTime))
-                .map(ReservationDboMapper::toModel)
-                .toList();
+    public Page<Reservation> findByFilters(LocalDate date, StatusReservation status, Long teamId, Long fieldId, Pageable pageable) {
+        Sort sort = Sort.by(Sort.Order.desc("reservationDate"), Sort.Order.asc("startTime"));
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        Page<ReservationEntity> reservationList = reservationRepository.findByFilters(date, status, teamId, fieldId, sortedPageable);
+
+        return reservationList.map(ReservationDboMapper::toModel);
     }
 
     @Override
@@ -63,6 +67,14 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
                 .stream()
                 .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
                         .thenComparing(ReservationEntity::getStartTime))
+                .map(ReservationDboMapper::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Reservation> findByFieldIdAndStatus(Long fieldId, StatusReservation status) {
+        return reservationRepository.findByFieldIdAndStatus(fieldId, status)
+                .stream()
                 .map(ReservationDboMapper::toModel)
                 .toList();
     }

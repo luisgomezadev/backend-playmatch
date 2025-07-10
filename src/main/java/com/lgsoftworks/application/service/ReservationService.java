@@ -12,6 +12,7 @@ import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.domain.port.out.TeamRepositoryPort;
 import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -40,13 +41,14 @@ public class ReservationService implements ReservationUseCase {
     }
 
     @Override
-    public List<ReservationDTO> findByFilters(LocalDate date, StatusReservation status, Long teamId, Long fieldId) {
-        List<Reservation> reservationList = reservationRepositoryPort.findByFilters(date, status, teamId, fieldId);
-        return reservationList.stream()
-                .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
-                        .thenComparing(Reservation::getStartTime))
-                .map(ReservationModelMapper::toDTO)
-                .toList();
+    public Page<ReservationDTO> findByFilters(LocalDate date, StatusReservation status,
+                                              Long teamId, Long fieldId, Pageable pageable) {
+        Sort sort = Sort.by(Sort.Order.desc("reservationDate"), Sort.Order.asc("startTime"));
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        Page<Reservation> reservationList = reservationRepositoryPort.findByFilters(date, status, teamId, fieldId, sortedPageable);
+
+        return reservationList.map(ReservationModelMapper::toDTO);
     }
 
     @Override
@@ -90,6 +92,14 @@ public class ReservationService implements ReservationUseCase {
         return reservationList.stream()
                 .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
                         .thenComparing(Reservation::getStartTime))
+                .map(ReservationModelMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ReservationDTO> findByFieldIdAndStatus(Long fieldId, StatusReservation status) {
+        List<Reservation> reservationList = reservationRepositoryPort.findByFieldIdAndStatus(fieldId, status);
+        return reservationList.stream()
                 .map(ReservationModelMapper::toDTO)
                 .toList();
     }

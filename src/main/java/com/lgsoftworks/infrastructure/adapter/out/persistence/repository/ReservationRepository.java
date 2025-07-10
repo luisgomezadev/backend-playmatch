@@ -2,6 +2,8 @@ package com.lgsoftworks.infrastructure.adapter.out.persistence.repository;
 
 import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.ReservationEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +17,7 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
     List<ReservationEntity> findByFieldId(Long fieldId);
+    List<ReservationEntity> findByFieldIdAndStatus(Long fieldId, StatusReservation status);
     List<ReservationEntity> findByTeamId(Long teamId);
     List<ReservationEntity> findAllByStatus(StatusReservation status);
     Long countByStatusAndTeam_Id(StatusReservation status, Long teamId);
@@ -27,11 +30,12 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
         AND (:teamId IS NULL OR r.team.id = :teamId)
         AND (:fieldId IS NULL OR r.field.id = :fieldId)
     """)
-    List<ReservationEntity> findByFilters(
+    Page<ReservationEntity> findByFilters(
             @Param("date") LocalDate date,
             @Param("status") StatusReservation status,
             @Param("teamId") Long teamId,
-            @Param("fieldId") Long fieldId
+            @Param("fieldId") Long fieldId,
+            Pageable pageable
     );
 
     @Modifying

@@ -10,6 +10,9 @@ import com.lgsoftworks.infrastructure.adapter.in.rest.dto.MessageResponse;
 import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,19 +39,28 @@ public class ReservationController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<ReservationDTO>> getFilteredReservations(
+    public ResponseEntity<Page<ReservationDTO>> getFilteredReservations(
             @RequestParam(value = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date,
             @RequestParam(value = "status", required = false) StatusReservation status,
             @RequestParam(value = "teamId", required = false) Long teamId,
-            @RequestParam(value = "fieldId", required = false) Long fieldId
+            @RequestParam(value = "fieldId", required = false) Long fieldId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size
             ) {
-        return ResponseEntity.ok(reservationUseCase.findByFilters(date, status, teamId, fieldId));
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(reservationUseCase.findByFilters(date, status, teamId, fieldId, pageable));
     }
 
     @GetMapping("/field/{fieldId}")
     public ResponseEntity<List<ReservationDTO>> getReservationsByFieldId(@PathVariable Long fieldId) {
         return ResponseEntity.ok(reservationUseCase.findByFieldId(fieldId));
+    }
+
+    @GetMapping("/field/{fieldId}/status/{status}")
+    public ResponseEntity<List<ReservationDTO>> getReservationsByFieldIdAndStatus(@PathVariable Long fieldId,
+                                                                                  @PathVariable StatusReservation status) {
+        return ResponseEntity.ok(reservationUseCase.findByFieldIdAndStatus(fieldId, status));
     }
 
     @GetMapping("/team/{teamId}")
