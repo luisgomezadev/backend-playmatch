@@ -1,7 +1,9 @@
 package com.lgsoftworks.infrastructure.security;
 
+import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.infrastructure.security.exception.CustomAccessDeniedHandler;
 import com.lgsoftworks.infrastructure.security.filter.JwtAuthFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -28,17 +30,15 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
     @Autowired
     private AuthenticationProvider authenticationProvider;
     @Autowired
-    @Qualifier("handlerExceptionResolver")
     private HandlerExceptionResolver handlerExceptionResolver;
-    private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public SecurityConfig(CustomAccessDeniedHandler accessDeniedHandler) {
-        this.accessDeniedHandler = accessDeniedHandler;
-    }
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public JwtAuthFilter jwtAuthFilter() {
@@ -56,21 +56,22 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
+                                "/swagger-ui-custom.html",
                                 "/proxy/**",
                                 "/actuator/**",
                                 "/uploads/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/field/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/field/**").hasAnyAuthority("FIELD_ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/field/**").hasAnyAuthority("FIELD_ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/field/**").hasAnyAuthority("FIELD_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/field/**").hasAnyAuthority(Role.FIELD_ADMIN.name())
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/field/**").hasAnyAuthority(Role.FIELD_ADMIN.name())
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/field/**").hasAnyAuthority(Role.FIELD_ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/api/v1/team/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/team/**").hasAnyAuthority("PLAYER")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/team/**").hasAnyAuthority("PLAYER")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/team/**").hasAnyAuthority("PLAYER")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/reservation/**").hasAnyAuthority("PLAYER","FIELD_ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/reservation/**").hasAnyAuthority("PLAYER")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/reservation/**").hasAnyAuthority("PLAYER","FIELD_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/team/**").hasAnyAuthority(Role.PLAYER.name())
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/team/**").hasAnyAuthority(Role.PLAYER.name())
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/team/**").hasAnyAuthority(Role.PLAYER.name())
+                        .requestMatchers(HttpMethod.GET, "/api/v1/reservation/**").hasAnyAuthority(Role.PLAYER.name(),Role.FIELD_ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/api/v1/reservation/**").hasAnyAuthority(Role.PLAYER.name())
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/reservation/**").hasAnyAuthority(Role.PLAYER.name(),Role.FIELD_ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

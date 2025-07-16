@@ -108,6 +108,7 @@ com\lgsoftworks\application\dto\request\TeamApplicationRequest.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\entity\ReservationEntity.class
 com\lgsoftworks\domain\exception\PlayerNotFoundException.class
 com\lgsoftworks\domain\exception\UserByIdNotFoundException.class
+com\lgsoftworks\infrastructure\configuration\OpenApiConfig.class
 com\lgsoftworks\domain\exception\TeamByIdNotFoundException.class
 com\lgsoftworks\domain\exception\UserByDocumentNotFoundException.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\entity\TeamApplicationEntity.class
