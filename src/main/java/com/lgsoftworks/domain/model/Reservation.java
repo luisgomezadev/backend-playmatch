@@ -16,7 +16,7 @@ import java.time.LocalTime;
 @Setter
 public class Reservation {
     private Long id;
-    private Team team;
+    private User user;
     private Field field;
     private Byte hours;
     private LocalTime startTime;

@@ -27,9 +27,9 @@ public class FieldEntity extends BaseEntity{
     @Column(name = "image_url")
     private String imageUrl;
 
-    @OneToOne(mappedBy = "field", fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "admin_id", unique = true)
-    private FieldAdminEntity admin;
+    private UserEntity admin;
 
     @Enumerated(EnumType.STRING)
     private Status status;

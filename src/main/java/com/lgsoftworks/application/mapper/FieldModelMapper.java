@@ -19,7 +19,7 @@ public class FieldModelMapper {
         fieldDTO.setClosingHour(field.getClosingHour());
         fieldDTO.setStatus(field.getStatus());
         fieldDTO.setImageUrl(field.getImageUrl());
-        fieldDTO.setAdmin(UserModelMapper.toUserDTO(field.getFieldAdmin()));
+        fieldDTO.setAdmin(UserModelMapper.toUserDTO(field.getAdmin()));
         fieldDTO.setReservations(ReservationModelMapper.toReservationFieldDTOList(field.getReservations()));
 
         return fieldDTO;
@@ -37,7 +37,7 @@ public class FieldModelMapper {
         field.setClosingHour(fieldDTO.getClosingHour());
         field.setStatus(fieldDTO.getStatus());
         field.setImageUrl(fieldDTO.getImageUrl());
-        field.setFieldAdmin(UserModelMapper.toAdmin(fieldDTO.getAdmin()));
+        field.setAdmin(UserModelMapper.toUser(fieldDTO.getAdmin()));
         field.setReservations(ReservationModelMapper.toReservationFieldList(fieldDTO.getReservations()));
 
         return field;
@@ -70,6 +70,7 @@ public class FieldModelMapper {
         fieldSummaryDTO.setOpeningHour(field.getOpeningHour());
         fieldSummaryDTO.setClosingHour(field.getClosingHour());
         fieldSummaryDTO.setStatus(field.getStatus());
+        fieldSummaryDTO.setAdmin(UserModelMapper.toUserDTO(field.getAdmin()));
         fieldSummaryDTO.setImageUrl(field.getImageUrl());
         return fieldSummaryDTO;
     }
@@ -85,6 +86,7 @@ public class FieldModelMapper {
         field.setOpeningHour(fieldSummaryDTO.getOpeningHour());
         field.setClosingHour(fieldSummaryDTO.getClosingHour());
         field.setStatus(fieldSummaryDTO.getStatus());
+        field.setAdmin(UserModelMapper.toUser(fieldSummaryDTO.getAdmin()));
         field.setImageUrl(fieldSummaryDTO.getImageUrl());
         return field;
     }

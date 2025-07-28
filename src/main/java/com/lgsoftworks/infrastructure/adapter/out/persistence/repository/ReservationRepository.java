@@ -18,22 +18,22 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
     List<ReservationEntity> findByFieldId(Long fieldId);
     List<ReservationEntity> findByFieldIdAndStatus(Long fieldId, StatusReservation status);
-    List<ReservationEntity> findByTeamId(Long teamId);
+    List<ReservationEntity> findByUserId(Long userId);
     List<ReservationEntity> findAllByStatus(StatusReservation status);
-    Long countByStatusAndTeam_Id(StatusReservation status, Long teamId);
+    Long countByStatusAndUser_Id(StatusReservation status, Long userId);
     Long countByStatusAndField_Id(StatusReservation status, Long fieldId);
 
     @Query("""
     SELECT r FROM ReservationEntity r
     WHERE (:date IS NULL OR r.reservationDate = :date)
         AND (:status IS NULL OR r.status = :status)
-        AND (:teamId IS NULL OR r.team.id = :teamId)
+        AND (:userId IS NULL OR r.user.id = :userId)
         AND (:fieldId IS NULL OR r.field.id = :fieldId)
     """)
     Page<ReservationEntity> findByFilters(
             @Param("date") LocalDate date,
             @Param("status") StatusReservation status,
-            @Param("teamId") Long teamId,
+            @Param("userId") Long userId,
             @Param("fieldId") Long fieldId,
             Pageable pageable
     );

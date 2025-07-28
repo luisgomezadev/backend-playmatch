@@ -1,6 +1,7 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.mapper;
 
 import com.lgsoftworks.domain.model.Reservation;
+import com.lgsoftworks.domain.model.User;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.ReservationEntity;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class ReservationDboMapper {
         reservation.setId(reservationEntity.getId());
         reservation.setHours(reservationEntity.getHours());
         reservation.setReservationDate(reservationEntity.getReservationDate());
-        reservation.setTeam(TeamDboMapper.toSimpleModel(reservationEntity.getTeam()));
+        reservation.setUser(UserDboMapper.toModel(reservationEntity.getUser()));
         reservation.setStartTime(reservationEntity.getStartTime());
         reservation.setEndTime(reservationEntity.getEndTime());
         reservation.setStatus(reservationEntity.getStatus());
@@ -27,7 +28,7 @@ public class ReservationDboMapper {
         reservationEntity.setId(reservation.getId());
         reservationEntity.setHours(reservation.getHours());
         reservationEntity.setReservationDate(reservation.getReservationDate());
-        reservationEntity.setTeam(TeamDboMapper.toSimpleDbo(reservation.getTeam()));
+        reservationEntity.setUser(UserDboMapper.toDbo(reservation.getUser()));
         reservationEntity.setStartTime(reservation.getStartTime());
         reservationEntity.setEndTime(reservation.getEndTime());
         reservationEntity.setStatus(reservation.getStatus());
@@ -44,12 +45,8 @@ public class ReservationDboMapper {
         reservation.setStartTime(reservationEntity.getStartTime());
         reservation.setEndTime(reservationEntity.getEndTime());
         reservation.setStatus(reservationEntity.getStatus());
-        if (reservationEntity.getField() != null) {
-            reservation.setField(FieldDboMapper.toSimpleModel(reservationEntity.getField()));
-        }
-        if (reservationEntity.getTeam() != null) {
-            reservation.setTeam(TeamDboMapper.toSimpleModel(reservationEntity.getTeam()));
-        }
+        reservation.setField(FieldDboMapper.toSimpleModel(reservationEntity.getField()));
+        reservation.setUser(UserDboMapper.toModel(reservationEntity.getUser()));
         return reservation;
     }
 
@@ -62,12 +59,8 @@ public class ReservationDboMapper {
         reservationEntity.setStartTime(reservation.getStartTime());
         reservationEntity.setEndTime(reservation.getEndTime());
         reservationEntity.setStatus(reservation.getStatus());
-        if (reservation.getField() != null) {
-            reservationEntity.setField(FieldDboMapper.toSimpleDbo(reservation.getField()));
-        }
-        if (reservation.getTeam() != null) {
-            reservationEntity.setTeam(TeamDboMapper.toSimpleDbo(reservation.getTeam()));
-        }
+        reservationEntity.setField(FieldDboMapper.toSimpleDbo(reservation.getField()));
+        reservationEntity.setUser(UserDboMapper.toDbo(reservation.getUser()));
         return reservationEntity;
     }
 

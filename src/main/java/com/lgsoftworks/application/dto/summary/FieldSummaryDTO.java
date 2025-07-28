@@ -1,5 +1,6 @@
 package com.lgsoftworks.application.dto.summary;
 
+import com.lgsoftworks.application.dto.UserDTO;
 import com.lgsoftworks.domain.enums.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class FieldSummaryDTO {
     private LocalTime openingHour;
     private LocalTime closingHour;
     private Status status;
+    private UserDTO admin;
     private String imageUrl;
 }

@@ -11,15 +11,15 @@ import java.util.Optional;
 
 public interface ReservationRepositoryPort {
     List<Reservation> findAll();
-    Page<Reservation> findByFilters(LocalDate date, StatusReservation status, Long teamId, Long fieldId, Pageable pageable);
+    Page<Reservation> findByFilters(LocalDate date, StatusReservation status, Long userId, Long fieldId, Pageable pageable);
     Optional<Reservation> findById(Long id);
     Reservation save(Reservation reservation);
     void deleteById(Long id);
     List<Reservation> findByFieldId(Long fieldId);
     List<Reservation> findByFieldIdAndStatus(Long fieldId, StatusReservation status);
-    List<Reservation> findByTeamId(Long teamId);
+    List<Reservation> findByUserId(Long userId);
     List<Reservation> findAllByStatus(StatusReservation status);
     void updateStatus(Long reservationId, StatusReservation status);
-    Long countReservationsByTeamAndStatus(StatusReservation statusReservation, Long teamId);
+    Long countReservationsByUserAndStatus(StatusReservation statusReservation, Long userId);
     Long countReservationsByFieldAndStatus(StatusReservation statusReservation, Long fieldId);
 }

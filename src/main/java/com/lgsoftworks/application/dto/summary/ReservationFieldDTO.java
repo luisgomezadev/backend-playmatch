@@ -1,5 +1,6 @@
 package com.lgsoftworks.application.dto.summary;
 
+import com.lgsoftworks.application.dto.UserDTO;
 import com.lgsoftworks.domain.enums.StatusReservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.time.LocalTime;
 public class ReservationFieldDTO {
     private Long id;
     private Byte hours;
-    private TeamSummaryDTO team;
+    private UserDTO user;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate reservationDate;

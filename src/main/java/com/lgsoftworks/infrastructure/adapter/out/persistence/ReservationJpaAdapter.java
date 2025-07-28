@@ -35,11 +35,11 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     }
 
     @Override
-    public Page<Reservation> findByFilters(LocalDate date, StatusReservation status, Long teamId, Long fieldId, Pageable pageable) {
+    public Page<Reservation> findByFilters(LocalDate date, StatusReservation status, Long userId, Long fieldId, Pageable pageable) {
         Sort sort = Sort.by(Sort.Order.desc("reservationDate"), Sort.Order.asc("startTime"));
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-        Page<ReservationEntity> reservationList = reservationRepository.findByFilters(date, status, teamId, fieldId, sortedPageable);
+        Page<ReservationEntity> reservationList = reservationRepository.findByFilters(date, status, userId, fieldId, sortedPageable);
 
         return reservationList.map(ReservationDboMapper::toModel);
     }
@@ -80,8 +80,8 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     }
 
     @Override
-    public List<Reservation> findByTeamId(Long teamId) {
-        return reservationRepository.findByTeamId(teamId)
+    public List<Reservation> findByUserId(Long userId) {
+        return reservationRepository.findByUserId(userId)
                 .stream()
                 .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
                         .thenComparing(ReservationEntity::getStartTime))
@@ -105,8 +105,8 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     }
 
     @Override
-    public Long countReservationsByTeamAndStatus(StatusReservation statusReservation, Long teamId) {
-        return reservationRepository.countByStatusAndTeam_Id(statusReservation, teamId);
+    public Long countReservationsByUserAndStatus(StatusReservation statusReservation, Long userId) {
+        return reservationRepository.countByStatusAndUser_Id(statusReservation, userId);
     }
 
     @Override

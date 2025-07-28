@@ -1,6 +1,5 @@
 package com.lgsoftworks.application.dto.request;
 
-import com.lgsoftworks.domain.enums.DocumentType;
 import com.lgsoftworks.domain.enums.Role;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -28,18 +27,9 @@ public class UserRequest {
     @Size(min = 3, max = 50, message = "La ciudad debe tener entre 3 y 50 caracteres")
     private String city;
 
-    @NotNull(message = "La edad es requerida")
-    @Positive(message = "La edad debe ser mayor que cero")
-    private Byte age;
-
     @NotBlank(message = "El número de celular es requerido")
     @Pattern(regexp = "^[0-9]{10}$", message = "El número de celular debe tener 10 dígitos numéricos")
     private String cellphone;
-
-    private DocumentType documentType;
-
-    @NotBlank(message = "El número de documento es requerido")
-    private String documentNumber;
 
     @NotBlank(message = "El email es requerido")
     @Email(message = "Debe ingresar un correo válido")

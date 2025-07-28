@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface ReservationUseCase {
     List<ReservationDTO> findAll();
-    Page<ReservationDTO> findByFilters(LocalDate date, StatusReservation status, Long teamId, Long fieldId, Pageable pageable);
+    Page<ReservationDTO> findByFilters(LocalDate date, StatusReservation status, Long userId, Long fieldId, Pageable pageable);
     Optional<ReservationDTO> findById(Long id);
     ReservationDTO save(ReservationRequest reservationRequest);
     ReservationDTO update(ReservationRequest reservationRequest);
@@ -21,6 +21,6 @@ public interface ReservationUseCase {
     void updateStatus(Long id, StatusReservation status);
     List<ReservationDTO> findByFieldId(Long fieldId);
     List<ReservationDTO> findByFieldIdAndStatus(Long fieldId, StatusReservation status);
-    List<ReservationDTO> findByTeamId(Long teamId);
+    List<ReservationDTO> findByUserId(Long userId);
     List<ReservationDTO> findAllByStatus(StatusReservation status);
 }

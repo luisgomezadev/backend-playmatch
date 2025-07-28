@@ -1,11 +1,10 @@
 package com.lgsoftworks.application.service;
 
 import com.lgsoftworks.application.mapper.FieldModelMapper;
-import com.lgsoftworks.application.mapper.TeamModelMapper;
+import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.exception.FieldByIdNotFoundException;
-import com.lgsoftworks.domain.exception.TeamByIdNotFoundException;
-import com.lgsoftworks.domain.model.FieldAdmin;
-import com.lgsoftworks.domain.model.Team;
+import com.lgsoftworks.domain.exception.UserTypeNotAllowedToCreateFieldException;
+import com.lgsoftworks.domain.model.User;
 import com.lgsoftworks.domain.port.in.FieldUseCase;
 import com.lgsoftworks.application.dto.FieldDTO;
 import com.lgsoftworks.application.dto.request.FieldRequest;
@@ -14,7 +13,7 @@ import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
 import com.lgsoftworks.domain.model.Field;
 import com.lgsoftworks.domain.port.in.UploadFieldImageUseCase;
 import com.lgsoftworks.domain.port.out.CloudinaryImageUploaderPort;
-import com.lgsoftworks.domain.port.out.FieldAdminRepositoryPort;
+import com.lgsoftworks.domain.port.out.UserRepositoryPort;
 import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ import java.util.Optional;
 public class FieldService implements FieldUseCase, UploadFieldImageUseCase {
 
     private final FieldRepositoryPort fieldRepositoryPort;
-    private final FieldAdminRepositoryPort fieldAdminRepositoryPort;
+    private final UserRepositoryPort userRepositoryPort;
     private final CloudinaryImageUploaderPort imageUploader;
 
     @Override
@@ -58,19 +57,20 @@ public class FieldService implements FieldUseCase, UploadFieldImageUseCase {
 
     @Override
     public FieldDTO save(FieldRequest fieldRequest) {
-        FieldAdmin fieldAdmin = fieldAdminRepositoryPort.findById(fieldRequest.getAdminId())
+        User user = userRepositoryPort.findById(fieldRequest.getAdminId())
                 .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdminId()));
 
-        if (existsByAdminId(fieldAdmin.getId())) {
-            throw new UserAlreadyAssignedAsAdminException(fieldAdmin.getId());
+        if (user.getRole() != Role.FIELD_ADMIN) {
+            throw new UserTypeNotAllowedToCreateFieldException(user);
+        }
+
+        if (existsByAdminId(user.getId())) {
+            throw new UserAlreadyAssignedAsAdminException(user.getId());
         }
 
         Field field = FieldModelMapper.toModelRequest(fieldRequest);
-        field.setFieldAdmin(fieldAdmin);
+        field.setAdmin(user);
         Field savedField = fieldRepositoryPort.save(field);
-
-        fieldAdmin.setField(savedField);
-        fieldAdminRepositoryPort.save(fieldAdmin);
 
         return FieldModelMapper.toDTO(savedField);
     }
@@ -81,17 +81,22 @@ public class FieldService implements FieldUseCase, UploadFieldImageUseCase {
         Field existingField = fieldRepositoryPort.findById(fieldId)
                 .orElseThrow(() -> new FieldByIdNotFoundException(fieldId));
 
-        FieldAdmin fieldAdmin = fieldAdminRepositoryPort.findById(fieldRequest.getAdminId())
+        User user = userRepositoryPort.findById(fieldRequest.getAdminId())
                 .orElseThrow(() -> new UserByIdNotFoundException(fieldRequest.getAdminId()));
 
+        if (user.getRole() != Role.FIELD_ADMIN) {
+            throw new UserTypeNotAllowedToCreateFieldException(user);
+        }
+
         // Prevenir cambiar a un admin que ya tiene otra cancha (si se está cambiando)
-        if (!existingField.getFieldAdmin().getId().equals(fieldAdmin.getId()) && existsByAdminId(fieldAdmin.getId())) {
-            throw new UserAlreadyAssignedAsAdminException(fieldAdmin.getId());
+        if (!existingField.getAdmin().getId().equals(user.getId()) && existsByAdminId(user.getId())) {
+            throw new UserAlreadyAssignedAsAdminException(user.getId());
         }
 
         Field field = FieldModelMapper.toModelRequest(fieldRequest);
-
+        field.setAdmin(user);
         Field updatedField = fieldRepositoryPort.save(field);
+
         return FieldModelMapper.toDTO(updatedField);
     }
 
@@ -101,14 +106,7 @@ public class FieldService implements FieldUseCase, UploadFieldImageUseCase {
         Field field = fieldRepositoryPort.findById(id)
                 .orElseThrow(() -> new FieldByIdNotFoundException(id));
 
-        if (field.getFieldAdmin() != null) {
-            field.getFieldAdmin().setField(null);
-        }
-
-        // Actualizar el administrador sin la cancha
-        fieldAdminRepositoryPort.save(field.getFieldAdmin());
-
-        fieldRepositoryPort.deleteById(id);
+        fieldRepositoryPort.deleteById(field.getId());
     }
 
     @Override

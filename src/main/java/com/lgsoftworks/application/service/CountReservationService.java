@@ -13,8 +13,8 @@ public class CountReservationService implements CountReservationUseCase {
     private final ReservationRepositoryPort reservationRepositoryPort;
 
     @Override
-    public Long countReservationsByTeamAndStatus(Long teamId, StatusReservation status) {
-        return reservationRepositoryPort.countReservationsByTeamAndStatus(status, teamId);
+    public Long countReservationsByUserAndStatus(Long userId, StatusReservation status) {
+        return reservationRepositoryPort.countReservationsByUserAndStatus(status, userId);
     }
 
     @Override

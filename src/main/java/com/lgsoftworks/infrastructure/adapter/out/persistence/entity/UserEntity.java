@@ -1,11 +1,7 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.entity;
 
-import com.lgsoftworks.domain.enums.DocumentType;
 import com.lgsoftworks.domain.enums.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +14,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@MappedSuperclass
+@Entity
+@Table(name = "user")
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class UserEntity extends BaseEntity implements UserDetails {
+public class UserEntity extends BaseEntity implements UserDetails {
 
     @Column(nullable = false)
     protected String firstName;
@@ -33,17 +30,9 @@ public abstract class UserEntity extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     protected String city;
 
-    @Column(nullable = false)
-    protected Byte age;
 
     @Column(unique = true)
     protected String cellphone;
-
-    @Enumerated(EnumType.STRING)
-    protected DocumentType documentType;
-
-    @Column(unique = true)
-    protected String documentNumber;
 
     @Column(unique = true)
     @Email

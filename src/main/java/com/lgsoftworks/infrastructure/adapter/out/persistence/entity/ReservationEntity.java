@@ -19,8 +19,8 @@ import java.time.LocalTime;
 @Setter
 public class ReservationEntity extends BaseEntity{
     @ManyToOne
-    @JoinColumn(name = "team_id", nullable = false)
-    private TeamEntity team;
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
     @ManyToOne
     @JoinColumn(name = "field_id", nullable = false)
     private FieldEntity field;

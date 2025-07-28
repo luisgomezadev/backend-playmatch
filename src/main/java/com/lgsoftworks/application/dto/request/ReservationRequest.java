@@ -1,8 +1,6 @@
 package com.lgsoftworks.application.dto.request;
 
 import com.lgsoftworks.domain.enums.StatusReservation;
-import com.lgsoftworks.domain.model.Field;
-import com.lgsoftworks.domain.model.Team;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -21,8 +19,8 @@ import java.time.LocalTime;
 public class ReservationRequest {
     private Long id;
 
-    @NotNull(message = "El ID del equipo es requerido")
-    private Long teamId;
+    @NotNull(message = "El ID del jugador es requerido")
+    private Long userId;
 
     @NotNull(message = "El ID de la cancha es requerida")
     private Long fieldId;

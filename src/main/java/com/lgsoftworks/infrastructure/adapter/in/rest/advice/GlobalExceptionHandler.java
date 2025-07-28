@@ -32,22 +32,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({
             PasswordNotNullException.class,
-            CannotDeleteTeamOwnerException.class,
-            TeamFullException.class,
-            PlayerAlreadyInTeamException.class,
             FieldNotAvailableException.class,
-            TeamAlreadyHasReservationException.class,
-            UserWithDocumentExistsException.class,
+            UserAlreadyHasReservationException.class,
             UserWithEmailExistsException.class,
-            DuplicateOwnerException.class,
             UserAlreadyAssignedAsAdminException.class,
             UserTypeNotAllowedToCreateFieldException.class,
-            UserTypeNotAllowedToCreateTeamException.class,
-            PlayerAlreadyMemberOfTeamException.class,
-            PlayerAlreadyHasPendingRequestException.class,
             ReservationTimeOutOfRangeException.class,
             SQLIntegrityConstraintViolationException.class,
-            TeamCapacityBelowCurrentPlayersException.class,
             MethodArgumentTypeMismatchException.class,
             HttpMessageNotReadableException.class,
             DataIntegrityViolationException.class,
@@ -65,14 +56,10 @@ public class GlobalExceptionHandler {
     // --- 404 NOT FOUND ---
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
-            UserByDocumentNotFoundException.class,
             UserByEmailNotFoundException.class,
-            PlayerNotFoundException.class,
             ReservationByIdNotFoundException.class,
             UserByIdNotFoundException.class,
-            TeamByIdNotFoundException.class,
             FieldByIdNotFoundException.class,
-            TeamApplicationByIdNotFoundException.class
     })
     public ErrorResponse handleNotFoundException(RuntimeException ex) {
         return ErrorResponse.builder()
@@ -151,16 +138,8 @@ public class GlobalExceptionHandler {
     private String resolveEnumValidationMessage(Throwable cause) {
         if (cause == null || cause.getMessage() == null) return "Solicitud malformada";
 
-        if (cause.getMessage().contains("DocumentType")) {
-            return buildEnumMessage("Tipo de documento inválido", DocumentType.values());
-        }
-
         if (cause.getMessage().contains("StatusReservation")) {
             return buildEnumMessage("Estado de reserva inválido", StatusReservation.values());
-        }
-
-        if (cause.getMessage().contains("StatusRequest")) {
-            return buildEnumMessage("Respuesta de solicitud inválida", StatusRequest.values());
         }
 
         if (cause.getMessage().contains("Status")) {

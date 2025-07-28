@@ -3,26 +3,32 @@ package com.lgsoftworks.domain.validation;
 import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.exception.FieldNotAvailableException;
 import com.lgsoftworks.domain.exception.ReservationTimeOutOfRangeException;
-import com.lgsoftworks.domain.exception.TeamAlreadyHasReservationException;
+import com.lgsoftworks.domain.exception.UserAlreadyHasReservationException;
 import com.lgsoftworks.domain.model.Field;
 import com.lgsoftworks.domain.model.Reservation;
-import com.lgsoftworks.domain.model.Team;
+import com.lgsoftworks.domain.model.User;
+import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
+@RequiredArgsConstructor
 public class ReservationValidator {
 
-    public static void validateTeamHasReservation(Team team) {
-        for (Reservation r : team.getReservations()) {
+    private final ReservationRepositoryPort reservationRepositoryPort;
+
+    public void validateUserHasReservation(User user) {
+        List<Reservation> reservationList = reservationRepositoryPort.findByUserId(user.getId());
+        for (Reservation r : reservationList) {
             if (r.getStatus().equals(StatusReservation.ACTIVE)) {
-                throw new TeamAlreadyHasReservationException(team);
+                throw new UserAlreadyHasReservationException();
             }
         }
     }
 
-    public static void validateTimeWithinFieldSchedule(Reservation reservation, Field field) {
+    public void validateTimeWithinFieldSchedule(Reservation reservation, Field field) {
         LocalTime start = reservation.getStartTime();
         LocalTime end = reservation.getEndTime();
 
@@ -35,7 +41,7 @@ public class ReservationValidator {
         }
     }
 
-    public static void validateFieldAvailability(Reservation reservation, Field field) {
+    public void validateFieldAvailability(Reservation reservation, Field field) {
         List<Reservation> reservations = field.getReservations();
         for (Reservation r: reservations) {
             if (r.getStatus().equals(StatusReservation.ACTIVE) && Objects.equals(r.getField().getId(), field.getId())) {

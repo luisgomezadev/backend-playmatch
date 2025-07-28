@@ -1,12 +1,9 @@
 package com.lgsoftworks.application.mapper;
 
 import com.lgsoftworks.application.dto.UserDTO;
-import com.lgsoftworks.domain.model.FieldAdmin;
+import com.lgsoftworks.application.dto.request.UserRequest;
+import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.model.User;
-import com.lgsoftworks.domain.model.Player;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserModelMapper {
 
@@ -17,48 +14,42 @@ public class UserModelMapper {
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setCity(user.getCity());
-        userDTO.setAge(user.getAge());
         userDTO.setCellphone(user.getCellphone());
-        userDTO.setDocumentType(user.getDocumentType());
-        userDTO.setDocumentNumber(user.getDocumentNumber());
         userDTO.setEmail(user.getEmail());
         userDTO.setImageUrl(user.getImageUrl());
+        userDTO.setRole(user.getRole());
         return userDTO;
     }
 
-    public static FieldAdmin toAdmin(UserDTO userDTO) {
+    public static User toUser(UserDTO userDTO) {
         if (userDTO == null) return null;
-        FieldAdmin fieldAdmin = new FieldAdmin();
-        fieldAdmin.setId(userDTO.getId());
-        fieldAdmin.setFirstName(userDTO.getFirstName());
-        fieldAdmin.setLastName(userDTO.getLastName());
-        fieldAdmin.setCity(userDTO.getCity());
-        fieldAdmin.setAge(userDTO.getAge());
-        fieldAdmin.setCellphone(userDTO.getCellphone());
-        fieldAdmin.setDocumentType(userDTO.getDocumentType());
-        fieldAdmin.setDocumentNumber(userDTO.getDocumentNumber());
-        fieldAdmin.setEmail(userDTO.getEmail());
-        fieldAdmin.setImageUrl(userDTO.getImageUrl());
-        return fieldAdmin;
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setCity(userDTO.getCity());
+        user.setCellphone(userDTO.getCellphone());
+        user.setEmail(userDTO.getEmail());
+        user.setImageUrl(userDTO.getImageUrl());
+        user.setRole(userDTO.getRole());
+        return user;
     }
 
-    public static Player toPlayer(UserDTO userDTO) {
-        if (userDTO == null) return null;
-        Player player = new Player();
-        player.setId(userDTO.getId());
-        player.setFirstName(userDTO.getFirstName());
-        player.setLastName(userDTO.getLastName());
-        player.setCity(userDTO.getCity());
-        player.setAge(userDTO.getAge());
-        player.setCellphone(userDTO.getCellphone());
-        player.setDocumentType(userDTO.getDocumentType());
-        player.setDocumentNumber(userDTO.getDocumentNumber());
-        player.setEmail(userDTO.getEmail());
-        player.setImageUrl(userDTO.getImageUrl());
-        return player;
+    public static User requestToModel(UserRequest userRequest) {
+        if (userRequest == null) return null;
+        User user = new User();
+        user.setId(userRequest.getId());
+        user.setFirstName(userRequest.getFirstName());
+        user.setLastName(userRequest.getLastName());
+        user.setCity(userRequest.getCity());
+        user.setCellphone(userRequest.getCellphone());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
+        user.setRole(userRequest.getRole());
+        return user;
     }
 
-    public static List<UserDTO> toUserSummaryList(List<Player> players) {
+    /*public static List<UserDTO> toUserSummaryList(List<Player> players) {
         if (players == null) return null;
         return players.stream()
                 .map(UserModelMapper::toUserDTO)
@@ -70,7 +61,6 @@ public class UserModelMapper {
         return users.stream()
                 .map(UserModelMapper::toPlayer)
                 .collect(Collectors.toList());
-    }
-
+    }*/
 
 }

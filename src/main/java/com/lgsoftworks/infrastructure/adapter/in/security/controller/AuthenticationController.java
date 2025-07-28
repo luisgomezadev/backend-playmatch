@@ -1,13 +1,13 @@
 package com.lgsoftworks.infrastructure.adapter.in.security.controller;
 
 import com.lgsoftworks.application.dto.request.UserRequest;
-import com.lgsoftworks.application.dto.request.UserRequest;
 import com.lgsoftworks.application.dto.UserDTO;
 import com.lgsoftworks.infrastructure.adapter.in.security.dto.RefreshTokenRequest;
-import com.lgsoftworks.infrastructure.security.service.AuthenticationServiceFieldAdmin;
-import com.lgsoftworks.infrastructure.security.service.AuthenticationServicePlayer;
+import com.lgsoftworks.infrastructure.security.service.AuthenticationService;
 import com.lgsoftworks.infrastructure.adapter.in.security.dto.AuthenticationRequest;
 import com.lgsoftworks.infrastructure.adapter.in.security.dto.AuthenticationResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,39 +21,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @Validated
+@Tag(name = "Autenticación", description = "Operaciones relacionadas con la autenticación")
 public class AuthenticationController {
 
-    private final AuthenticationServicePlayer servicePlayer;
-    private final AuthenticationServiceFieldAdmin serviceAdmin;
+    private final AuthenticationService authenticationService;
 
-    @PostMapping("/player/register")
-    public ResponseEntity<UserDTO> registerPlayer(@RequestBody @Valid UserRequest request) {//@Validated
-        return ResponseEntity.ok(servicePlayer.register(request));
+    @Operation(summary = "Crear nuevo usuario")
+    @PostMapping("/register")
+    public ResponseEntity<UserDTO> register(@RequestBody @Valid UserRequest request) {
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
-    @PostMapping("/admin/register")
-    public ResponseEntity<UserDTO> registerAdmin(@RequestBody @Valid UserRequest request) {//@Validated
-        return ResponseEntity.ok(serviceAdmin.register(request));
+    @Operation(summary = "Login")
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody @Valid AuthenticationRequest request) {
+        return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 
-    @PostMapping("/authenticate/player")
-    public ResponseEntity<AuthenticationResponse> authenticatePlayer(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(servicePlayer.authenticate(request));
-    }
-
-    @PostMapping("/authenticate/admin")
-    public ResponseEntity<AuthenticationResponse> authenticateAdmin(@RequestBody AuthenticationRequest request) {
-        return ResponseEntity.ok(serviceAdmin.authenticate(request));
-    }
-
-    @PostMapping("/refresh/player")
-    public ResponseEntity<AuthenticationResponse> refreshPlayerToken(@RequestBody @Valid RefreshTokenRequest request) {
-        return ResponseEntity.ok(servicePlayer.refreshToken(request));
-    }
-
-    @PostMapping("/refresh/admin")
-    public ResponseEntity<AuthenticationResponse> refreshAdminToken(@RequestBody @Valid RefreshTokenRequest request) {
-        return ResponseEntity.ok(serviceAdmin.refreshToken(request));
+    @Operation(summary = "Refrescar Token")
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthenticationResponse> refreshToken(@RequestBody @Valid RefreshTokenRequest request) {
+        return ResponseEntity.ok(authenticationService.refreshToken(request));
     }
 
 }

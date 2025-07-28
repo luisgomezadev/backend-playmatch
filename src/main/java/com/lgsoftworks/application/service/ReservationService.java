@@ -9,8 +9,8 @@ import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.model.Reservation;
 import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
-import com.lgsoftworks.domain.port.out.TeamRepositoryPort;
-import com.lgsoftworks.application.dto.summary.ReservationAvailabilityDTO;
+import com.lgsoftworks.application.dto.ReservationAvailabilityDTO;
+import com.lgsoftworks.domain.port.out.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class ReservationService implements ReservationUseCase {
 
     private final ReservationRepositoryPort reservationRepositoryPort;
     private final FieldRepositoryPort fieldRepositoryPort;
-    private final TeamRepositoryPort teamRepositoryPort;
+    private final UserRepositoryPort userRepositoryPort;
     private final ReservationAvailabilityUseCase reservationAvailabilityUseCase;
 
     @Override
@@ -42,11 +42,11 @@ public class ReservationService implements ReservationUseCase {
 
     @Override
     public Page<ReservationDTO> findByFilters(LocalDate date, StatusReservation status,
-                                              Long teamId, Long fieldId, Pageable pageable) {
+                                              Long userId, Long fieldId, Pageable pageable) {
         Sort sort = Sort.by(Sort.Order.desc("reservationDate"), Sort.Order.asc("startTime"));
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-        Page<Reservation> reservationList = reservationRepositoryPort.findByFilters(date, status, teamId, fieldId, sortedPageable);
+        Page<Reservation> reservationList = reservationRepositoryPort.findByFilters(date, status, userId, fieldId, sortedPageable);
 
         return reservationList.map(ReservationModelMapper::toDTO);
     }
@@ -105,8 +105,8 @@ public class ReservationService implements ReservationUseCase {
     }
 
     @Override
-    public List<ReservationDTO> findByTeamId(Long teamId) {
-        List<Reservation> reservationList = reservationRepositoryPort.findByTeamId(teamId);
+    public List<ReservationDTO> findByUserId(Long userId) {
+        List<Reservation> reservationList = reservationRepositoryPort.findByUserId(userId);
         return reservationList.stream()
                 .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
                         .thenComparing(Reservation::getStartTime))
@@ -124,17 +124,4 @@ public class ReservationService implements ReservationUseCase {
                 .toList();
     }
 
-    public void autoFinalizeExpiredReservations() {
-        List<Reservation> activeReservations = reservationRepositoryPort.findAllByStatus(StatusReservation.ACTIVE);
-        LocalDateTime now = LocalDateTime.now();
-
-        for (Reservation reservation : activeReservations) {
-            StatusReservation originalStatus = reservation.getStatus();
-            reservation.finalizeIfExpired(now);
-
-            if (reservation.getStatus() != originalStatus) {
-                reservationRepositoryPort.save(reservation);
-            }
-        }
-    }
 }

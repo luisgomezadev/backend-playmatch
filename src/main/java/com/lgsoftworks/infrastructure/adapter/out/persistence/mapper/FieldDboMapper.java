@@ -17,7 +17,7 @@ public class FieldDboMapper {
         field.setClosingHour(entity.getClosingHour());
         field.setStatus(entity.getStatus());
         field.setImageUrl(entity.getImageUrl());
-        field.setFieldAdmin(FieldAdminDboMapper.toSimpleModel(entity.getAdmin()));
+        field.setAdmin(UserDboMapper.toModel(entity.getAdmin()));
         field.setReservations(ReservationDboMapper.toModelList(entity.getReservations()));
 
         return field;
@@ -35,7 +35,7 @@ public class FieldDboMapper {
         fieldEntity.setClosingHour(field.getClosingHour());
         fieldEntity.setStatus(field.getStatus());
         fieldEntity.setImageUrl(field.getImageUrl());
-        fieldEntity.setAdmin(FieldAdminDboMapper.toSimpleDbo(field.getFieldAdmin()));
+        fieldEntity.setAdmin(UserDboMapper.toDbo(field.getAdmin()));
         fieldEntity.setReservations(ReservationDboMapper.toDboList(field.getReservations()));
 
         return fieldEntity;
@@ -52,6 +52,7 @@ public class FieldDboMapper {
         field.setOpeningHour(entity.getOpeningHour());
         field.setClosingHour(entity.getClosingHour());
         field.setStatus(entity.getStatus());
+        field.setAdmin(UserDboMapper.toModel(entity.getAdmin()));
         field.setImageUrl(entity.getImageUrl());
 
         return field;
@@ -68,6 +69,7 @@ public class FieldDboMapper {
         fieldEntity.setOpeningHour(field.getOpeningHour());
         fieldEntity.setClosingHour(field.getClosingHour());
         fieldEntity.setStatus(field.getStatus());
+        fieldEntity.setAdmin(UserDboMapper.toDbo(field.getAdmin()));
         fieldEntity.setImageUrl(field.getImageUrl());
 
         return fieldEntity;
