@@ -49,11 +49,11 @@ public class ReservationController {
 
     @Operation(
             summary = "Filtrar reservas",
-            description = "Devuelve una lista paginada de reservas que coinciden con los filtros opcionales: fecha, estado, ID del equipo y ID del campo.",
+            description = "Devuelve una lista paginada de reservas que coinciden con los filtros opcionales: fecha, estado, ID del usuario y ID del campo.",
             parameters = {
                     @Parameter(name = "date", description = "Fecha de la reserva (formato: yyyy-MM-dd)", example = "2025-07-17"),
                     @Parameter(name = "status", description = "Estado de la reserva (por ejemplo: ACTIVE, CANCELED, FINISHED)", example = "ACTIVE"),
-                    @Parameter(name = "teamId", description = "ID del equipo que realizó la reserva", example = "1"),
+                    @Parameter(name = "userId", description = "ID del usuario que realizó la reserva", example = "1"),
                     @Parameter(name = "fieldId", description = "ID del campo reservado", example = "2"),
                     @Parameter(name = "page", description = "Número de página para la paginación (por defecto: 0)", example = "0"),
                     @Parameter(name = "size", description = "Tamaño de página (por defecto: 6)", example = "6")
@@ -115,12 +115,12 @@ public class ReservationController {
     }
 
     @Operation(
-            summary = "Obtener reservas por equipo",
-            description = "Devuelve una lista de reservas asociadas a un equipo específico.",
+            summary = "Obtener reservas por usuario",
+            description = "Devuelve una lista de reservas asociadas a un usuario específico.",
             parameters = {
                     @Parameter(
-                            name = "teamId",
-                            description = "ID del equipo",
+                            name = "userId",
+                            description = "ID del usuario",
                             required = true,
                             example = "1"
                     )

@@ -70,7 +70,7 @@ public class FieldController {
 
     @Operation(summary = "Eliminar una cancha por su ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteTeamById(@PathVariable Long id){
+    public ResponseEntity<MessageResponse> deleteFieldById(@PathVariable Long id){
         fieldUseCase.deleteById(id);
         return ResponseEntity.ok().body(new MessageResponse("Campo eliminado exitosamente!"));
     }

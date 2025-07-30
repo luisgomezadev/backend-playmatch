@@ -81,7 +81,6 @@ com\lgsoftworks\domain\model\Reservation.class
 com\lgsoftworks\domain\exception\InvalidCredentialsException.class
 com\lgsoftworks\infrastructure\adapter\in\rest\dto\MessageResponse.class
 com\lgsoftworks\application\dto\FieldDTO.class
-com\lgsoftworks\domain\enums\Permission.class
 com\lgsoftworks\domain\validation\ValidateUser.class
 com\lgsoftworks\domain\model\Field.class
 com\lgsoftworks\application\service\ReservationAvailabilityService.class
