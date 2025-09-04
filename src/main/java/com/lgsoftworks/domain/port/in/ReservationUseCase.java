@@ -23,4 +23,5 @@ public interface ReservationUseCase {
     List<ReservationDTO> findByFieldIdAndStatus(Long fieldId, StatusReservation status);
     List<ReservationDTO> findByUserId(Long userId);
     List<ReservationDTO> findAllByStatus(StatusReservation status);
+    List<ReservationDTO> findLastThreeReservations(Long fieldId);
 }

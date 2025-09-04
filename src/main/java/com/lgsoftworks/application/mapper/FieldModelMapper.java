@@ -20,7 +20,6 @@ public class FieldModelMapper {
         fieldDTO.setStatus(field.getStatus());
         fieldDTO.setImageUrl(field.getImageUrl());
         fieldDTO.setAdmin(UserModelMapper.toUserDTO(field.getAdmin()));
-        fieldDTO.setReservations(ReservationModelMapper.toReservationFieldDTOList(field.getReservations()));
 
         return fieldDTO;
     }
@@ -38,7 +37,6 @@ public class FieldModelMapper {
         field.setStatus(fieldDTO.getStatus());
         field.setImageUrl(fieldDTO.getImageUrl());
         field.setAdmin(UserModelMapper.toUser(fieldDTO.getAdmin()));
-        field.setReservations(ReservationModelMapper.toReservationFieldList(fieldDTO.getReservations()));
 
         return field;
     }

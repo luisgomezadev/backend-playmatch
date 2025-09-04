@@ -24,5 +24,4 @@ public class FieldDTO {
     private UserDTO admin;
     private Status status;
     private String imageUrl;
-    private List<ReservationFieldDTO> reservations;
 }

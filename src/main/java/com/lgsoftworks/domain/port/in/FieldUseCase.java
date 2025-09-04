@@ -1,9 +1,14 @@
 package com.lgsoftworks.domain.port.in;
 
 import com.lgsoftworks.application.dto.FieldDTO;
+import com.lgsoftworks.application.dto.PageResponse;
+import com.lgsoftworks.application.dto.request.FieldFilter;
 import com.lgsoftworks.application.dto.request.FieldRequest;
 import com.lgsoftworks.domain.model.Field;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +21,5 @@ public interface FieldUseCase {
     FieldDTO update(FieldRequest fieldRequest);
     void deleteById(Long id);
     boolean existsByAdminId(Long id);
+    PageResponse<FieldDTO> searchFields(FieldFilter filter, Pageable pageable);
 }

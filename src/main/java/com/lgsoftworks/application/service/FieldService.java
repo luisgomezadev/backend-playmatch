@@ -1,7 +1,10 @@
 package com.lgsoftworks.application.service;
 
+import com.lgsoftworks.application.dto.PageResponse;
+import com.lgsoftworks.application.dto.request.FieldFilter;
 import com.lgsoftworks.application.mapper.FieldModelMapper;
 import com.lgsoftworks.domain.enums.Role;
+import com.lgsoftworks.domain.enums.Status;
 import com.lgsoftworks.domain.exception.FieldByIdNotFoundException;
 import com.lgsoftworks.domain.exception.UserTypeNotAllowedToCreateFieldException;
 import com.lgsoftworks.domain.model.User;
@@ -16,10 +19,13 @@ import com.lgsoftworks.domain.port.out.CloudinaryImageUploaderPort;
 import com.lgsoftworks.domain.port.out.UserRepositoryPort;
 import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,6 +118,21 @@ public class FieldService implements FieldUseCase, UploadFieldImageUseCase {
     @Override
     public boolean existsByAdminId(Long id) {
         return fieldRepositoryPort.existsByAdminId(id);
+    }
+
+    @Override
+    public PageResponse<FieldDTO> searchFields(FieldFilter filter, Pageable pageable) {
+        Page<FieldDTO> fieldDTOS = fieldRepositoryPort.searchFields(filter, pageable)
+                .map(FieldModelMapper::toDTO);
+
+        return new PageResponse<>(
+                fieldDTOS.getContent(),
+                fieldDTOS.getNumber(),
+                fieldDTOS.getSize(),
+                fieldDTOS.getTotalElements(),
+                fieldDTOS.getTotalPages(),
+                fieldDTOS.isLast()
+        );
     }
 
     public String uploadFieldImage(MultipartFile file) {

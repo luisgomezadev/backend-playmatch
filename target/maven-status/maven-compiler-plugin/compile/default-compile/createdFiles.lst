@@ -9,6 +9,7 @@ com\lgsoftworks\infrastructure\adapter\in\rest\dto\ErrorResponse$ErrorResponseBu
 com\lgsoftworks\infrastructure\adapter\in\security\dto\AuthenticationRequest$AuthenticationRequestBuilder.class
 com\lgsoftworks\application\mapper\UserModelMapper.class
 com\lgsoftworks\domain\exception\ForbiddenException.class
+com\lgsoftworks\application\dto\PageResponse.class
 com\lgsoftworks\application\service\CountReservationService.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\entity\UserEntity.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\repository\UserRepository.class
@@ -22,6 +23,7 @@ com\lgsoftworks\domain\exception\UserByCellphoneNotFoundException.class
 com\lgsoftworks\domain\port\in\CountReservationUseCase.class
 com\lgsoftworks\infrastructure\security\service\AuthenticationService.class
 com\lgsoftworks\infrastructure\security\JwtProperties.class
+com\lgsoftworks\application\dto\request\FieldFilter.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\entity\FieldEntity.class
 com\lgsoftworks\application\dto\request\ReservationRequest.class
 com\lgsoftworks\domain\exception\UserWithEmailExistsException.class
@@ -67,6 +69,7 @@ com\lgsoftworks\infrastructure\adapter\in\rest\controller\UserController.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\ReservationJpaAdapter.class
 com\lgsoftworks\application\mapper\FieldModelMapper.class
 com\lgsoftworks\application\dto\ReservationAvailabilityDTO.class
+com\lgsoftworks\infrastructure\adapter\out\persistence\FieldSpecification.class
 com\lgsoftworks\domain\exception\UserAlreadyAssignedAsAdminException.class
 com\lgsoftworks\infrastructure\adapter\in\security\dto\RefreshTokenRequest.class
 com\lgsoftworks\infrastructure\security\SecurityConfig.class

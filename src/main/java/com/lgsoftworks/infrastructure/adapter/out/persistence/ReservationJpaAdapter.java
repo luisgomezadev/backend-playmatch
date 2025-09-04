@@ -75,6 +75,8 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     public List<Reservation> findByFieldIdAndStatus(Long fieldId, StatusReservation status) {
         return reservationRepository.findByFieldIdAndStatus(fieldId, status)
                 .stream()
+                .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
+                        .thenComparing(ReservationEntity::getStartTime))
                 .map(ReservationDboMapper::toModel)
                 .toList();
     }
@@ -95,6 +97,14 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
                 .stream()
                 .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
                         .thenComparing(ReservationEntity::getStartTime))
+                .map(ReservationDboMapper::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Reservation> findLastThreeReservations(Long fieldId) {
+        return reservationRepository.findTop3ByFieldIdOrderByCreatedDateDesc(fieldId)
+                .stream()
                 .map(ReservationDboMapper::toModel)
                 .toList();
     }

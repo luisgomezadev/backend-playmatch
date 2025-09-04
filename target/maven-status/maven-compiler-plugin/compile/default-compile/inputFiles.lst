@@ -1,4 +1,6 @@
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\dto\FieldDTO.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\dto\PageResponse.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\dto\request\FieldFilter.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\dto\request\FieldRequest.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\dto\request\ReservationRequest.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\application\dto\request\UserRequest.java
@@ -68,6 +70,7 @@ C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftwor
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\entity\ReservationEntity.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\entity\UserEntity.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\FieldJpaAdapter.java
+C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\FieldSpecification.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\mapper\FieldDboMapper.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\mapper\ReservationDboMapper.java
 C:\Users\luisg\OneDrive\Documentos\Java SB\PlayMatch\src\main\java\com\lgsoftworks\infrastructure\adapter\out\persistence\mapper\UserDboMapper.java

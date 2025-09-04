@@ -7,16 +7,13 @@ import com.lgsoftworks.application.dto.ReservationDTO;
 import com.lgsoftworks.application.dto.request.ReservationRequest;
 import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.model.Reservation;
-import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.application.dto.ReservationAvailabilityDTO;
-import com.lgsoftworks.domain.port.out.UserRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +23,6 @@ import java.util.Optional;
 public class ReservationService implements ReservationUseCase {
 
     private final ReservationRepositoryPort reservationRepositoryPort;
-    private final FieldRepositoryPort fieldRepositoryPort;
-    private final UserRepositoryPort userRepositoryPort;
     private final ReservationAvailabilityUseCase reservationAvailabilityUseCase;
 
     @Override
@@ -100,6 +95,8 @@ public class ReservationService implements ReservationUseCase {
     public List<ReservationDTO> findByFieldIdAndStatus(Long fieldId, StatusReservation status) {
         List<Reservation> reservationList = reservationRepositoryPort.findByFieldIdAndStatus(fieldId, status);
         return reservationList.stream()
+                .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
+                        .thenComparing(Reservation::getStartTime))
                 .map(ReservationModelMapper::toDTO)
                 .toList();
     }
@@ -120,6 +117,14 @@ public class ReservationService implements ReservationUseCase {
         return reservationList.stream()
                 .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
                         .thenComparing(Reservation::getStartTime))
+                .map(ReservationModelMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ReservationDTO> findLastThreeReservations(Long fieldId) {
+        List<Reservation> reservationList = reservationRepositoryPort.findLastThreeReservations(fieldId);
+        return reservationList.stream()
                 .map(ReservationModelMapper::toDTO)
                 .toList();
     }

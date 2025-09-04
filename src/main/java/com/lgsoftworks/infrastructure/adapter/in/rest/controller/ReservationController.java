@@ -266,4 +266,9 @@ public class ReservationController {
                 );
     }
 
+    @GetMapping("/latest/{fieldId}")
+    public ResponseEntity<List<ReservationDTO>> getLastThreeReservationsByField(@PathVariable Long fieldId) {
+        return ResponseEntity.ok(reservationUseCase.findLastThreeReservations(fieldId));
+    }
+
 }

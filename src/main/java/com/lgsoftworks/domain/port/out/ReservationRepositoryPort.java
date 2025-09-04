@@ -19,6 +19,7 @@ public interface ReservationRepositoryPort {
     List<Reservation> findByFieldIdAndStatus(Long fieldId, StatusReservation status);
     List<Reservation> findByUserId(Long userId);
     List<Reservation> findAllByStatus(StatusReservation status);
+    List<Reservation> findLastThreeReservations(Long fieldId);
     void updateStatus(Long reservationId, StatusReservation status);
     Long countReservationsByUserAndStatus(StatusReservation statusReservation, Long userId);
     Long countReservationsByFieldAndStatus(StatusReservation statusReservation, Long fieldId);

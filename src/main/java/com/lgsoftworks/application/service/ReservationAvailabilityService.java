@@ -15,8 +15,6 @@ import com.lgsoftworks.domain.port.out.UserRepositoryPort;
 import com.lgsoftworks.domain.validation.ReservationValidator;
 import com.lgsoftworks.application.dto.request.ReservationRequest;
 import com.lgsoftworks.application.dto.ReservationAvailabilityDTO;
-import com.lgsoftworks.domain.validation.ValidateUser;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;

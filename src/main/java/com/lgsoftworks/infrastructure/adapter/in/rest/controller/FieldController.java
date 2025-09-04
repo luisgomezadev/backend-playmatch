@@ -1,5 +1,7 @@
 package com.lgsoftworks.infrastructure.adapter.in.rest.controller;
 
+import com.lgsoftworks.application.dto.PageResponse;
+import com.lgsoftworks.application.dto.request.FieldFilter;
 import com.lgsoftworks.domain.port.in.FieldUseCase;
 import com.lgsoftworks.application.dto.FieldDTO;
 import com.lgsoftworks.domain.port.in.UploadFieldImageUseCase;
@@ -13,12 +15,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,12 +37,26 @@ public class FieldController {
     private final FieldUseCase fieldUseCase;
     private final UploadFieldImageUseCase uploadFieldImageUseCase;
 
-    @Operation(summary = "Obtener todos los canchas")
+    /*@Operation(summary = "Obtener todos los canchas")
     @ApiResponse(responseCode = "200", description = "Lista de canchas encontrada",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = FieldDTO.class)))
     @GetMapping
     public ResponseEntity<List<FieldDTO>> getFields() {
         return ResponseEntity.ok().body(fieldUseCase.findAll());
+    }*/
+
+    @GetMapping
+    public ResponseEntity<PageResponse<FieldDTO>> getFields(
+            @RequestParam(required = false) String city,
+            @RequestParam(required = false) BigDecimal minPrice,
+            @RequestParam(required = false) BigDecimal maxPrice,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size
+    ) {
+        FieldFilter filter = new FieldFilter(city, minPrice, maxPrice);
+        return ResponseEntity.ok(fieldUseCase.searchFields(
+                filter, PageRequest.of(page, size)
+        ));
     }
 
     @Operation(summary = "Obtener todas los canchas activas")
