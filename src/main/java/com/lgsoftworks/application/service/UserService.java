@@ -1,5 +1,9 @@
 package com.lgsoftworks.application.service;
 
+import com.lgsoftworks.application.dto.FieldDTO;
+import com.lgsoftworks.application.dto.PageResponse;
+import com.lgsoftworks.application.dto.request.UserFilter;
+import com.lgsoftworks.application.mapper.FieldModelMapper;
 import com.lgsoftworks.application.mapper.UserModelMapper;
 import com.lgsoftworks.application.dto.request.UserRequest;
 import com.lgsoftworks.application.dto.UserDTO;
@@ -34,9 +38,19 @@ public class UserService implements UserUseCase, UploadUserImageUseCase {
     }
 
     @Override
-    public Page<UserDTO> findByRole(Role role, Pageable pageable) {
-        Page<User> page = userRepositoryPort.findByRole(role, pageable);
-        return page.map(UserModelMapper::toUserDTO);
+    public PageResponse<UserDTO> searchUsers(UserFilter filter, Pageable pageable) {
+
+        Page<UserDTO> userDTOS = userRepositoryPort.searchUsers(filter, pageable)
+                .map(UserModelMapper::toUserDTO);
+
+        return new PageResponse<>(
+                userDTOS.getContent(),
+                userDTOS.getNumber(),
+                userDTOS.getSize(),
+                userDTOS.getTotalElements(),
+                userDTOS.getTotalPages(),
+                userDTOS.isLast()
+        );
     }
 
     @Override

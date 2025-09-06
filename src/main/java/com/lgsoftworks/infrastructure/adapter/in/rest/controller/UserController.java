@@ -1,5 +1,8 @@
 package com.lgsoftworks.infrastructure.adapter.in.rest.controller;
 
+import com.lgsoftworks.application.dto.PageResponse;
+import com.lgsoftworks.application.dto.request.FieldFilter;
+import com.lgsoftworks.application.dto.request.UserFilter;
 import com.lgsoftworks.application.dto.request.UserRequest;
 import com.lgsoftworks.application.dto.UserDTO;
 import com.lgsoftworks.domain.enums.Role;
@@ -39,12 +42,16 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "Lista de jugadores encontrado",
             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDTO.class)))
     @GetMapping
-    public ResponseEntity<Page<UserDTO>> getUsersByRole(
+    public ResponseEntity<PageResponse<UserDTO>> getUsers(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String city,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "6") int size,
-            @RequestParam(value = "role", required = false) Role role) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(userUseCase.findByRole(role, pageable));
+            @RequestParam(required = false) Role role) {
+        UserFilter filter = new UserFilter(name, city, role);
+        return ResponseEntity.ok(userUseCase.searchUsers(
+                filter, PageRequest.of(page, size)
+        ));
     }
 
     @Operation(summary = "Obtener un jugador por su ID")

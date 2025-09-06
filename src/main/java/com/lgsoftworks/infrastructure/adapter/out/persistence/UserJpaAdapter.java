@@ -1,15 +1,23 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence;
 
+import com.lgsoftworks.application.dto.request.FieldFilter;
+import com.lgsoftworks.application.dto.request.UserFilter;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
+import com.lgsoftworks.domain.model.Field;
 import com.lgsoftworks.domain.model.User;
 import com.lgsoftworks.domain.port.out.UserRepositoryPort;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.FieldEntity;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.UserEntity;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.FieldDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.UserDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.UserRepository;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.specifications.FieldSpecification;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.specifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,9 +30,13 @@ public class UserJpaAdapter implements UserRepositoryPort {
     private final UserRepository userRepository;
 
     @Override
-    public Page<User> findByRole(Role role, Pageable pageable) {
-        return userRepository
-                .findByRole(role, pageable)
+    public Page<User> searchUsers(UserFilter filter, Pageable pageable) {
+        Specification<UserEntity> spec = Specification
+                .where(UserSpecification.hasName(filter.getName()))
+                .and(UserSpecification.hasCity(filter.getCity()))
+                .and(UserSpecification.hasRole(filter.getRole()));
+
+        return userRepository.findAll(spec, pageable)
                 .map(UserDboMapper::toModel);
     }
 

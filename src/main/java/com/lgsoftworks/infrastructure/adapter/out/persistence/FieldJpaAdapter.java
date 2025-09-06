@@ -7,13 +7,13 @@ import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.FieldEntity;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.FieldDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.FieldRepository;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.specifications.FieldSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +71,7 @@ public class FieldJpaAdapter implements FieldRepositoryPort {
     public Page<Field> searchFields(FieldFilter filter, Pageable pageable) {
         Specification<FieldEntity> spec = Specification
                 .where(FieldSpecification.isActive())
+                .and(FieldSpecification.hasName(filter.getName()))
                 .and(FieldSpecification.hasCity(filter.getCity()))
                 .and(FieldSpecification.hasMinPrice(filter.getMinPrice()))
                 .and(FieldSpecification.hasMaxPrice(filter.getMaxPrice()));

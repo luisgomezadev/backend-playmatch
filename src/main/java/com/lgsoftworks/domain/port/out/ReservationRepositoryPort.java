@@ -1,5 +1,6 @@
 package com.lgsoftworks.domain.port.out;
 
+import com.lgsoftworks.application.dto.request.ReservationFilter;
 import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.model.Reservation;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 public interface ReservationRepositoryPort {
     List<Reservation> findAll();
-    Page<Reservation> findByFilters(LocalDate date, StatusReservation status, Long userId, Long fieldId, Pageable pageable);
+    Page<Reservation> searchReservations(ReservationFilter reservationFilter, Pageable pageable);
     Optional<Reservation> findById(Long id);
     Reservation save(Reservation reservation);
     void deleteById(Long id);

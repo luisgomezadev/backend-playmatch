@@ -1,5 +1,9 @@
 package com.lgsoftworks.application.service;
 
+import com.lgsoftworks.application.dto.FieldDTO;
+import com.lgsoftworks.application.dto.PageResponse;
+import com.lgsoftworks.application.dto.request.ReservationFilter;
+import com.lgsoftworks.application.mapper.FieldModelMapper;
 import com.lgsoftworks.application.mapper.ReservationModelMapper;
 import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.port.in.ReservationUseCase;
@@ -36,14 +40,21 @@ public class ReservationService implements ReservationUseCase {
     }
 
     @Override
-    public Page<ReservationDTO> findByFilters(LocalDate date, StatusReservation status,
-                                              Long userId, Long fieldId, Pageable pageable) {
+    public PageResponse<ReservationDTO> searchReservations(ReservationFilter filter, Pageable pageable) {
         Sort sort = Sort.by(Sort.Order.desc("reservationDate"), Sort.Order.asc("startTime"));
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-        Page<Reservation> reservationList = reservationRepositoryPort.findByFilters(date, status, userId, fieldId, sortedPageable);
+        Page<ReservationDTO> reservationDTOS = reservationRepositoryPort.searchReservations(filter, sortedPageable)
+                .map(ReservationModelMapper::toDTO);
 
-        return reservationList.map(ReservationModelMapper::toDTO);
+        return new PageResponse<>(
+                reservationDTOS.getContent(),
+                reservationDTOS.getNumber(),
+                reservationDTOS.getSize(),
+                reservationDTOS.getTotalElements(),
+                reservationDTOS.getTotalPages(),
+                reservationDTOS.isLast()
+        );
     }
 
     @Override

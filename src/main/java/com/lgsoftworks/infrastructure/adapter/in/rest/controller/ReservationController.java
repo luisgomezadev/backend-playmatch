@@ -1,5 +1,8 @@
 package com.lgsoftworks.infrastructure.adapter.in.rest.controller;
 
+import com.lgsoftworks.application.dto.PageResponse;
+import com.lgsoftworks.application.dto.request.FieldFilter;
+import com.lgsoftworks.application.dto.request.ReservationFilter;
 import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.port.in.CountReservationUseCase;
 import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
@@ -39,15 +42,6 @@ public class ReservationController {
     private final ReservationAvailabilityUseCase reservationAvailabilityUseCase;
 
     @Operation(
-            summary = "Obtener todas las reservas",
-            description = "Devuelve una lista completa de todas las reservas registradas en el sistema."
-    )
-    @GetMapping
-    public ResponseEntity<List<ReservationDTO>> getReservations() {
-        return ResponseEntity.ok(reservationUseCase.findAll());
-    }
-
-    @Operation(
             summary = "Filtrar reservas",
             description = "Devuelve una lista paginada de reservas que coinciden con los filtros opcionales: fecha, estado, ID del usuario y ID del campo.",
             parameters = {
@@ -59,8 +53,8 @@ public class ReservationController {
                     @Parameter(name = "size", description = "Tamaño de página (por defecto: 6)", example = "6")
             }
     )
-    @GetMapping("/filter")
-    public ResponseEntity<Page<ReservationDTO>> getFilteredReservations(
+    @GetMapping
+    public ResponseEntity<PageResponse<ReservationDTO>> getReservations(
             @RequestParam(value = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date,
             @RequestParam(value = "status", required = false) StatusReservation status,
@@ -69,8 +63,10 @@ public class ReservationController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "6") int size
             ) {
-        Pageable pageable = PageRequest.of(page, size);
-        return ResponseEntity.ok(reservationUseCase.findByFilters(date, status, userId, fieldId, pageable));
+        ReservationFilter filter = new ReservationFilter(date, status, userId, fieldId);
+        return ResponseEntity.ok(reservationUseCase.searchReservations(
+                filter, PageRequest.of(page, size)
+        ));
     }
 
     @Operation(

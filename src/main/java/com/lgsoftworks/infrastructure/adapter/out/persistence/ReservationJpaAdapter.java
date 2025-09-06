@@ -1,16 +1,20 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence;
 
+import com.lgsoftworks.application.dto.request.ReservationFilter;
 import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.domain.model.Reservation;
 import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.ReservationEntity;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.FieldDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.ReservationDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.ReservationRepository;
+import com.lgsoftworks.infrastructure.adapter.out.persistence.specifications.ReservationSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -35,13 +39,18 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     }
 
     @Override
-    public Page<Reservation> findByFilters(LocalDate date, StatusReservation status, Long userId, Long fieldId, Pageable pageable) {
+    public Page<Reservation> searchReservations(ReservationFilter filter, Pageable pageable) {
         Sort sort = Sort.by(Sort.Order.desc("reservationDate"), Sort.Order.asc("startTime"));
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
-        Page<ReservationEntity> reservationList = reservationRepository.findByFilters(date, status, userId, fieldId, sortedPageable);
+        Specification<ReservationEntity> spec = Specification
+                .where(ReservationSpecification.hasDate(filter.getDate()))
+                .and(ReservationSpecification.hasStatus(filter.getStatus()))
+                .and(ReservationSpecification.hasUserId(filter.getUserId()))
+                .and(ReservationSpecification.hasFieldId(filter.getFieldId()));
 
-        return reservationList.map(ReservationDboMapper::toModel);
+        return reservationRepository.findAll(spec, sortedPageable)
+                .map(ReservationDboMapper::toModel);
     }
 
     @Override

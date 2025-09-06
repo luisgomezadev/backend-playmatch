@@ -5,6 +5,8 @@ import com.lgsoftworks.application.dto.request.UserRequest;
 import com.lgsoftworks.domain.enums.Role;
 import com.lgsoftworks.domain.model.User;
 
+import java.util.Objects;
+
 public class UserModelMapper {
 
     public static UserDTO toUserDTO(User user) {
@@ -13,6 +15,7 @@ public class UserModelMapper {
         userDTO.setId(user.getId());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
+        userDTO.setFullName(user.getFullName());
         userDTO.setCity(user.getCity());
         userDTO.setCellphone(user.getCellphone());
         userDTO.setEmail(user.getEmail());
@@ -27,6 +30,7 @@ public class UserModelMapper {
         user.setId(userDTO.getId());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
+        user.setFullName(userDTO.getFullName());
         user.setCity(userDTO.getCity());
         user.setCellphone(userDTO.getCellphone());
         user.setEmail(userDTO.getEmail());
@@ -41,12 +45,17 @@ public class UserModelMapper {
         user.setId(userRequest.getId());
         user.setFirstName(userRequest.getFirstName());
         user.setLastName(userRequest.getLastName());
+        user.setFullName(buildFullName(userRequest.getFirstName(), userRequest.getLastName()));
         user.setCity(userRequest.getCity());
         user.setCellphone(userRequest.getCellphone());
         user.setEmail(userRequest.getEmail());
         user.setPassword(userRequest.getPassword());
         user.setRole(userRequest.getRole());
         return user;
+    }
+
+    private static String buildFullName(String firstName, String lastName) {
+        return (Objects.toString(firstName, "") + " " + Objects.toString(lastName, "")).trim();
     }
 
     /*public static List<UserDTO> toUserSummaryList(List<Player> players) {

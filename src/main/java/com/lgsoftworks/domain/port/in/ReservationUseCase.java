@@ -1,5 +1,7 @@
 package com.lgsoftworks.domain.port.in;
 
+import com.lgsoftworks.application.dto.PageResponse;
+import com.lgsoftworks.application.dto.request.ReservationFilter;
 import com.lgsoftworks.domain.enums.StatusReservation;
 import com.lgsoftworks.application.dto.ReservationDTO;
 import com.lgsoftworks.application.dto.request.ReservationRequest;
@@ -13,7 +15,7 @@ import java.util.Optional;
 
 public interface ReservationUseCase {
     List<ReservationDTO> findAll();
-    Page<ReservationDTO> findByFilters(LocalDate date, StatusReservation status, Long userId, Long fieldId, Pageable pageable);
+    PageResponse<ReservationDTO> searchReservations(ReservationFilter reservationFilter, Pageable pageable);
     Optional<ReservationDTO> findById(Long id);
     ReservationDTO save(ReservationRequest reservationRequest);
     ReservationDTO update(ReservationRequest reservationRequest);

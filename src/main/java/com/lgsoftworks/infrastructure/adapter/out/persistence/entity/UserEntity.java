@@ -28,6 +28,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
     protected String lastName;
 
     @Column(nullable = false)
+    protected String fullName;
+
+    @Column(nullable = false)
     protected String city;
 
 

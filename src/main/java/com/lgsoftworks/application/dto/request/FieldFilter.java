@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class FieldFilter {
 
+    private String name;
     private String city;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;

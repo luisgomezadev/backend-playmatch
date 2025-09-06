@@ -47,13 +47,14 @@ public class FieldController {
 
     @GetMapping
     public ResponseEntity<PageResponse<FieldDTO>> getFields(
+            @RequestParam(required = false) String name,
             @RequestParam(required = false) String city,
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "12") int size
     ) {
-        FieldFilter filter = new FieldFilter(city, minPrice, maxPrice);
+        FieldFilter filter = new FieldFilter(name, city, minPrice, maxPrice);
         return ResponseEntity.ok(fieldUseCase.searchFields(
                 filter, PageRequest.of(page, size)
         ));
