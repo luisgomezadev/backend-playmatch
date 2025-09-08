@@ -1,7 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.mapper;
 
-import com.lgsoftworks.domain.model.Reservation;
-import com.lgsoftworks.domain.model.User;
+import com.lgsoftworks.domain.reservation.model.Reservation;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.ReservationEntity;
 
 import java.util.List;

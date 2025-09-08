@@ -1,7 +1,7 @@
 package com.lgsoftworks.infrastructure.adapter.in.security.controller;
 
-import com.lgsoftworks.application.dto.request.UserRequest;
-import com.lgsoftworks.application.dto.UserDTO;
+import com.lgsoftworks.application.user.dto.request.UserRequest;
+import com.lgsoftworks.application.user.dto.response.UserDTO;
 import com.lgsoftworks.infrastructure.adapter.in.security.dto.RefreshTokenRequest;
 import com.lgsoftworks.infrastructure.security.service.AuthenticationService;
 import com.lgsoftworks.infrastructure.adapter.in.security.dto.AuthenticationRequest;

@@ -1,7 +1,9 @@
 package com.lgsoftworks.infrastructure.adapter.in.rest.advice;
 
-import com.lgsoftworks.domain.enums.*;
+import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.exception.*;
+import com.lgsoftworks.domain.reservation.enums.StatusReservation;
+import com.lgsoftworks.domain.user.enums.Role;
 import com.lgsoftworks.infrastructure.adapter.in.rest.dto.ErrorResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -139,7 +141,7 @@ public class GlobalExceptionHandler {
         if (cause == null || cause.getMessage() == null) return "Solicitud malformada";
 
         if (cause.getMessage().contains("StatusReservation")) {
-            return buildEnumMessage("Estado de reserva inválido", StatusReservation.values());
+            return buildEnumMessage("Estado de reserva inválido", com.lgsoftworks.domain.reservation.enums.StatusReservation.values());
         }
 
         if (cause.getMessage().contains("Status")) {
@@ -147,7 +149,7 @@ public class GlobalExceptionHandler {
         }
 
         if (cause.getMessage().contains("Role")) {
-            return buildEnumMessage("Rol inválido", Role.values());
+            return buildEnumMessage("Rol inválido", com.lgsoftworks.domain.user.enums.Role.values());
         }
 
         return "Solicitud malformada";

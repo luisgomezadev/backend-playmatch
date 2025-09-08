@@ -1,6 +1,6 @@
 package com.lgsoftworks.domain.exception;
 
-import com.lgsoftworks.domain.model.Field;
+import com.lgsoftworks.domain.field.model.Field;
 
 public class FieldNotAvailableException extends RuntimeException {
     public FieldNotAvailableException(Field field) {

@@ -1,13 +1,12 @@
 package com.lgsoftworks.infrastructure.adapter.in.rest.controller;
 
-import com.lgsoftworks.application.dto.PageResponse;
-import com.lgsoftworks.application.dto.request.FieldFilter;
-import com.lgsoftworks.application.dto.request.UserFilter;
-import com.lgsoftworks.application.dto.request.UserRequest;
-import com.lgsoftworks.application.dto.UserDTO;
-import com.lgsoftworks.domain.enums.Role;
-import com.lgsoftworks.domain.port.in.UploadUserImageUseCase;
-import com.lgsoftworks.domain.port.in.UserUseCase;
+import com.lgsoftworks.application.common.PageResponse;
+import com.lgsoftworks.application.user.dto.request.UserFilter;
+import com.lgsoftworks.application.user.dto.request.UserRequest;
+import com.lgsoftworks.application.user.dto.response.UserDTO;
+import com.lgsoftworks.domain.user.enums.Role;
+import com.lgsoftworks.domain.user.port.in.UploadUserImageUseCase;
+import com.lgsoftworks.domain.user.port.in.UserUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,16 +15,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController

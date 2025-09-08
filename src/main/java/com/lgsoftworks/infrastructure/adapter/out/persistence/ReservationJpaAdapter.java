@@ -1,11 +1,10 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence;
 
-import com.lgsoftworks.application.dto.request.ReservationFilter;
-import com.lgsoftworks.domain.enums.StatusReservation;
-import com.lgsoftworks.domain.model.Reservation;
-import com.lgsoftworks.domain.port.out.ReservationRepositoryPort;
+import com.lgsoftworks.application.reservation.dto.request.ReservationFilter;
+import com.lgsoftworks.domain.reservation.enums.StatusReservation;
+import com.lgsoftworks.domain.reservation.model.Reservation;
+import com.lgsoftworks.domain.reservation.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.ReservationEntity;
-import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.FieldDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.ReservationDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.ReservationRepository;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.specifications.ReservationSpecification;
@@ -29,18 +28,8 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
     private final ReservationRepository reservationRepository;
 
     @Override
-    public List<Reservation> findAll() {
-        return reservationRepository.findAll()
-                .stream()
-                .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
-                        .thenComparing(ReservationEntity::getStartTime))
-                .map(ReservationDboMapper::toModel)
-                .toList();
-    }
-
-    @Override
     public Page<Reservation> searchReservations(ReservationFilter filter, Pageable pageable) {
-        Sort sort = Sort.by(Sort.Order.desc("reservationDate"), Sort.Order.asc("startTime"));
+        Sort sort = Sort.by(Sort.Order.desc("reservationDate"), Sort.Order.desc("startTime"));
         Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
 
         Specification<ReservationEntity> spec = Specification
@@ -86,6 +75,15 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
                 .stream()
                 .sorted(Comparator.comparing(ReservationEntity::getReservationDate).reversed()
                         .thenComparing(ReservationEntity::getStartTime))
+                .map(ReservationDboMapper::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Reservation> findActiveByFieldIdAndDate(Long fieldId, LocalDate date) {
+        return reservationRepository.findByFieldIdAndReservationDateAndStatus(fieldId, date, StatusReservation.ACTIVE)
+                .stream()
+                .sorted(Comparator.comparing(ReservationEntity::getStartTime))
                 .map(ReservationDboMapper::toModel)
                 .toList();
     }

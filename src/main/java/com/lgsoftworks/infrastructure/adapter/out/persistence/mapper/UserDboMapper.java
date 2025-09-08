@@ -1,10 +1,7 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.mapper;
 
-import com.lgsoftworks.domain.model.User;
+import com.lgsoftworks.domain.user.model.User;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.UserEntity;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class UserDboMapper {
 

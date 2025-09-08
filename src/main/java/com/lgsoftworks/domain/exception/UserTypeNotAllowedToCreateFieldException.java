@@ -1,6 +1,6 @@
 package com.lgsoftworks.domain.exception;
 
-import com.lgsoftworks.domain.model.User;
+import com.lgsoftworks.domain.user.model.User;
 
 public class UserTypeNotAllowedToCreateFieldException extends RuntimeException {
     public UserTypeNotAllowedToCreateFieldException(User user) {

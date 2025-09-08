@@ -1,15 +1,15 @@
 package com.lgsoftworks.infrastructure.security.service;
 
-import com.lgsoftworks.application.mapper.UserModelMapper;
-import com.lgsoftworks.application.dto.request.UserRequest;
-import com.lgsoftworks.application.dto.UserDTO;
+import com.lgsoftworks.application.user.dto.mapper.UserModelMapper;
+import com.lgsoftworks.application.user.dto.request.UserRequest;
+import com.lgsoftworks.application.user.dto.response.UserDTO;
 import com.lgsoftworks.domain.exception.InvalidCredentialsException;
 import com.lgsoftworks.domain.exception.PasswordNotNullException;
 import com.lgsoftworks.domain.exception.UserByEmailNotFoundException;
 import com.lgsoftworks.domain.exception.UserWithEmailExistsException;
-import com.lgsoftworks.domain.model.User;
-import com.lgsoftworks.domain.port.in.UserUseCase;
-import com.lgsoftworks.domain.port.out.UserRepositoryPort;
+import com.lgsoftworks.domain.user.model.User;
+import com.lgsoftworks.domain.user.port.in.UserUseCase;
+import com.lgsoftworks.domain.user.port.out.UserRepositoryPort;
 import com.lgsoftworks.infrastructure.adapter.in.security.dto.AuthenticationRequest;
 import com.lgsoftworks.infrastructure.adapter.in.security.dto.AuthenticationResponse;
 import com.lgsoftworks.infrastructure.adapter.in.security.dto.RefreshTokenRequest;

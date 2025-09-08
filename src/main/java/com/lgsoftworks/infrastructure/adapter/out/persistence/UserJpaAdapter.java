@@ -1,18 +1,12 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence;
 
-import com.lgsoftworks.application.dto.request.FieldFilter;
-import com.lgsoftworks.application.dto.request.UserFilter;
-import com.lgsoftworks.domain.enums.Role;
+import com.lgsoftworks.application.user.dto.request.UserFilter;
 import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
-import com.lgsoftworks.domain.model.Field;
-import com.lgsoftworks.domain.model.User;
-import com.lgsoftworks.domain.port.out.UserRepositoryPort;
-import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.FieldEntity;
+import com.lgsoftworks.domain.user.model.User;
+import com.lgsoftworks.domain.user.port.out.UserRepositoryPort;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.UserEntity;
-import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.FieldDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.UserDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.UserRepository;
-import com.lgsoftworks.infrastructure.adapter.out.persistence.specifications.FieldSpecification;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.specifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 @Component

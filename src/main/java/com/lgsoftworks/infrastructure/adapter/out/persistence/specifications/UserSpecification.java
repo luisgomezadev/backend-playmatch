@@ -1,7 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.specifications;
 
-import com.lgsoftworks.domain.enums.Role;
-import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.FieldEntity;
+import com.lgsoftworks.domain.user.enums.Role;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.UserEntity;
 import org.springframework.data.jpa.domain.Specification;
 

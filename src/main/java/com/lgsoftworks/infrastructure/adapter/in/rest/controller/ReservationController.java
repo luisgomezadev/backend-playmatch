@@ -1,25 +1,23 @@
 package com.lgsoftworks.infrastructure.adapter.in.rest.controller;
 
-import com.lgsoftworks.application.dto.PageResponse;
-import com.lgsoftworks.application.dto.request.FieldFilter;
-import com.lgsoftworks.application.dto.request.ReservationFilter;
-import com.lgsoftworks.domain.enums.StatusReservation;
-import com.lgsoftworks.domain.port.in.CountReservationUseCase;
-import com.lgsoftworks.domain.port.in.ReservationAvailabilityUseCase;
-import com.lgsoftworks.domain.port.in.ReservationUseCase;
-import com.lgsoftworks.application.dto.ReservationDTO;
-import com.lgsoftworks.application.dto.request.ReservationRequest;
+import com.lgsoftworks.application.common.PageResponse;
+import com.lgsoftworks.application.reservation.dto.response.TimeSlot;
+import com.lgsoftworks.application.reservation.dto.request.ReservationFilter;
+import com.lgsoftworks.domain.reservation.enums.StatusReservation;
+import com.lgsoftworks.domain.reservation.port.in.CountReservationUseCase;
+import com.lgsoftworks.domain.reservation.port.in.ReservationAvailabilityUseCase;
+import com.lgsoftworks.domain.reservation.port.in.ReservationUseCase;
+import com.lgsoftworks.application.reservation.dto.response.ReservationDTO;
+import com.lgsoftworks.application.reservation.dto.request.ReservationRequest;
 import com.lgsoftworks.infrastructure.adapter.in.rest.dto.MessageResponse;
-import com.lgsoftworks.application.dto.ReservationAvailabilityDTO;
+import com.lgsoftworks.application.reservation.dto.response.ReservationAvailabilityDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -260,6 +258,15 @@ public class ReservationController {
                 .body(reservationAvailabilityUseCase
                         .reservationAvailability(reservationRequest)
                 );
+    }
+
+    @GetMapping("/availability/hours")
+    public ResponseEntity<List<TimeSlot>> getHoursAvailability(
+            @RequestParam Long fieldId,
+            @RequestParam(value = "date", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date
+    ) {
+        return ResponseEntity.ok(reservationAvailabilityUseCase.getAvailableSlots(fieldId, date));
     }
 
     @GetMapping("/latest/{fieldId}")

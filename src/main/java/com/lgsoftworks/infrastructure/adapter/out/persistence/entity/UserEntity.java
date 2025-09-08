@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.entity;
 
-import com.lgsoftworks.domain.enums.Role;
+import com.lgsoftworks.domain.user.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;

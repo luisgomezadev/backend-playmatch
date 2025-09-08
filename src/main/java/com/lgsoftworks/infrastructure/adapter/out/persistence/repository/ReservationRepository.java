@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.repository;
 
-import com.lgsoftworks.domain.enums.StatusReservation;
+import com.lgsoftworks.domain.reservation.enums.StatusReservation;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.ReservationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -20,6 +20,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     List<ReservationEntity> findByUserId(Long userId);
     List<ReservationEntity> findAllByStatus(StatusReservation status);
     List<ReservationEntity> findTop3ByFieldIdOrderByCreatedDateDesc(Long fieldId);
+    List<ReservationEntity> findByFieldIdAndReservationDateAndStatus(Long fieldId, LocalDate date, StatusReservation status);
     Long countByStatusAndUser_Id(StatusReservation status, Long userId);
     Long countByStatusAndField_Id(StatusReservation status, Long fieldId);
 

@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.entity;
 
-import com.lgsoftworks.domain.enums.Status;
+import com.lgsoftworks.domain.common.enums.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

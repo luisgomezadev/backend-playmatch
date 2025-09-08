@@ -1,11 +1,10 @@
 package com.lgsoftworks.infrastructure.security;
 
-import com.lgsoftworks.domain.enums.Role;
+import com.lgsoftworks.domain.user.enums.Role;
 import com.lgsoftworks.infrastructure.security.exception.CustomAccessDeniedHandler;
 import com.lgsoftworks.infrastructure.security.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

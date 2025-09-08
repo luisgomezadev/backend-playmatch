@@ -1,9 +1,9 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence;
 
-import com.lgsoftworks.application.dto.request.FieldFilter;
-import com.lgsoftworks.domain.enums.Status;
-import com.lgsoftworks.domain.model.Field;
-import com.lgsoftworks.domain.port.out.FieldRepositoryPort;
+import com.lgsoftworks.application.field.dto.request.FieldFilter;
+import com.lgsoftworks.domain.common.enums.Status;
+import com.lgsoftworks.domain.field.model.Field;
+import com.lgsoftworks.domain.field.port.out.FieldRepositoryPort;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.FieldEntity;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.mapper.FieldDboMapper;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.repository.FieldRepository;
@@ -22,14 +22,6 @@ import java.util.Optional;
 public class FieldJpaAdapter implements FieldRepositoryPort {
 
     private final FieldRepository fieldRepository;
-
-    @Override
-    public List<Field> findAll() {
-        List<FieldEntity> fieldEntityList = fieldRepository.findAll();
-        return fieldEntityList.stream()
-                .map(FieldDboMapper::toModel)
-                .toList();
-    }
 
     @Override
     public Optional<Field> findById(Long id) {

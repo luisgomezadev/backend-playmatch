@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.specifications;
 
-import com.lgsoftworks.domain.enums.StatusReservation;
+import com.lgsoftworks.domain.reservation.enums.StatusReservation;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.ReservationEntity;
 import org.springframework.data.jpa.domain.Specification;
 

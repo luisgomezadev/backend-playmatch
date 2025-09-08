@@ -1,21 +1,18 @@
 package com.lgsoftworks.infrastructure.adapter.in.rest.controller;
 
-import com.lgsoftworks.application.dto.PageResponse;
-import com.lgsoftworks.application.dto.request.FieldFilter;
-import com.lgsoftworks.domain.port.in.FieldUseCase;
-import com.lgsoftworks.application.dto.FieldDTO;
-import com.lgsoftworks.domain.port.in.UploadFieldImageUseCase;
+import com.lgsoftworks.application.common.PageResponse;
+import com.lgsoftworks.application.field.dto.request.FieldFilter;
+import com.lgsoftworks.domain.field.port.in.FieldUseCase;
+import com.lgsoftworks.application.field.dto.response.FieldDTO;
+import com.lgsoftworks.domain.field.port.in.UploadFieldImageUseCase;
 import com.lgsoftworks.infrastructure.adapter.in.rest.dto.MessageResponse;
-import com.lgsoftworks.application.dto.request.FieldRequest;
+import com.lgsoftworks.application.field.dto.request.FieldRequest;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -2,7 +2,7 @@ package com.lgsoftworks.infrastructure.adapter.out.persistence.cloudinary;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.lgsoftworks.domain.port.out.CloudinaryImageUploaderPort;
+import com.lgsoftworks.domain.common.port.out.CloudinaryImageUploaderPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

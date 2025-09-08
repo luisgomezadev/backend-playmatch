@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.mapper;
 
-import com.lgsoftworks.domain.model.Field;
+import com.lgsoftworks.domain.field.model.Field;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.FieldEntity;
 
 public class FieldDboMapper {

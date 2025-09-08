@@ -1,10 +1,7 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.entity;
 
-import com.lgsoftworks.domain.enums.StatusReservation;
+import com.lgsoftworks.domain.reservation.enums.StatusReservation;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
