@@ -2,10 +2,7 @@ package com.lgsoftworks.application.venue.dto.request;
 
 import com.lgsoftworks.application.field.dto.request.FieldRequest;
 import com.lgsoftworks.domain.common.enums.Status;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +24,11 @@ public class VenueRequest {
     @NotBlank(message = "El nombre es requerido")
     @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
     private String name;
+
+    @NotBlank(message = "El código es requerido")
+    @Size(min = 3, max = 50, message = "El código debe tener entre 3 y 50 caracteres")
+    @Pattern(regexp = "^[A-Za-z0-9-]+$", message = "El código solo puede contener letras, números o guiones, sin espacios ni acentos")
+    private String code;
 
     @NotBlank(message = "La ciudad es requerida")
     @Size(min = 3, max = 50, message = "La ciudad debe tener entre 3 y 50 caracteres")

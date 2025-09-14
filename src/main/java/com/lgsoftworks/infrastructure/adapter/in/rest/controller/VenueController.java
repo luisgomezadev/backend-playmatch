@@ -78,4 +78,13 @@ public class VenueController {
         return ResponseEntity.status(HttpStatus.CREATED).body(venueUseCase.save(venueRequest));
     }
 
+    @Operation(summary = "Actualizar un complejo deportivo existente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Complejo actualizado"),
+            @ApiResponse(responseCode = "404", description = "Complejo no encontrado")
+    })
+    @PutMapping
+    public ResponseEntity<VenueDTO> updateVenue(@Valid @RequestBody VenueRequest venueRequest) {
+        return ResponseEntity.ok(venueUseCase.update(venueRequest));
+    }
 }

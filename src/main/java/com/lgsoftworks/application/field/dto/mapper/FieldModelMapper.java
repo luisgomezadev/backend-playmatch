@@ -36,6 +36,7 @@ public class FieldModelMapper {
         if (request == null) return null;
 
         Field field = new Field();
+        field.setId(request.getId());
         field.setName(request.getName());
         field.setFieldType(request.getFieldType());
         field.setHourlyRate(request.getHourlyRate());

@@ -59,22 +59,27 @@ public class VenueModelMapper {
         if (request == null) return null;
 
         Venue venue = new Venue();
+        // 🔹 ahora se incluye el ID del venue para updates
+        venue.setId(request.getId());
         venue.setName(request.getName());
+        venue.setCode(request.getCode());
         venue.setCity(request.getCity());
         venue.setAddress(request.getAddress());
         venue.setOpeningHour(request.getOpeningHour());
         venue.setClosingHour(request.getClosingHour());
         venue.setStatus(request.getStatus());
 
-        // Mapear las canchas y asociarlas al venue
+        // 🔹 Mapear las canchas (con ID para update)
         if (request.getFields() != null && !request.getFields().isEmpty()) {
             List<Field> fields = request.getFields().stream()
                     .map(f -> {
                         Field field = new Field();
+                        // incluir ID del field si viene
+                        field.setId(f.getId());
                         field.setName(f.getName());
                         field.setFieldType(f.getFieldType());
                         field.setHourlyRate(f.getHourlyRate());
-                        field.setVenue(venue); // <--- clave: asociar el venue
+                        field.setVenue(venue); // asociar el venue
                         return field;
                     })
                     .collect(Collectors.toList());
@@ -83,4 +88,5 @@ public class VenueModelMapper {
 
         return venue;
     }
+
 }
