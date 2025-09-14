@@ -7,73 +7,54 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ReservationDboMapper {
-    public static Reservation toModel(ReservationEntity reservationEntity) {
-        if (reservationEntity == null) return null;
+
+    public static Reservation toModel(ReservationEntity entity) {
+        if (entity == null) return null;
+
         Reservation reservation = new Reservation();
-        reservation.setId(reservationEntity.getId());
-        reservation.setHours(reservationEntity.getHours());
-        reservation.setReservationDate(reservationEntity.getReservationDate());
-        reservation.setUser(UserDboMapper.toModel(reservationEntity.getUser()));
-        reservation.setStartTime(reservationEntity.getStartTime());
-        reservation.setEndTime(reservationEntity.getEndTime());
-        reservation.setStatus(reservationEntity.getStatus());
-        reservation.setField(FieldDboMapper.toSimpleModel(reservationEntity.getField()));
+        reservation.setId(entity.getId());
+        reservation.setCode(entity.getCode());
+        reservation.setUser(entity.getUser());
+        reservation.setCellphone(entity.getCellphone());
+        reservation.setField(FieldDboMapper.toSimpleModel(entity.getField()));
+        reservation.setDuration(entity.getDuration());
+        reservation.setStartTime(entity.getStartTime());
+        reservation.setEndTime(entity.getEndTime());
+        reservation.setReservationDate(entity.getReservationDate());
+        reservation.setStatus(entity.getStatus());
+
         return reservation;
     }
 
     public static ReservationEntity toDbo(Reservation reservation) {
         if (reservation == null) return null;
-        ReservationEntity reservationEntity = new ReservationEntity();
-        reservationEntity.setId(reservation.getId());
-        reservationEntity.setHours(reservation.getHours());
-        reservationEntity.setReservationDate(reservation.getReservationDate());
-        reservationEntity.setUser(UserDboMapper.toDbo(reservation.getUser()));
-        reservationEntity.setStartTime(reservation.getStartTime());
-        reservationEntity.setEndTime(reservation.getEndTime());
-        reservationEntity.setStatus(reservation.getStatus());
-        reservationEntity.setField(FieldDboMapper.toSimpleDbo(reservation.getField()));
-        return reservationEntity;
-    }
 
-    public static Reservation toSimpleModel(ReservationEntity reservationEntity) {
-        if (reservationEntity == null) return null;
-        Reservation reservation = new Reservation();
-        reservation.setId(reservationEntity.getId());
-        reservation.setHours(reservationEntity.getHours());
-        reservation.setReservationDate(reservationEntity.getReservationDate());
-        reservation.setStartTime(reservationEntity.getStartTime());
-        reservation.setEndTime(reservationEntity.getEndTime());
-        reservation.setStatus(reservationEntity.getStatus());
-        reservation.setField(FieldDboMapper.toSimpleModel(reservationEntity.getField()));
-        reservation.setUser(UserDboMapper.toModel(reservationEntity.getUser()));
-        return reservation;
-    }
+        ReservationEntity entity = new ReservationEntity();
+        entity.setId(reservation.getId());
+        entity.setCode(reservation.getCode());
+        entity.setUser(reservation.getUser());
+        entity.setCellphone(reservation.getCellphone());
+        entity.setField(FieldDboMapper.toSimpleDbo(reservation.getField()));
+        entity.setDuration(reservation.getDuration());
+        entity.setStartTime(reservation.getStartTime());
+        entity.setEndTime(reservation.getEndTime());
+        entity.setReservationDate(reservation.getReservationDate());
+        entity.setStatus(reservation.getStatus());
 
-    public static ReservationEntity toSimpleDbo(Reservation reservation) {
-        if (reservation == null) return null;
-        ReservationEntity reservationEntity = new ReservationEntity();
-        reservationEntity.setId(reservation.getId());
-        reservationEntity.setHours(reservation.getHours());
-        reservationEntity.setReservationDate(reservation.getReservationDate());
-        reservationEntity.setStartTime(reservation.getStartTime());
-        reservationEntity.setEndTime(reservation.getEndTime());
-        reservationEntity.setStatus(reservation.getStatus());
-        reservationEntity.setField(FieldDboMapper.toSimpleDbo(reservation.getField()));
-        reservationEntity.setUser(UserDboMapper.toDbo(reservation.getUser()));
-        return reservationEntity;
+        return entity;
     }
 
     public static List<Reservation> toModelList(List<ReservationEntity> entities) {
         if (entities == null) return null;
         return entities.stream()
-                .map(ReservationDboMapper::toSimpleModel)
+                .map(ReservationDboMapper::toModel)
                 .collect(Collectors.toList());
     }
 
     public static List<ReservationEntity> toDboList(List<Reservation> reservations) {
         if (reservations == null) return null;
         return reservations.stream()
-                .map(ReservationDboMapper::toSimpleDbo)
+                .map(ReservationDboMapper::toDbo)
                 .collect(Collectors.toList());
     }
 }

@@ -60,13 +60,12 @@ public class SecurityConfig {
                                 "/actuator/**",
                                 "/uploads/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/field/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/field/**").hasAnyAuthority(Role.FIELD_ADMIN.name())
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/field/**").hasAnyAuthority(Role.FIELD_ADMIN.name())
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/field/**").hasAnyAuthority(Role.FIELD_ADMIN.name())
-                        .requestMatchers(HttpMethod.GET, "/api/v1/reservation/**").hasAnyAuthority(Role.PLAYER.name(),Role.FIELD_ADMIN.name())
-                        .requestMatchers(HttpMethod.POST, "/api/v1/reservation/**").hasAnyAuthority(Role.PLAYER.name())
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/reservation/**").hasAnyAuthority(Role.PLAYER.name(),Role.FIELD_ADMIN.name())
+                        .requestMatchers(HttpMethod.GET,"/api/v1/field/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/venue/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/reservation/code/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/v1/reservation/availability/hours/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/reservation").permitAll()
+                        .requestMatchers(HttpMethod.PUT,"/api/v1/reservation/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

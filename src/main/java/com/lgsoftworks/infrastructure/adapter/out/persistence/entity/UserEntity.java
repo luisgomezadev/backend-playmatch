@@ -30,10 +30,6 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     protected String fullName;
 
-    @Column(nullable = false)
-    protected String city;
-
-
     @Column(unique = true)
     protected String cellphone;
 

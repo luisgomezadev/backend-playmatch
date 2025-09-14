@@ -2,7 +2,6 @@ package com.lgsoftworks.infrastructure.adapter.in.rest.advice;
 
 import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.exception.*;
-import com.lgsoftworks.domain.reservation.enums.StatusReservation;
 import com.lgsoftworks.domain.user.enums.Role;
 import com.lgsoftworks.infrastructure.adapter.in.rest.dto.ErrorResponse;
 import jakarta.validation.ConstraintViolation;
@@ -61,7 +60,8 @@ public class GlobalExceptionHandler {
             UserByEmailNotFoundException.class,
             ReservationByIdNotFoundException.class,
             UserByIdNotFoundException.class,
-            FieldByIdNotFoundException.class,
+            VenueByIdNotFoundException.class,
+            FieldByIdNotFoundException.class
     })
     public ErrorResponse handleNotFoundException(RuntimeException ex) {
         return ErrorResponse.builder()
@@ -145,11 +145,19 @@ public class GlobalExceptionHandler {
         }
 
         if (cause.getMessage().contains("Status")) {
-            return buildEnumMessage("Estado de campo inválido", Status.values());
+            return buildEnumMessage("Estado inválido", Status.values());
         }
 
         if (cause.getMessage().contains("Role")) {
-            return buildEnumMessage("Rol inválido", com.lgsoftworks.domain.user.enums.Role.values());
+            return buildEnumMessage("Rol inválido", Role.values());
+        }
+
+        if (cause.getMessage().contains("ReservationDuration")) {
+            return buildEnumMessage("Duración inválida", Role.values());
+        }
+
+        if (cause.getMessage().contains("FieldType")) {
+            return buildEnumMessage("Tipo de cancha inválida", Role.values());
         }
 
         return "Solicitud malformada";

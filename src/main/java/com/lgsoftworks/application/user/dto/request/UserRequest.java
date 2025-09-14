@@ -23,10 +23,6 @@ public class UserRequest {
     @Pattern(regexp = "^[A-Za-zÁÉÍÓÚÑáéíóúñ\\s]+$", message = "El apellido solo puede contener letras")
     private String lastName;
 
-    @NotBlank(message = "La ciudad es requerida")
-    @Size(min = 3, max = 50, message = "La ciudad debe tener entre 3 y 50 caracteres")
-    private String city;
-
     @NotBlank(message = "El número de celular es requerido")
     @Pattern(regexp = "^[0-9]{10}$", message = "El número de celular debe tener 10 dígitos numéricos")
     private String cellphone;

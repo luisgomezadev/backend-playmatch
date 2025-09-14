@@ -1,23 +1,17 @@
 package com.lgsoftworks.infrastructure.adapter.in.rest.controller;
 
-import com.lgsoftworks.application.common.PageResponse;
 import com.lgsoftworks.application.reservation.dto.response.TimeSlot;
-import com.lgsoftworks.application.reservation.dto.request.ReservationFilter;
-import com.lgsoftworks.domain.reservation.enums.StatusReservation;
-import com.lgsoftworks.domain.reservation.port.in.CountReservationUseCase;
+import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.reservation.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.reservation.port.in.ReservationUseCase;
 import com.lgsoftworks.application.reservation.dto.response.ReservationDTO;
 import com.lgsoftworks.application.reservation.dto.request.ReservationRequest;
 import com.lgsoftworks.infrastructure.adapter.in.rest.dto.MessageResponse;
-import com.lgsoftworks.application.reservation.dto.response.ReservationAvailabilityDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,44 +30,15 @@ import java.util.Optional;
 public class ReservationController {
 
     private final ReservationUseCase reservationUseCase;
-    private final CountReservationUseCase countReservationUseCase;
     private final ReservationAvailabilityUseCase reservationAvailabilityUseCase;
 
     @Operation(
-            summary = "Filtrar reservas",
-            description = "Devuelve una lista paginada de reservas que coinciden con los filtros opcionales: fecha, estado, ID del usuario y ID del campo.",
-            parameters = {
-                    @Parameter(name = "date", description = "Fecha de la reserva (formato: yyyy-MM-dd)", example = "2025-07-17"),
-                    @Parameter(name = "status", description = "Estado de la reserva (por ejemplo: ACTIVE, CANCELED, FINISHED)", example = "ACTIVE"),
-                    @Parameter(name = "userId", description = "ID del usuario que realizó la reserva", example = "1"),
-                    @Parameter(name = "fieldId", description = "ID del campo reservado", example = "2"),
-                    @Parameter(name = "page", description = "Número de página para la paginación (por defecto: 0)", example = "0"),
-                    @Parameter(name = "size", description = "Tamaño de página (por defecto: 6)", example = "6")
-            }
-    )
-    @GetMapping
-    public ResponseEntity<PageResponse<ReservationDTO>> getReservations(
-            @RequestParam(value = "date", required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date,
-            @RequestParam(value = "status", required = false) StatusReservation status,
-            @RequestParam(value = "userId", required = false) Long userId,
-            @RequestParam(value = "fieldId", required = false) Long fieldId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "6") int size
-            ) {
-        ReservationFilter filter = new ReservationFilter(date, status, userId, fieldId);
-        return ResponseEntity.ok(reservationUseCase.searchReservations(
-                filter, PageRequest.of(page, size)
-        ));
-    }
-
-    @Operation(
-            summary = "Obtener reservas por ID de campo",
-            description = "Devuelve una lista de reservas asociadas a un campo específico, identificado por su ID.",
+            summary = "Obtener reservas por ID de la cancha",
+            description = "Devuelve una lista de reservas asociadas a una cancha específica, identificada por su ID.",
             parameters = {
                     @Parameter(
                             name = "fieldId",
-                            description = "ID del campo para el que se desean obtener las reservas",
+                            description = "ID de la cancha para la que se desean obtener las reservas",
                             required = true,
                             example = "1"
                     )
@@ -85,44 +50,45 @@ public class ReservationController {
     }
 
     @Operation(
-            summary = "Obtener reservas por cancha y estado",
-            description = "Devuelve una lista de reservas que pertenecen a una cancha específica y que tienen un estado determinado.",
+            summary = "Obtener reservas por ID del complejo",
+            description = "Devuelve una lista de reservas asociadas a un complejo específico, identificado por su ID.",
             parameters = {
                     @Parameter(
-                            name = "fieldId",
-                            description = "ID de la cancha",
+                            name = "venueId",
+                            description = "ID del específico para el que se desean obtener las reservas",
                             required = true,
                             example = "1"
-                    ),
-                    @Parameter(
-                            name = "status",
-                            description = "Estado de la reserva (por ejemplo: ACTIVE, CANCELED, FINISHED)",
-                            required = true,
-                            schema = @Schema(implementation = StatusReservation.class)
                     )
             }
     )
-    @GetMapping("/field/{fieldId}/status/{status}")
-    public ResponseEntity<List<ReservationDTO>> getReservationsByFieldIdAndStatus(@PathVariable Long fieldId,
-                                                                                  @PathVariable StatusReservation status) {
-        return ResponseEntity.ok(reservationUseCase.findByFieldIdAndStatus(fieldId, status));
+    @GetMapping("/venue/{venueId}")
+    public ResponseEntity<List<ReservationDTO>> getReservationsByVenueId(@PathVariable Long venueId) {
+        return ResponseEntity.ok(reservationUseCase.findByVenueId(venueId));
     }
 
     @Operation(
-            summary = "Obtener reservas por usuario",
-            description = "Devuelve una lista de reservas asociadas a un usuario específico.",
+            summary = "Obtener reserva por código",
+            description = "Devuelve una reserva específica, identificada por su código.",
             parameters = {
                     @Parameter(
-                            name = "userId",
-                            description = "ID del usuario",
+                            name = "code",
+                            description = "Código de la reserva para obtener toda su información",
                             required = true,
-                            example = "1"
+                            example = "ABC123"
                     )
             }
     )
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ReservationDTO>> getReservationsByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(reservationUseCase.findByUserId(userId));
+    @GetMapping("/code/{code}")
+    public ResponseEntity<Optional<ReservationDTO>> getReservationByCode(@PathVariable String code) {
+        return ResponseEntity.ok(reservationUseCase.findByCode(code));
+    }
+
+    @GetMapping("/venue/{venueId}/date")
+    public ResponseEntity<List<ReservationDTO>>
+    getReservationsByVenueIdAndDate(@PathVariable Long venueId,
+                                    @RequestParam(value = "date", required = false)
+                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date) {
+        return ResponseEntity.ok(reservationUseCase.findByVenueIdAndDate(venueId, date));
     }
 
     @Operation(
@@ -136,7 +102,7 @@ public class ReservationController {
 
     @Operation(
             summary = "Cancelar una reserva",
-            description = "Actualiza el estado de una reserva a CANCELADO usando su ID.",
+            description = "Actualiza el estado de una reserva a INACTIVO usando su ID.",
             parameters = {
                     @Parameter(
                             name = "id",
@@ -146,106 +112,11 @@ public class ReservationController {
                     )
             }
     )
-    @PutMapping("/{id}/status/canceled")
-    public ResponseEntity<MessageResponse> canceledStatus(@PathVariable Long id) {
-        reservationUseCase.updateStatus(id, StatusReservation.CANCELED);
+    @PutMapping("/{id}/canceled")
+    public ResponseEntity<MessageResponse> canceledReservation(@PathVariable Long id) {
+        reservationUseCase.updateStatus(id, Status.INACTIVE);
         return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse("Se ha actualizado el estado de la reserva"));
-    }
-
-    @Operation(
-            summary = "Finalizar una reserva",
-            description = "Actualiza el estado de una reserva a FINALIZADO usando su ID.",
-            parameters = {
-                    @Parameter(
-                            name = "id",
-                            description = "ID de la reserva que se desea finalizar",
-                            required = true,
-                            example = "12"
-                    )
-            }
-    )
-    @PutMapping("/{id}/status/finalize")
-    public ResponseEntity<MessageResponse> finalizeStatus(@PathVariable Long id) {
-        reservationUseCase.updateStatus(id, StatusReservation.FINISHED);
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new MessageResponse("Se ha actualizado el estado de la reserva"));
-    }
-
-    @Operation(
-            summary = "Obtener cantidad de reservas activas por usuario",
-            description = "Devuelve la cantidad total de reservas con estado ACTIVO asociadas al usuario especificado.",
-            parameters = {
-                    @Parameter(
-                            name = "userId",
-                            description = "ID del usuario",
-                            required = true,
-                            example = "5"
-                    )
-            }
-    )
-    @GetMapping("/user/{userId}/active")
-    public ResponseEntity<Long> getCountActiveByUser(@PathVariable Long userId) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(countReservationUseCase.countReservationsByUserAndStatus(userId, StatusReservation.ACTIVE));
-    }
-
-    @Operation(
-            summary = "Obtener cantidad de reservas activas por campo",
-            description = "Devuelve el número total de reservas con estado ACTIVO asociadas al campo especificado.",
-            parameters = {
-                    @Parameter(
-                            name = "fieldId",
-                            description = "ID del campo",
-                            required = true,
-                            example = "3"
-                    )
-            }
-    )
-    @GetMapping("/field/{fieldId}/active")
-    public ResponseEntity<Long> getCountActiveByField(@PathVariable Long fieldId) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(countReservationUseCase.countReservationsByFieldAndStatus(fieldId, StatusReservation.ACTIVE));
-    }
-
-    @Operation(
-            summary = "Obtener cantidad de reservas canceladas por campo",
-            description = "Devuelve el número total de reservas con estado CANCELED asociadas al campo especificado.",
-            parameters = {
-                    @Parameter(
-                            name = "fieldId",
-                            description = "ID del campo",
-                            required = true,
-                            example = "3"
-                    )
-            }
-    )
-    @GetMapping("/field/{fieldId}/canceled")
-    public ResponseEntity<Long> getCountCanceledByField(@PathVariable Long fieldId) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(countReservationUseCase
-                        .countReservationsByFieldAndStatus(fieldId, StatusReservation.CANCELED)
-                );
-    }
-
-    @Operation(
-            summary = "Obtener cantidad de reservas finalizadas por campo",
-            description = "Devuelve el número total de reservas con estado FINISHED asociadas al campo especificado.",
-            parameters = {
-                    @Parameter(
-                            name = "fieldId",
-                            description = "ID del campo",
-                            required = true,
-                            example = "3"
-                    )
-            }
-    )
-    @GetMapping("/field/{fieldId}/finished")
-    public ResponseEntity<Long> getCountFinishedByField(@PathVariable Long fieldId) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(countReservationUseCase
-                        .countReservationsByFieldAndStatus(fieldId, StatusReservation.FINISHED)
-                );
+                new MessageResponse("Se ha cancelado la reserva"));
     }
 
     @Operation(
@@ -253,7 +124,7 @@ public class ReservationController {
             description = "Recibe los datos de la reserva y verifica la disponibilidad para esa fecha y campo y devuelve la reserva."
     )
     @PostMapping("/availability")
-    public ResponseEntity<Optional<ReservationAvailabilityDTO>> getReservationAvailability(@RequestBody ReservationRequest reservationRequest) {
+    public ResponseEntity<Optional<ReservationDTO>> getReservationAvailability(@RequestBody ReservationRequest reservationRequest) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(reservationAvailabilityUseCase
                         .reservationAvailability(reservationRequest)
@@ -262,16 +133,12 @@ public class ReservationController {
 
     @GetMapping("/availability/hours")
     public ResponseEntity<List<TimeSlot>> getHoursAvailability(
+            @RequestParam Long venueId,
             @RequestParam Long fieldId,
             @RequestParam(value = "date", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date
     ) {
-        return ResponseEntity.ok(reservationAvailabilityUseCase.getAvailableSlots(fieldId, date));
-    }
-
-    @GetMapping("/latest/{fieldId}")
-    public ResponseEntity<List<ReservationDTO>> getLastThreeReservationsByField(@PathVariable Long fieldId) {
-        return ResponseEntity.ok(reservationUseCase.findLastThreeReservations(fieldId));
+        return ResponseEntity.ok(reservationAvailabilityUseCase.getAvailableSlots(venueId, fieldId, date));
     }
 
 }

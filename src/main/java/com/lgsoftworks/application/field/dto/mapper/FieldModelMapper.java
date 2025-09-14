@@ -10,50 +10,35 @@ public class FieldModelMapper {
 
     public static FieldDTO toDTO(Field field) {
         if (field == null) return null;
-        FieldDTO fieldDTO = new FieldDTO();
-        fieldDTO.setId(field.getId());
-        fieldDTO.setName(field.getName());
-        fieldDTO.setCity(field.getCity());
-        fieldDTO.setAddress(field.getAddress());
-        fieldDTO.setHourlyRate(field.getHourlyRate());
-        fieldDTO.setOpeningHour(field.getOpeningHour());
-        fieldDTO.setClosingHour(field.getClosingHour());
-        fieldDTO.setStatus(field.getStatus());
-        fieldDTO.setImageUrl(field.getImageUrl());
-        fieldDTO.setAdmin(UserModelMapper.toUserDTO(field.getAdmin()));
 
-        return fieldDTO;
+        FieldDTO dto = new FieldDTO();
+        dto.setId(field.getId());
+        dto.setName(field.getName());
+        dto.setFieldType(field.getFieldType());
+        dto.setHourlyRate(field.getHourlyRate());
+
+        return dto;
     }
 
-    public static Field toModel(FieldDTO fieldDTO) {
-        if (fieldDTO == null) return null;
+    public static Field toModel(FieldDTO dto) {
+        if (dto == null) return null;
+
         Field field = new Field();
-        field.setId(fieldDTO.getId());
-        field.setName(fieldDTO.getName());
-        field.setCity(fieldDTO.getCity());
-        field.setAddress(fieldDTO.getAddress());
-        field.setHourlyRate(fieldDTO.getHourlyRate());
-        field.setOpeningHour(fieldDTO.getOpeningHour());
-        field.setClosingHour(fieldDTO.getClosingHour());
-        field.setStatus(fieldDTO.getStatus());
-        field.setImageUrl(fieldDTO.getImageUrl());
-        field.setAdmin(UserModelMapper.toUser(fieldDTO.getAdmin()));
+        field.setId(dto.getId());
+        field.setName(dto.getName());
+        field.setFieldType(dto.getFieldType());
+        field.setHourlyRate(dto.getHourlyRate());
 
         return field;
     }
 
-    public static Field toModelRequest(FieldRequest fieldRequest) {
-        if (fieldRequest == null) return null;
+    public static Field toModelRequest(FieldRequest request) {
+        if (request == null) return null;
+
         Field field = new Field();
-        field.setId(fieldRequest.getId());
-        field.setName(fieldRequest.getName());
-        field.setCity(fieldRequest.getCity());
-        field.setAddress(fieldRequest.getAddress());
-        field.setHourlyRate(fieldRequest.getHourlyRate());
-        field.setOpeningHour(fieldRequest.getOpeningHour());
-        field.setClosingHour(fieldRequest.getClosingHour());
-        field.setStatus(fieldRequest.getStatus());
-        field.setImageUrl(fieldRequest.getImageUrl());
+        field.setName(request.getName());
+        field.setFieldType(request.getFieldType());
+        field.setHourlyRate(request.getHourlyRate());
 
         return field;
     }

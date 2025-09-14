@@ -1,6 +1,6 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.specifications;
 
-import com.lgsoftworks.domain.reservation.enums.StatusReservation;
+import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.ReservationEntity;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -20,10 +20,5 @@ public class ReservationSpecification {
     public static Specification<ReservationEntity> hasFieldId(Long fieldId) {
         return (root, query, cb) ->
                 fieldId == null ? null : cb.equal(root.get("field").get("id"), fieldId);
-    }
-
-    public static Specification<ReservationEntity> hasStatus(StatusReservation status) {
-        return (root, query, cb) ->
-                status == null ? null : cb.equal(root.get("status"), status);
     }
 }

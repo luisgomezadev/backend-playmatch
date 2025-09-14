@@ -1,21 +1,22 @@
 package com.lgsoftworks.application.reservation.service;
 
+import com.lgsoftworks.application.reservation.dto.response.ReservationDTO;
 import com.lgsoftworks.application.reservation.dto.response.TimeSlot;
 import com.lgsoftworks.application.reservation.dto.mapper.ReservationModelMapper;
-import com.lgsoftworks.domain.common.port.out.CloudinaryImageUploaderPort;
+import com.lgsoftworks.domain.common.enums.Status;
+import com.lgsoftworks.domain.common.util.GenerateCodeUtil;
 import com.lgsoftworks.domain.exception.FieldByIdNotFoundException;
-import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
+import com.lgsoftworks.domain.exception.VenueByIdNotFoundException;
 import com.lgsoftworks.application.reservation.dto.request.ReservationRequest;
-import com.lgsoftworks.application.reservation.dto.response.ReservationAvailabilityDTO;
 import com.lgsoftworks.domain.field.model.Field;
 import com.lgsoftworks.domain.field.port.out.FieldRepositoryPort;
-import com.lgsoftworks.domain.reservation.enums.StatusReservation;
 import com.lgsoftworks.domain.reservation.model.Reservation;
 import com.lgsoftworks.domain.reservation.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.reservation.port.out.ReservationRepositoryPort;
 import com.lgsoftworks.domain.reservation.validation.ValidateReservation;
-import com.lgsoftworks.domain.user.model.User;
-import com.lgsoftworks.domain.user.port.out.UserRepositoryPort;
+import com.lgsoftworks.domain.venue.model.Venue;
+import com.lgsoftworks.domain.venue.port.out.VenueRepositoryPort;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,32 +26,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationAvailabilityService implements ReservationAvailabilityUseCase {
 
-    private final FieldRepositoryPort fieldRepositoryPort;
+    private final VenueRepositoryPort venueRepositoryPort;
     private final ReservationRepositoryPort reservationRepositoryPort;
-    private final UserRepositoryPort userRepositoryPort;
-    private final ValidateReservation validateReservation;
-
-    public ReservationAvailabilityService(FieldRepositoryPort fieldRepositoryPort,
-                                          UserRepositoryPort userRepositoryPort,
-                                          ReservationRepositoryPort reservationRepositoryPort,
-                                          CloudinaryImageUploaderPort cloudinaryImageUploaderPort) {
-        this.userRepositoryPort = userRepositoryPort;
-        this.fieldRepositoryPort = fieldRepositoryPort;
-        this.validateReservation = new ValidateReservation(reservationRepositoryPort);
-        this.reservationRepositoryPort = reservationRepositoryPort;
-    }
+    private final FieldRepositoryPort fieldRepositoryPort;
 
     @Override
-    public List<TimeSlot> getAvailableSlots(Long fieldId, LocalDate date) {
-        Field field = fieldRepositoryPort.findById(fieldId)
-                .orElseThrow(() -> new FieldByIdNotFoundException(fieldId));
+    public List<TimeSlot> getAvailableSlots(Long venueId, Long fieldId, LocalDate date) {
+        Venue venue = venueRepositoryPort.findById(venueId)
+                .orElseThrow(() -> new VenueByIdNotFoundException(venueId));
 
-        LocalTime open = field.getOpeningHour();
-        LocalTime close = field.getClosingHour();
+        LocalTime open = venue.getOpeningHour();
+        LocalTime close = venue.getClosingHour();
 
-        List<Reservation> reservations = reservationRepositoryPort.findActiveByFieldIdAndDate(fieldId, date);
+        List<Reservation> reservations = reservationRepositoryPort.findByFieldIdAndDate(fieldId, date);
 
         List<TimeSlot> available = new ArrayList<>();
         LocalTime current = open;
@@ -70,26 +61,21 @@ public class ReservationAvailabilityService implements ReservationAvailabilityUs
     }
 
     @Override
-    public Optional<ReservationAvailabilityDTO> reservationAvailability(ReservationRequest reservationRequest) {
+    public Optional<ReservationDTO> reservationAvailability(ReservationRequest reservationRequest) {
         Field field = fieldRepositoryPort.findById(reservationRequest.getFieldId())
                 .orElseThrow(() -> new FieldByIdNotFoundException(reservationRequest.getFieldId()));
 
-        User user = userRepositoryPort.findById(reservationRequest.getUserId())
-                .orElseThrow(() -> new UserByIdNotFoundException(reservationRequest.getUserId()));
-
-        LocalTime time = reservationRequest.getStartTime().plusHours(reservationRequest.getHours());
-
-        reservationRequest.setStatus(StatusReservation.ACTIVE); // Estado por defecto cuando se crea una reserva
+        LocalTime time = reservationRequest.getStartTime().plusMinutes(reservationRequest.getDuration().getMinutes());
 
         Reservation reservation = ReservationModelMapper.toModelRequest(reservationRequest);
         reservation.setEndTime(time);
         reservation.setField(field);
-        reservation.setUser(user);
+        reservation.setCode(GenerateCodeUtil.generateCode(6));
+        reservation.setStatus(Status.ACTIVE);
 
-        validateReservation.validateUserHasReservation(user);
-        validateReservation.validateTimeWithinFieldSchedule(reservation, field);
-        validateReservation.validateFieldAvailability(reservation, field);
+        ValidateReservation.validateTimeWithinVenueSchedule(reservation, field.getVenue());
+        ValidateReservation.validateFieldAvailability(reservation, field);
 
-        return Optional.of(ReservationModelMapper.toAvailabilityDTO(reservation));
+        return Optional.of(ReservationModelMapper.toDTO(reservation));
     }
 }

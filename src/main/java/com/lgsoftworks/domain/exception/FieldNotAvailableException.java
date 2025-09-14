@@ -4,6 +4,6 @@ import com.lgsoftworks.domain.field.model.Field;
 
 public class FieldNotAvailableException extends RuntimeException {
     public FieldNotAvailableException(Field field) {
-        super("El campo: " + field.getName() + " ya está reservado para esa fecha y hora");
+        super(field.getName() + " de " + field.getVenue().getName() + " ya está reservada para esa fecha y hora");
     }
 }

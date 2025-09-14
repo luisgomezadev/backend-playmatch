@@ -12,7 +12,6 @@ public class UserDboMapper {
         user.setFirstName(entity.getFirstName());
         user.setLastName(entity.getLastName());
         user.setFullName(entity.getFullName());
-        user.setCity(entity.getCity());
         user.setCellphone(entity.getCellphone());
         user.setEmail(entity.getEmail());
         user.setPassword(entity.getPassword());
@@ -28,7 +27,6 @@ public class UserDboMapper {
         entity.setFirstName(model.getFirstName());
         entity.setLastName(model.getLastName());
         entity.setFullName(model.getFullName());
-        entity.setCity(model.getCity());
         entity.setCellphone(model.getCellphone());
         entity.setEmail(model.getEmail());
         entity.setPassword(model.getPassword());

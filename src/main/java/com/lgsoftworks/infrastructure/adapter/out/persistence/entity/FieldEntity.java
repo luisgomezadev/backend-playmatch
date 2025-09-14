@@ -1,6 +1,7 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.entity;
 
 import com.lgsoftworks.domain.common.enums.Status;
+import com.lgsoftworks.domain.field.enums.FieldType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,23 +18,20 @@ import java.util.List;
 @Getter
 @Setter
 public class FieldEntity extends BaseEntity{
+    @Column(nullable = false)
     private String name;
-    private String city;
-    private String address;
-    private BigDecimal hourlyRate;
-    private LocalTime openingHour;
-    private LocalTime closingHour;
-
-    @Column(name = "image_url")
-    private String imageUrl;
-
-    @OneToOne
-    @JoinColumn(name = "admin_id", unique = true)
-    private UserEntity admin;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    @Column(nullable = false)
+    private FieldType fieldType;
 
-    @OneToMany(mappedBy = "field", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(nullable = false)
+    private BigDecimal hourlyRate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "venue_id", nullable = false)
+    private VenueEntity venue;
+
+    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReservationEntity> reservations = new ArrayList<>();
 }

@@ -11,7 +11,4 @@ import java.util.Optional;
 
 @Repository
 public interface FieldRepository extends JpaRepository<FieldEntity, Long>, JpaSpecificationExecutor<FieldEntity> {
-    boolean existsByAdminId(Long id);
-    Optional<FieldEntity> findByAdminId(Long id);
-    List<FieldEntity> findAllByStatus(Status status);
 }

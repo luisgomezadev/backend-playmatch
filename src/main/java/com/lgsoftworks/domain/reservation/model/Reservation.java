@@ -1,8 +1,8 @@
 package com.lgsoftworks.domain.reservation.model;
 
+import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.field.model.Field;
-import com.lgsoftworks.domain.user.model.User;
-import com.lgsoftworks.domain.reservation.enums.StatusReservation;
+import com.lgsoftworks.domain.reservation.enums.ReservationDuration;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +17,13 @@ import java.time.LocalTime;
 @Setter
 public class Reservation {
     private Long id;
-    private User user;
+    private String code;
+    private String user;
+    private String cellphone;
     private Field field;
-    private Byte hours;
+    private ReservationDuration duration;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate reservationDate;
-    private StatusReservation status;
-
+    private Status status;
 }

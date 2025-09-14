@@ -15,7 +15,6 @@ public class UserModelMapper {
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setFullName(user.getFullName());
-        userDTO.setCity(user.getCity());
         userDTO.setCellphone(user.getCellphone());
         userDTO.setEmail(user.getEmail());
         userDTO.setImageUrl(user.getImageUrl());
@@ -30,7 +29,6 @@ public class UserModelMapper {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setFullName(userDTO.getFullName());
-        user.setCity(userDTO.getCity());
         user.setCellphone(userDTO.getCellphone());
         user.setEmail(userDTO.getEmail());
         user.setImageUrl(userDTO.getImageUrl());
@@ -45,7 +43,6 @@ public class UserModelMapper {
         user.setFirstName(userRequest.getFirstName());
         user.setLastName(userRequest.getLastName());
         user.setFullName(buildFullName(userRequest.getFirstName(), userRequest.getLastName()));
-        user.setCity(userRequest.getCity());
         user.setCellphone(userRequest.getCellphone());
         user.setEmail(userRequest.getEmail());
         user.setPassword(userRequest.getPassword());

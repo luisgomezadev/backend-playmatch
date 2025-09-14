@@ -1,12 +1,9 @@
 package com.lgsoftworks.application.reservation.service;
 
-import com.lgsoftworks.application.common.PageResponse;
-import com.lgsoftworks.application.reservation.dto.request.ReservationFilter;
 import com.lgsoftworks.application.reservation.dto.mapper.ReservationModelMapper;
 import com.lgsoftworks.application.reservation.dto.response.ReservationDTO;
 import com.lgsoftworks.application.reservation.dto.request.ReservationRequest;
-import com.lgsoftworks.application.reservation.dto.response.ReservationAvailabilityDTO;
-import com.lgsoftworks.domain.reservation.enums.StatusReservation;
+import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.reservation.model.Reservation;
 import com.lgsoftworks.domain.reservation.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.reservation.port.in.ReservationUseCase;
@@ -15,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -27,36 +25,24 @@ public class ReservationService implements ReservationUseCase {
     private final ReservationAvailabilityUseCase reservationAvailabilityUseCase;
 
     @Override
-    public PageResponse<ReservationDTO> searchReservations(ReservationFilter filter, Pageable pageable) {
-        Sort sort = Sort.by(Sort.Order.desc("reservationDate"), Sort.Order.desc("startTime"));
-        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
-
-        Page<ReservationDTO> reservationDTOS = reservationRepositoryPort.searchReservations(filter, sortedPageable)
-                .map(ReservationModelMapper::toDTO);
-
-        return new PageResponse<>(
-                reservationDTOS.getContent(),
-                reservationDTOS.getNumber(),
-                reservationDTOS.getSize(),
-                reservationDTOS.getTotalElements(),
-                reservationDTOS.getTotalPages(),
-                reservationDTOS.isLast()
-        );
-    }
-
-    @Override
     public Optional<ReservationDTO> findById(Long id) {
         Optional<Reservation> reservation = reservationRepositoryPort.findById(id);
         return reservation.map(ReservationModelMapper::toDTO);
     }
 
     @Override
+    public Optional<ReservationDTO> findByCode(String code) {
+        Optional<Reservation> reservation = reservationRepositoryPort.findByCode(code);
+        return reservation.map(ReservationModelMapper::toDTO);
+    }
+
+    @Override
     public ReservationDTO save(ReservationRequest reservationRequest) {
 
-        Optional<ReservationAvailabilityDTO> reservationDTO = reservationAvailabilityUseCase.reservationAvailability(reservationRequest);
+        Optional<ReservationDTO> reservationDTO = reservationAvailabilityUseCase.reservationAvailability(reservationRequest);
 
         if (reservationDTO.isPresent()) {
-            Reservation reservation = ReservationModelMapper.toModelOfAvailability(reservationDTO.get());
+            Reservation reservation = ReservationModelMapper.toModel(reservationDTO.get());
 
             Reservation savedReservation = reservationRepositoryPort.save(reservation);
             return ReservationModelMapper.toDTO(savedReservation);
@@ -70,13 +56,8 @@ public class ReservationService implements ReservationUseCase {
     }
 
     @Override
-    public void deleteById(Long id) {
-        reservationRepositoryPort.deleteById(id);
-    }
-
-    @Override
-    public void updateStatus(Long id, StatusReservation status) {
-        reservationRepositoryPort.updateStatus(id, status);
+    public void updateStatus(Long reservationId, Status status) {
+        reservationRepositoryPort.updateStatus(reservationId, status);
     }
 
     @Override
@@ -90,31 +71,21 @@ public class ReservationService implements ReservationUseCase {
     }
 
     @Override
-    public List<ReservationDTO> findByFieldIdAndStatus(Long fieldId, StatusReservation status) {
-        List<Reservation> reservationList = reservationRepositoryPort.findByFieldIdAndStatus(fieldId, status);
+    public List<ReservationDTO> findByVenueId(Long venueId) {
+        List<Reservation> reservationList = reservationRepositoryPort.findByVenueId(venueId);
         return reservationList.stream()
-                .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
-                        .thenComparing(Reservation::getStartTime))
+                .sorted(Comparator.comparing(Reservation::getReservationDate))
                 .map(ReservationModelMapper::toDTO)
                 .toList();
     }
 
     @Override
-    public List<ReservationDTO> findByUserId(Long userId) {
-        List<Reservation> reservationList = reservationRepositoryPort.findByUserId(userId);
-        return reservationList.stream()
-                .sorted(Comparator.comparing(Reservation::getReservationDate).reversed()
-                        .thenComparing(Reservation::getStartTime))
+    public List<ReservationDTO> findByVenueIdAndDate(Long venueId, LocalDate date) {
+        List<Reservation> reservationList = reservationRepositoryPort.findByVenueIdAndDate(venueId, date);
+        return reservationList
+                .stream()
+                .sorted(Comparator.comparing(Reservation::getStartTime))
                 .map(ReservationModelMapper::toDTO)
                 .toList();
     }
-
-    @Override
-    public List<ReservationDTO> findLastThreeReservations(Long fieldId) {
-        List<Reservation> reservationList = reservationRepositoryPort.findLastThreeReservations(fieldId);
-        return reservationList.stream()
-                .map(ReservationModelMapper::toDTO)
-                .toList();
-    }
-
 }

@@ -9,11 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FieldRepositoryPort {
-    Page<Field> searchFields(FieldFilter filter, Pageable pageable);
     Optional<Field> findById(Long id);
-    Optional<Field> findByAdminId(Long id);
-    List<Field> findAllActive();
+
     Field save(Field field);
+
     void deleteById(Long id);
-    boolean existsByAdminId(Long id);
 }
