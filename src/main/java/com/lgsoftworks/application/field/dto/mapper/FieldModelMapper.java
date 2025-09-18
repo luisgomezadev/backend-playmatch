@@ -3,7 +3,6 @@ package com.lgsoftworks.application.field.dto.mapper;
 
 import com.lgsoftworks.application.field.dto.request.FieldRequest;
 import com.lgsoftworks.application.field.dto.response.FieldDTO;
-import com.lgsoftworks.application.user.dto.mapper.UserModelMapper;
 import com.lgsoftworks.domain.field.model.Field;
 
 public class FieldModelMapper {

@@ -36,7 +36,6 @@ com\lgsoftworks\infrastructure\adapter\in\security\dto\AuthenticationRequest.cla
 com\lgsoftworks\infrastructure\adapter\out\persistence\cloudinary\CloudinaryConfig.class
 com\lgsoftworks\infrastructure\adapter\in\rest\advice\GlobalExceptionHandler.class
 com\lgsoftworks\infrastructure\security\AuthenticationConfig.class
-com\lgsoftworks\application\user\dto\request\UserFilter.class
 com\lgsoftworks\infrastructure\adapter\in\rest\controller\UserController.class
 com\lgsoftworks\infrastructure\adapter\out\persistence\ReservationJpaAdapter.class
 com\lgsoftworks\application\reservation\dto\response\TimeSlot.class

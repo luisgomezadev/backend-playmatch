@@ -1,6 +1,5 @@
 package com.lgsoftworks.application.field.dto.request;
 
-import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.field.enums.FieldType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

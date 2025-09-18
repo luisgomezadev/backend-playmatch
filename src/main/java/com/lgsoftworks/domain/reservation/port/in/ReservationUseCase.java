@@ -15,7 +15,6 @@ public interface ReservationUseCase {
     Optional<ReservationDTO> findById(Long id);
     Optional<ReservationDTO> findByCode(String code);
     ReservationDTO save(ReservationRequest reservationRequest);
-    ReservationDTO update(ReservationRequest reservationRequest);
     void updateStatus(Long reservationId, Status status);
     List<ReservationDTO> findByFieldId(Long fieldId);
     List<ReservationDTO> findByVenueId(Long venueId);

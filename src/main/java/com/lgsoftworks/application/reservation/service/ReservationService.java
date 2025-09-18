@@ -9,7 +9,6 @@ import com.lgsoftworks.domain.reservation.port.in.ReservationAvailabilityUseCase
 import com.lgsoftworks.domain.reservation.port.in.ReservationUseCase;
 import com.lgsoftworks.domain.reservation.port.out.ReservationRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -47,11 +46,6 @@ public class ReservationService implements ReservationUseCase {
             Reservation savedReservation = reservationRepositoryPort.save(reservation);
             return ReservationModelMapper.toDTO(savedReservation);
         }
-        return null;
-    }
-
-    @Override
-    public ReservationDTO update(ReservationRequest reservationRequest) {
         return null;
     }
 

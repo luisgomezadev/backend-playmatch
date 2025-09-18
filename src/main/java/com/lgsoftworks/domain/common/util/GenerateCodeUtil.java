@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 public class GenerateCodeUtil {
 
     private static final String CHARACTERS =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     private static final SecureRandom random = new SecureRandom();
 

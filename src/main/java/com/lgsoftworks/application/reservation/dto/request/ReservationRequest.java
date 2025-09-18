@@ -2,7 +2,6 @@ package com.lgsoftworks.application.reservation.dto.request;
 
 import com.lgsoftworks.domain.reservation.enums.ReservationDuration;
 import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

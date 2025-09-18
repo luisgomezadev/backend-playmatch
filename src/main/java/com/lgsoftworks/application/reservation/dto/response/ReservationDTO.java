@@ -1,8 +1,6 @@
 package com.lgsoftworks.application.reservation.dto.response;
 
-import com.lgsoftworks.application.field.dto.response.FieldDTO;
 import com.lgsoftworks.domain.common.enums.Status;
-import com.lgsoftworks.domain.field.model.Field;
 import com.lgsoftworks.domain.reservation.enums.ReservationDuration;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

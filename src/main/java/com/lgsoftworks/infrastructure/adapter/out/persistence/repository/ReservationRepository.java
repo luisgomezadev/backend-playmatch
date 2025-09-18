@@ -21,7 +21,7 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     List<ReservationEntity> findByFieldIdAndStatus(Long fieldId, Status status);
     List<ReservationEntity> findByField_Venue_IdAndStatus(Long venueId, Status status);
     List<ReservationEntity> findByField_Venue_IdAndStatusAndReservationDate(Long venueId, Status status, LocalDate date);
-    List<ReservationEntity> findByFieldIdAndReservationDate(Long fieldId, LocalDate date);
+    List<ReservationEntity> findByFieldIdAndReservationDateAndStatus(Long fieldId, LocalDate date, Status status);
     Optional<ReservationEntity> findByCodeAndStatus(String code, Status status);
 
     @Modifying

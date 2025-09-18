@@ -7,10 +7,8 @@ import com.lgsoftworks.application.venue.dto.mapper.VenueModelMapper;
 import com.lgsoftworks.application.venue.dto.request.VenueFilter;
 import com.lgsoftworks.application.venue.dto.request.VenueRequest;
 import com.lgsoftworks.application.venue.dto.response.VenueDTO;
-import com.lgsoftworks.domain.common.util.GenerateCodeUtil;
 import com.lgsoftworks.domain.exception.UserAlreadyAssignedAsAdminException;
 import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
-import com.lgsoftworks.domain.exception.VenueByIdNotFoundException;
 import com.lgsoftworks.domain.field.model.Field;
 import com.lgsoftworks.domain.user.model.User;
 import com.lgsoftworks.domain.user.port.out.UserRepositoryPort;
@@ -149,8 +147,6 @@ public class VenueService implements VenueUseCase {
 
         return VenueModelMapper.toDTO(updatedVenue);
     }
-
-
 
     @Override
     public boolean existsByAdminId(Long adminId) {

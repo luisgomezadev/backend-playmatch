@@ -1,6 +1,5 @@
 package com.lgsoftworks.application.field.dto.response;
 
-import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.field.enums.FieldType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -63,7 +63,7 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
 
     @Override
     public List<Reservation> findByFieldIdAndDate(Long fieldId, LocalDate date) {
-        return reservationRepository.findByFieldIdAndReservationDate(fieldId, date)
+        return reservationRepository.findByFieldIdAndReservationDateAndStatus(fieldId, date, Status.ACTIVE)
                 .stream()
                 .sorted(Comparator.comparing(ReservationEntity::getStartTime))
                 .map(ReservationDboMapper::toModel)

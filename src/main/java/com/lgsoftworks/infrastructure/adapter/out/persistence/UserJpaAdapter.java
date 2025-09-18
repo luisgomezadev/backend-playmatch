@@ -1,6 +1,5 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence;
 
-import com.lgsoftworks.application.user.dto.request.UserFilter;
 import com.lgsoftworks.domain.exception.UserByIdNotFoundException;
 import com.lgsoftworks.domain.user.model.User;
 import com.lgsoftworks.domain.user.port.out.UserRepositoryPort;
@@ -21,17 +20,6 @@ import java.util.Optional;
 public class UserJpaAdapter implements UserRepositoryPort {
 
     private final UserRepository userRepository;
-
-    @Override
-    public Page<User> searchUsers(UserFilter filter, Pageable pageable) {
-        Specification<UserEntity> spec = Specification
-                .where(UserSpecification.hasName(filter.getName()))
-                .and(UserSpecification.hasCity(filter.getCity()))
-                .and(UserSpecification.hasRole(filter.getRole()));
-
-        return userRepository.findAll(spec, pageable)
-                .map(UserDboMapper::toModel);
-    }
 
     @Override
     public Optional<User> findById(Long id) {

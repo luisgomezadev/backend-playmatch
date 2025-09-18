@@ -1,7 +1,6 @@
 package com.lgsoftworks.application.user.service;
 
 import com.lgsoftworks.application.common.PageResponse;
-import com.lgsoftworks.application.user.dto.request.UserFilter;
 import com.lgsoftworks.application.user.dto.mapper.UserModelMapper;
 import com.lgsoftworks.application.user.dto.request.UserRequest;
 import com.lgsoftworks.application.user.dto.response.UserDTO;
@@ -34,22 +33,6 @@ public class UserService implements UserUseCase, UploadUserImageUseCase {
     }
 
     @Override
-    public PageResponse<UserDTO> searchUsers(UserFilter filter, Pageable pageable) {
-
-        Page<UserDTO> userDTOS = userRepositoryPort.searchUsers(filter, pageable)
-                .map(UserModelMapper::toUserDTO);
-
-        return new PageResponse<>(
-                userDTOS.getContent(),
-                userDTOS.getNumber(),
-                userDTOS.getSize(),
-                userDTOS.getTotalElements(),
-                userDTOS.getTotalPages(),
-                userDTOS.isLast()
-        );
-    }
-
-    @Override
     public Optional<UserDTO> findById(Long id) {
         Optional<User> user = userRepositoryPort.findById(id);
         return user.map(UserModelMapper::toUserDTO);
@@ -60,18 +43,6 @@ public class UserService implements UserUseCase, UploadUserImageUseCase {
         validateUser.validate(userRequest.getEmail(), userRequest.getCellphone());
         User savedUser = userRepositoryPort.save(UserModelMapper.requestToModel(userRequest));
         return UserModelMapper.toUserDTO(savedUser);
-    }
-
-    @Override
-    public UserDTO update(UserRequest userRequest) {
-        validateUser.validate(userRequest.getEmail(), userRequest.getCellphone());
-        User updatedUser = userRepositoryPort.save(UserModelMapper.requestToModel(userRequest));
-        return UserModelMapper.toUserDTO(updatedUser);
-    }
-
-    @Override
-    public boolean deleteById(Long id) {
-        return userRepositoryPort.deleteById(id);
     }
 
     @Override
