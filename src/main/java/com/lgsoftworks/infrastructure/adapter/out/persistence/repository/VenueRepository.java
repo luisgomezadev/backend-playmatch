@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface VenueRepository  extends JpaRepository<VenueEntity, Long>, JpaSpecificationExecutor<VenueEntity> {
+public interface VenueRepository extends JpaRepository<VenueEntity, Long>, JpaSpecificationExecutor<VenueEntity> {
     boolean existsByAdminId(Long id);
+
     Optional<VenueEntity> findByAdminId(Long id);
+
     Optional<VenueEntity> findByCode(String code);
 }

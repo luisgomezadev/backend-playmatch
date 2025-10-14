@@ -13,47 +13,47 @@ import java.util.stream.Collectors;
 
 public class VenueModelMapper {
 
-        public static VenueDTO toDTO(Venue venue) {
-            if (venue == null) return null;
+    public static VenueDTO toDTO(Venue venue) {
+        if (venue == null) return null;
 
-            VenueDTO dto = new VenueDTO();
-            dto.setId(venue.getId());
-            dto.setCode(venue.getCode());
-            dto.setName(venue.getName());
-            dto.setCity(venue.getCity());
-            dto.setAddress(venue.getAddress());
-            dto.setAdmin(UserModelMapper.toUserDTO(venue.getAdmin()));
-            dto.setOpeningHour(venue.getOpeningHour());
-            dto.setClosingHour(venue.getClosingHour());
-            dto.setStatus(venue.getStatus());
+        VenueDTO dto = new VenueDTO();
+        dto.setId(venue.getId());
+        dto.setCode(venue.getCode());
+        dto.setName(venue.getName());
+        dto.setCity(venue.getCity());
+        dto.setAddress(venue.getAddress());
+        dto.setAdmin(UserModelMapper.toUserDTO(venue.getAdmin()));
+        dto.setOpeningHour(venue.getOpeningHour());
+        dto.setClosingHour(venue.getClosingHour());
+        dto.setStatus(venue.getStatus());
 
-            if (venue.getFields() != null && !venue.getFields().isEmpty()) {
-                List<FieldDTO> fields = venue.getFields().stream()
-                        .map(FieldModelMapper::toDTO)
-                        .collect(Collectors.toList());
-                dto.setFields(fields);
-            }
-
-            return dto;
+        if (venue.getFields() != null && !venue.getFields().isEmpty()) {
+            List<FieldDTO> fields = venue.getFields().stream()
+                    .map(FieldModelMapper::toDTO)
+                    .collect(Collectors.toList());
+            dto.setFields(fields);
         }
 
-        public static Venue toModel(VenueDTO dto) {
-            if (dto == null) return null;
+        return dto;
+    }
 
-            Venue venue = new Venue();
-            venue.setId(dto.getId());
-            venue.setCode(dto.getCode());
-            venue.setName(dto.getName());
-            venue.setCity(dto.getCity());
-            venue.setAddress(dto.getAddress());
-            venue.setAdmin(UserModelMapper.toUser(dto.getAdmin()));
-            venue.setOpeningHour(dto.getOpeningHour());
-            venue.setClosingHour(dto.getClosingHour());
-            venue.setStatus(dto.getStatus());
+    public static Venue toModel(VenueDTO dto) {
+        if (dto == null) return null;
 
-            // No seteamos las canchas aquí; se asignan en el servicio o mapper de request
-            return venue;
-        }
+        Venue venue = new Venue();
+        venue.setId(dto.getId());
+        venue.setCode(dto.getCode());
+        venue.setName(dto.getName());
+        venue.setCity(dto.getCity());
+        venue.setAddress(dto.getAddress());
+        venue.setAdmin(UserModelMapper.toUser(dto.getAdmin()));
+        venue.setOpeningHour(dto.getOpeningHour());
+        venue.setClosingHour(dto.getClosingHour());
+        venue.setStatus(dto.getStatus());
+
+        // No seteamos las canchas aquí; se asignan en el servicio o mapper de request
+        return venue;
+    }
 
     public static Venue toModelRequest(VenueRequest request) {
         if (request == null) return null;

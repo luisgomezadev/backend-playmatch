@@ -1,11 +1,11 @@
 package com.lgsoftworks.infrastructure.adapter.in.rest.controller;
 
+import com.lgsoftworks.application.reservation.dto.request.ReservationRequest;
+import com.lgsoftworks.application.reservation.dto.response.ReservationDTO;
 import com.lgsoftworks.application.reservation.dto.response.TimeSlot;
 import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.reservation.port.in.ReservationAvailabilityUseCase;
 import com.lgsoftworks.domain.reservation.port.in.ReservationUseCase;
-import com.lgsoftworks.application.reservation.dto.response.ReservationDTO;
-import com.lgsoftworks.application.reservation.dto.request.ReservationRequest;
 import com.lgsoftworks.infrastructure.adapter.in.rest.dto.MessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -55,7 +55,7 @@ public class ReservationController {
             parameters = {
                     @Parameter(
                             name = "venueId",
-                            description = "ID del específico para el que se desean obtener las reservas",
+                            description = "ID del complejo para el que se desean obtener las reservas",
                             required = true,
                             example = "1"
                     )
@@ -83,11 +83,23 @@ public class ReservationController {
         return ResponseEntity.ok(reservationUseCase.findByCode(code));
     }
 
+    @Operation(
+            summary = "Obtener reservas por ID del complejo y fecha",
+            description = "Devuelve una lista de reservas asociadas a un complejo y una fecha especifica.",
+            parameters = {
+                    @Parameter(
+                            name = "venueId",
+                            description = "ID del complejo para el que se desean obtener las reservas",
+                            required = true,
+                            example = "1"
+                    )
+            }
+    )
     @GetMapping("/venue/{venueId}/date")
     public ResponseEntity<List<ReservationDTO>>
     getReservationsByVenueIdAndDate(@PathVariable Long venueId,
                                     @RequestParam(value = "date", required = false)
-                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date) {
+                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return ResponseEntity.ok(reservationUseCase.findByVenueIdAndDate(venueId, date));
     }
 
@@ -119,24 +131,12 @@ public class ReservationController {
                 new MessageResponse("Se ha cancelado la reserva"));
     }
 
-    @Operation(
-            summary = "Verificar disponibilidad de reserva",
-            description = "Recibe los datos de la reserva y verifica la disponibilidad para esa fecha y campo y devuelve la reserva."
-    )
-    @PostMapping("/availability")
-    public ResponseEntity<Optional<ReservationDTO>> getReservationAvailability(@RequestBody ReservationRequest reservationRequest) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(reservationAvailabilityUseCase
-                        .reservationAvailability(reservationRequest)
-                );
-    }
-
     @GetMapping("/availability/hours")
     public ResponseEntity<List<TimeSlot>> getHoursAvailability(
             @RequestParam Long venueId,
             @RequestParam Long fieldId,
             @RequestParam(value = "date", required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
     ) {
         return ResponseEntity.ok(reservationAvailabilityUseCase.getAvailableSlots(venueId, fieldId, date));
     }

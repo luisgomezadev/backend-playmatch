@@ -1,6 +1,5 @@
 package com.lgsoftworks.application.user.service;
 
-import com.lgsoftworks.application.common.PageResponse;
 import com.lgsoftworks.application.user.dto.mapper.UserModelMapper;
 import com.lgsoftworks.application.user.dto.request.UserRequest;
 import com.lgsoftworks.application.user.dto.response.UserDTO;
@@ -12,8 +11,6 @@ import com.lgsoftworks.domain.user.port.in.UploadUserImageUseCase;
 import com.lgsoftworks.domain.user.port.in.UserUseCase;
 import com.lgsoftworks.domain.user.port.out.UserRepositoryPort;
 import com.lgsoftworks.domain.user.validation.ValidateUser;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +23,7 @@ public class UserService implements UserUseCase, UploadUserImageUseCase {
     private final ValidateUser validateUser;
 
     public UserService(UserRepositoryPort userRepositoryPort,
-                             CloudinaryImageUploaderPort cloudinaryImageUploaderPort) {
+                       CloudinaryImageUploaderPort cloudinaryImageUploaderPort) {
         this.userRepositoryPort = userRepositoryPort;
         this.imageUploader = cloudinaryImageUploaderPort;
         this.validateUser = new ValidateUser(userRepositoryPort);

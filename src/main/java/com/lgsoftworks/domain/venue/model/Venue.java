@@ -2,7 +2,6 @@ package com.lgsoftworks.domain.venue.model;
 
 import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.field.model.Field;
-import com.lgsoftworks.domain.reservation.model.Reservation;
 import com.lgsoftworks.domain.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,13 +2,15 @@ package com.lgsoftworks.application.venue.dto.request;
 
 import com.lgsoftworks.application.field.dto.request.FieldRequest;
 import com.lgsoftworks.domain.common.enums.Status;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;

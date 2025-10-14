@@ -1,9 +1,7 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.repository;
 
 import com.lgsoftworks.domain.common.enums.Status;
-import com.lgsoftworks.domain.reservation.enums.StatusReservation;
 import com.lgsoftworks.infrastructure.adapter.out.persistence.entity.ReservationEntity;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,9 +17,13 @@ import java.util.Optional;
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long>, JpaSpecificationExecutor<ReservationEntity> {
     List<ReservationEntity> findByFieldIdAndStatus(Long fieldId, Status status);
+
     List<ReservationEntity> findByField_Venue_IdAndStatus(Long venueId, Status status);
+
     List<ReservationEntity> findByField_Venue_IdAndStatusAndReservationDate(Long venueId, Status status, LocalDate date);
+
     List<ReservationEntity> findByFieldIdAndReservationDateAndStatus(Long fieldId, LocalDate date, Status status);
+
     Optional<ReservationEntity> findByCodeAndStatus(String code, Status status);
 
     @Modifying

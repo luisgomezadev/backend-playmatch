@@ -35,7 +35,8 @@ public class AuthenticationService {
 
     public UserDTO register(UserRequest userRequest) {
 
-        if (userRepositoryPort.findByEmail(userRequest.getEmail()).isPresent()) throw new UserWithEmailExistsException(userRequest.getEmail());
+        if (userRepositoryPort.findByEmail(userRequest.getEmail()).isPresent())
+            throw new UserWithEmailExistsException(userRequest.getEmail());
 
         if (userRequest.getPassword() == null) {
             throw new PasswordNotNullException();

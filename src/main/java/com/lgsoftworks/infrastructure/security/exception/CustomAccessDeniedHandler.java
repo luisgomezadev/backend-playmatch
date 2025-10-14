@@ -21,12 +21,12 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json");
 
         String json = """
-            {
-              "statusCode": 403,
-              "errorMessage": "No tienes permiso para acceder a este recurso.",
-              "timestamp": "%s"
-            }
-            """.formatted(LocalDateTime.now());
+                {
+                  "statusCode": 403,
+                  "errorMessage": "No tienes permiso para acceder a este recurso.",
+                  "timestamp": "%s"
+                }
+                """.formatted(LocalDateTime.now());
 
         response.getWriter().write(json);
     }

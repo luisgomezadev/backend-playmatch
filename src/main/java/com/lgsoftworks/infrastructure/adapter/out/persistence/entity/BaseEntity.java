@@ -34,5 +34,6 @@ public class BaseEntity implements Serializable {
     @Column(name = "updated_date", updatable = false)
     private Date updatedDate;
 
-    public BaseEntity() {}
+    public BaseEntity() {
+    }
 }

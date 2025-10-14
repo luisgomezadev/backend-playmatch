@@ -15,7 +15,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ReservationEntity extends BaseEntity{
+public class ReservationEntity extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String code;
 

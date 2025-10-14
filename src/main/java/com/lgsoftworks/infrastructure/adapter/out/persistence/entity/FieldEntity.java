@@ -1,6 +1,5 @@
 package com.lgsoftworks.infrastructure.adapter.out.persistence.entity;
 
-import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.field.enums.FieldType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class FieldEntity extends BaseEntity{
+public class FieldEntity extends BaseEntity {
     @Column(nullable = false)
     private String name;
 

@@ -1,7 +1,7 @@
 package com.lgsoftworks.application.user.dto.mapper;
 
-import com.lgsoftworks.application.user.dto.response.UserDTO;
 import com.lgsoftworks.application.user.dto.request.UserRequest;
+import com.lgsoftworks.application.user.dto.response.UserDTO;
 import com.lgsoftworks.domain.user.model.User;
 
 import java.util.Objects;

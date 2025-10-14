@@ -1,6 +1,5 @@
 package com.lgsoftworks.infrastructure.security;
 
-import com.lgsoftworks.domain.user.enums.Role;
 import com.lgsoftworks.infrastructure.security.exception.CustomAccessDeniedHandler;
 import com.lgsoftworks.infrastructure.security.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,12 +17,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import java.util.Arrays;
-import org.springframework.security.config.Customizer;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -60,12 +59,12 @@ public class SecurityConfig {
                                 "/actuator/**",
                                 "/uploads/**"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/v1/field/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/v1/venue/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/v1/reservation/code/**").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/v1/reservation/availability/hours/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/v1/reservation").permitAll()
-                        .requestMatchers(HttpMethod.PUT,"/api/v1/reservation/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/field/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/venue/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/reservation/code/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/reservation/availability/hours/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/reservation").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/reservation/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex
@@ -84,7 +83,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(
                 "http://localhost:4200",
-                "https://playmatch-lgsoftworks.vercel.app"
+                "https://projectplaymatch.vercel.app"
         ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));

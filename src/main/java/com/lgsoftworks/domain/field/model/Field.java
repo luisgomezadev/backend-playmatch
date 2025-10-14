@@ -1,6 +1,5 @@
 package com.lgsoftworks.domain.field.model;
 
-import com.lgsoftworks.domain.common.enums.Status;
 import com.lgsoftworks.domain.field.enums.FieldType;
 import com.lgsoftworks.domain.reservation.model.Reservation;
 import com.lgsoftworks.domain.venue.model.Venue;

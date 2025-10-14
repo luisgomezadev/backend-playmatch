@@ -4,10 +4,8 @@ import com.lgsoftworks.application.common.PageResponse;
 import com.lgsoftworks.application.venue.dto.request.VenueFilter;
 import com.lgsoftworks.application.venue.dto.request.VenueRequest;
 import com.lgsoftworks.application.venue.dto.response.VenueDTO;
-import com.lgsoftworks.domain.venue.model.Venue;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface VenueUseCase {
