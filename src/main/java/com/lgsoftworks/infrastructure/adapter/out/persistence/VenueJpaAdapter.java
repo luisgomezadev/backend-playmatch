@@ -41,10 +41,11 @@ public class VenueJpaAdapter implements VenueRepositoryPort {
 
     @Override
     public Page<Venue> searchVenues(VenueFilter filter, Pageable pageable) {
-        Specification<VenueEntity> spec = Specification
-                .where(VenueSpecification.isActive())
-                .and(VenueSpecification.hasName(filter.getName()))
-                .and(VenueSpecification.hasCity(filter.getCity()));
+        Specification<VenueEntity> spec = Specification.allOf(
+                VenueSpecification.isActive(),
+                VenueSpecification.hasName(filter.getName()),
+                VenueSpecification.hasCity(filter.getCity())
+        );
 
         return venueRepository.findAll(spec, pageable)
                 .map(VenueDboMapper::toModel);
