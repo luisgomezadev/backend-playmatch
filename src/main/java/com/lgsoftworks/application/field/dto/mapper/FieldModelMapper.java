@@ -3,7 +3,10 @@ package com.lgsoftworks.application.field.dto.mapper;
 
 import com.lgsoftworks.application.field.dto.request.FieldRequest;
 import com.lgsoftworks.application.field.dto.response.FieldDTO;
+import com.lgsoftworks.domain.field.enums.FieldType;
 import com.lgsoftworks.domain.field.model.Field;
+
+import java.math.BigDecimal;
 
 public class FieldModelMapper {
 
@@ -22,24 +25,31 @@ public class FieldModelMapper {
     public static Field toModel(FieldDTO dto) {
         if (dto == null) return null;
 
-        Field field = new Field();
-        field.setId(dto.getId());
-        field.setName(dto.getName());
-        field.setFieldType(dto.getFieldType());
-        field.setHourlyRate(dto.getHourlyRate());
-
-        return field;
+        return buildField(
+                dto.getId(),
+                dto.getName(),
+                dto.getFieldType(),
+                dto.getHourlyRate()
+        );
     }
 
     public static Field toModelRequest(FieldRequest request) {
         if (request == null) return null;
 
-        Field field = new Field();
-        field.setId(request.getId());
-        field.setName(request.getName());
-        field.setFieldType(request.getFieldType());
-        field.setHourlyRate(request.getHourlyRate());
+        return buildField(
+                request.getId(),
+                request.getName(),
+                request.getFieldType(),
+                request.getHourlyRate()
+        );
+    }
 
+    private static Field buildField(Long id, String name, FieldType fieldType, BigDecimal hourlyRate) {
+        Field field = new Field();
+        field.setId(id);
+        field.setName(name);
+        field.setFieldType(fieldType);
+        field.setHourlyRate(hourlyRate);
         return field;
     }
 

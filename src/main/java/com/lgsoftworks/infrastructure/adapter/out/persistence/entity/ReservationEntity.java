@@ -19,7 +19,7 @@ public class ReservationEntity extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String code;
 
-    @Column(nullable = false)
+    @Column(name = "username", nullable = false)
     private String user;
 
     @Column(nullable = false, length = 10)

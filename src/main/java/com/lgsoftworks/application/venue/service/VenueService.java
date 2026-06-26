@@ -92,16 +92,15 @@ public class VenueService implements VenueUseCase {
     @Override
     @Transactional
     public VenueDTO update(VenueRequest venueRequest) {
-        // 1️⃣ Obtener venue existente
+        // Get existing venue
         Venue existingVenue = venueRepositoryPort.findById(venueRequest.getId())
                 .orElseThrow(() -> new RuntimeException("Venue con ID " + venueRequest.getId() + " no encontrado"));
 
-        // 2️⃣ Obtener admin
+        // Get admin
         User user = userRepositoryPort.findById(venueRequest.getAdminId())
                 .orElseThrow(() -> new UserByIdNotFoundException(venueRequest.getAdminId()));
 
-        // 3️⃣ Actualizar datos básicos
-        existingVenue.setName(venueRequest.getName());
+        // Update data
         existingVenue.setCode(venueRequest.getCode());
         existingVenue.setCity(venueRequest.getCity());
         existingVenue.setAddress(venueRequest.getAddress());
@@ -110,20 +109,18 @@ public class VenueService implements VenueUseCase {
         existingVenue.setStatus(venueRequest.getStatus());
         existingVenue.setAdmin(user);
 
-        // 4️⃣ Manejar canchas (fields)
-        // IDs que vienen del request
         Set<Long> incomingFieldIds = venueRequest.getFields().stream()
                 .map(FieldRequest::getId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
 
-        // Eliminar canchas que ya no están en la lista
+        // Delete fields
         existingVenue.getFields().removeIf(field -> !incomingFieldIds.contains(field.getId()));
 
-        // 5️⃣ Actualizar o agregar canchas
+        // Update or Add fields
         for (var fieldReq : venueRequest.getFields()) {
             if (fieldReq.getId() != null) {
-                // UPDATE cancha existente
+                // UPDATE field
                 Field existingField = existingVenue.getFields().stream()
                         .filter(f -> f.getId().equals(fieldReq.getId()))
                         .findFirst()
@@ -132,7 +129,7 @@ public class VenueService implements VenueUseCase {
                 existingField.setFieldType(fieldReq.getFieldType());
                 existingField.setHourlyRate(fieldReq.getHourlyRate());
             } else {
-                // INSERT nueva cancha
+                // INSERT new field
                 Field newField = new Field();
                 newField.setName(fieldReq.getName());
                 newField.setFieldType(fieldReq.getFieldType());
@@ -142,7 +139,7 @@ public class VenueService implements VenueUseCase {
             }
         }
 
-        // 6️⃣ Guardar todo
+        // Save all
         Venue updatedVenue = venueRepositoryPort.save(existingVenue);
 
         return VenueModelMapper.toDTO(updatedVenue);
