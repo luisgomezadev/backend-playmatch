@@ -17,18 +17,19 @@ import org.springframework.stereotype.Service;
 public class VenuePublicService implements VenuePublicUseCase{
 
     private final VenueRepositoryPort venueRepositoryPort;
+    private final VenueModelMapper venueModelMapper;
 
     @Override
     public VenuePublicDTO findById(Long id) {
         return venueRepositoryPort.findById(id)
-                .map(VenueModelMapper::toPublicDTO)
+                .map(venueModelMapper::toPublicDTO)
                 .orElseThrow(() -> new VenueByIdNotFoundException(id));
     }
 
     @Override
     public VenuePublicDTO findByCode(String code) {
         return venueRepositoryPort.findByCode(code)
-                .map(VenueModelMapper::toPublicDTO)
+                .map(venueModelMapper::toPublicDTO)
                 .orElseThrow(() -> new VenueByCodeNotFoundException(code));
     }
 
@@ -36,7 +37,7 @@ public class VenuePublicService implements VenuePublicUseCase{
     public PageResponse<VenuePublicDTO> searchVenues(VenueFilter filter, Pageable pageable) {
         return PageResponse.from(
                 venueRepositoryPort.search(filter.name(), filter.city(), pageable)
-                        .map(VenueModelMapper::toPublicDTO)
+                        .map(venueModelMapper::toPublicDTO)
         );
     }
 }

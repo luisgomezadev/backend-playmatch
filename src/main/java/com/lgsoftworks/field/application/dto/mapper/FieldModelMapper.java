@@ -2,20 +2,18 @@ package com.lgsoftworks.field.application.dto.mapper;
 
 import com.lgsoftworks.field.application.dto.response.FieldDTO;
 import com.lgsoftworks.field.domain.model.Field;
+import com.lgsoftworks.venue.domain.model.VenueId;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
-public class FieldModelMapper {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, unmappedTargetPolicy = ReportingPolicy.ERROR)
+public interface FieldModelMapper {
 
-    private FieldModelMapper(){}
+    FieldDTO toDTO(Field field);
 
-    public static FieldDTO toDTO(Field field) {
-        if (field == null) return null;
-        FieldDTO dto = new FieldDTO();
-        dto.setId(field.getId());
-        dto.setName(field.getName());
-        dto.setFieldType(field.getFieldType());
-        dto.setHourlyRate(field.getHourlyRate());
-        dto.setVenueId(field.getVenueId().value());
-        return dto;
+    default Long map(VenueId venueId) {
+        return venueId == null ? null : venueId.value();
     }
 
 }

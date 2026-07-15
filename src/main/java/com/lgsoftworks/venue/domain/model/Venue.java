@@ -4,7 +4,6 @@ import com.lgsoftworks.shared.domain.enums.Status;
 import com.lgsoftworks.venue.domain.exception.InvalidVenueDataException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 
 import java.time.LocalTime;
 import java.util.Objects;

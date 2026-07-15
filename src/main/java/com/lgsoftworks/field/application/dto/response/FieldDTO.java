@@ -1,6 +1,7 @@
 package com.lgsoftworks.field.application.dto.response;
 
 import com.lgsoftworks.field.domain.model.FieldType;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
+@Data
 public class FieldDTO {
     private Long id;
     private String name;

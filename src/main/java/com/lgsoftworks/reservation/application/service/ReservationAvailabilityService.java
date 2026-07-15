@@ -34,6 +34,7 @@ public class ReservationAvailabilityService implements ReservationAvailabilityUs
     private final ReservationRepositoryPort reservationRepositoryPort;
     private final FieldRepositoryPort fieldRepositoryPort;
     private final ValidateReservation validateReservation;
+    private final ReservationModelMapper reservationModelMapper;
 
     @Override
     public List<TimeSlot> getAvailableSlots(Long venueId, Long fieldId, LocalDate date) {
@@ -88,6 +89,6 @@ public class ReservationAvailabilityService implements ReservationAvailabilityUs
         validateReservation.validateFieldAvailability(reservation, existingReservations);
 
         Reservation saved = reservationRepositoryPort.save(reservation);
-        return ReservationModelMapper.toDTO(saved);
+        return reservationModelMapper.toDTO(saved);
     }
 }

@@ -3,7 +3,6 @@ package com.lgsoftworks.shared.infrastructure.configuration;
 import com.lgsoftworks.auth.infrastructure.security.exception.CustomAccessDeniedHandler;
 import com.lgsoftworks.auth.infrastructure.security.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -31,10 +30,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    @Autowired
-    private AuthenticationProvider authenticationProvider;
-    @Autowired
-    private HandlerExceptionResolver handlerExceptionResolver;
+    private final AuthenticationProvider authenticationProvider;
+
+    private final HandlerExceptionResolver handlerExceptionResolver;
 
     private final CustomAccessDeniedHandler accessDeniedHandler;
 

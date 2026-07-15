@@ -2,8 +2,12 @@ package com.lgsoftworks.user.domain.model;
 
 import com.lgsoftworks.user.domain.exception.InvalidUserDataException;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class User {
     private Long id;
     private String firstName;
@@ -15,18 +19,15 @@ public class User {
     private String imageUrl;
     private Role role;
 
-    protected User() {
-    }
-
     public static User create(String firstName, String lastName, String cellphone,
-                              String email, String encodedPassword) {
+                              String email, String password) {
         User user = new User();
         user.firstName = requireNonBlank(firstName, "El nombre es requerido");
         user.lastName = requireNonBlank(lastName, "El apellido es requerido");
         user.fullName = (firstName + " " + lastName).trim();
         user.cellphone = requireNonBlank(cellphone, "El celular es requerido");
         user.email = requireNonBlank(email, "El email es requerido");
-        user.password = encodedPassword;
+        user.password = password;
         user.imageUrl = null;
         user.role = Role.USER;
         return user;

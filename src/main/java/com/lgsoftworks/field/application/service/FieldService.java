@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class FieldService implements FieldUseCase {
 
     private final FieldRepositoryPort fieldRepositoryPort;
+    private final FieldModelMapper fieldModelMapper;
 
     @Override
     public FieldDTO save(FieldRequest request) {
@@ -30,20 +30,20 @@ public class FieldService implements FieldUseCase {
                 new VenueId(request.getVenueId())
         );
         Field saved = fieldRepositoryPort.save(field);
-        return FieldModelMapper.toDTO(saved);
+        return fieldModelMapper.toDTO(saved);
     }
 
     @Override
     public FieldDTO findById(Long id) {
         return fieldRepositoryPort.findById(id)
-                .map(FieldModelMapper::toDTO)
+                .map(fieldModelMapper::toDTO)
                 .orElseThrow(() -> new FieldByIdNotFoundException(id));
     }
 
     @Override
     public List<FieldDTO> findByVenueId(Long venueId) {
         return fieldRepositoryPort.findByVenueId(venueId).stream()
-                .map(FieldModelMapper::toDTO)
+                .map(fieldModelMapper::toDTO)
                 .toList();
     }
 
@@ -53,7 +53,7 @@ public class FieldService implements FieldUseCase {
                 .orElseThrow(() -> new FieldByIdNotFoundException(fieldId));
         field.updatePrice(newHourlyRate);
         Field saved = fieldRepositoryPort.save(field);
-        return FieldModelMapper.toDTO(saved);
+        return fieldModelMapper.toDTO(saved);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class FieldService implements FieldUseCase {
         field.updatePrice(request.getHourlyRate());
         field.rename(request.getName());
         Field updated = fieldRepositoryPort.save(field);
-        return FieldModelMapper.toDTO(updated);
+        return fieldModelMapper.toDTO(updated);
     }
 
     @Override

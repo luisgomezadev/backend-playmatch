@@ -18,35 +18,36 @@ import java.util.Optional;
 public class ReservationService implements ReservationUseCase {
 
     private final ReservationRepositoryPort reservationRepositoryPort;
+    private final ReservationModelMapper reservationModelMapper;
 
     @Override
     public Optional<ReservationDTO> findById(Long id) {
-        return reservationRepositoryPort.findById(id).map(ReservationModelMapper::toDTO);
+        return reservationRepositoryPort.findById(id).map(reservationModelMapper::toDTO);
     }
 
     @Override
     public Optional<ReservationDTO> findByCode(String code) {
-        return reservationRepositoryPort.findByCode(code).map(ReservationModelMapper::toDTO);
+        return reservationRepositoryPort.findByCode(code).map(reservationModelMapper::toDTO);
     }
 
     @Override
     public List<ReservationDTO> findByFieldId(Long fieldId) {
         return reservationRepositoryPort.findActiveByFieldId(fieldId).stream()
-                .map(ReservationModelMapper::toDTO)
+                .map(reservationModelMapper::toDTO)
                 .toList();
     }
 
     @Override
     public List<ReservationDTO> findByVenueId(Long venueId) {
         return reservationRepositoryPort.findActiveByVenueId(venueId).stream()
-                .map(ReservationModelMapper::toDTO)
+                .map(reservationModelMapper::toDTO)
                 .toList();
     }
 
     @Override
     public List<ReservationDTO> findByVenueIdAndDate(Long venueId, LocalDate date) {
         return reservationRepositoryPort.findActiveByVenueIdAndDate(venueId, date).stream()
-                .map(ReservationModelMapper::toDTO)
+                .map(reservationModelMapper::toDTO)
                 .toList();
     }
 
@@ -56,6 +57,6 @@ public class ReservationService implements ReservationUseCase {
                 .orElseThrow(() -> new ReservationByIdNotFoundException(id));
         reservation.cancel();
         Reservation saved = reservationRepositoryPort.save(reservation);
-        return ReservationModelMapper.toDTO(saved);
+        return reservationModelMapper.toDTO(saved);
     }
 }

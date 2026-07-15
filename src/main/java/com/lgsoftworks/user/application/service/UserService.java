@@ -24,26 +24,32 @@ public class UserService implements UserUseCase, UploadUserImageUseCase {
     private final ImageUploaderPort imageUploader;
     private final UserUniquenessValidator uniquenessValidator;
     private final PasswordEncoder passwordEncoder;
+    private final UserModelMapper userModelMapper;
 
     @Override
     public Optional<UserDTO> findById(Long id) {
         Optional<User> user = userRepositoryPort.findById(id);
-        return user.map(UserModelMapper::toUserDTO);
+        return user.map(userModelMapper::toUserDTO);
     }
 
     @Override
     public UserDTO save(UserRequest userRequest) {
         uniquenessValidator.validate(userRequest.getEmail(), userRequest.getCellphone());
-        String encoded = passwordEncoder.encode(userRequest.getPassword());
-        User newUser = UserModelMapper.requestToModel(userRequest, encoded);
+        User newUser = User.create(
+                userRequest.getFirstName(),
+                userRequest.getLastName(),
+                userRequest.getCellphone(),
+                userRequest.getEmail(),
+                userRequest.getPassword()
+        );
         User saved = userRepositoryPort.save(newUser);
-        return UserModelMapper.toUserDTO(saved);
+        return userModelMapper.toUserDTO(saved);
     }
 
     @Override
     public Optional<UserDTO> findByEmail(String email) {
         Optional<User> user = userRepositoryPort.findByEmail(email);
-        return user.map(UserModelMapper::toUserDTO);
+        return user.map(userModelMapper::toUserDTO);
     }
 
     @Override
@@ -55,7 +61,7 @@ public class UserService implements UserUseCase, UploadUserImageUseCase {
 
         user.changeImageUrl(imageUrl);
         userRepositoryPort.save(user);
-        return UserModelMapper.toUserDTO(user);
+        return userModelMapper.toUserDTO(user);
     }
 
 }

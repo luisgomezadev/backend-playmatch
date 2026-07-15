@@ -33,6 +33,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final UserModelMapper userModelMapper;
 
     public UserDTO register(UserRequest userRequest) {
 
@@ -70,7 +71,7 @@ public class AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .user(UserModelMapper.toUserDTO(user))
+                .user(userModelMapper.toUserDTO(user))
                 .build();
     }
 
@@ -82,7 +83,7 @@ public class AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .token(newToken)
-                .user(UserModelMapper.toUserDTO(user))
+                .user(userModelMapper.toUserDTO(user))
                 .build();
     }
 

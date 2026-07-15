@@ -1,21 +1,15 @@
 package com.lgsoftworks.venue.application.service;
 
-import com.lgsoftworks.common.response.PageResponse;
 import com.lgsoftworks.venue.application.dto.mapper.VenueModelMapper;
-import com.lgsoftworks.venue.application.dto.request.VenueFilter;
 import com.lgsoftworks.venue.application.dto.request.VenueRequest;
 import com.lgsoftworks.venue.application.dto.response.VenueDTO;
-import com.lgsoftworks.venue.application.dto.response.VenuePublicDTO;
-import com.lgsoftworks.venue.application.port.in.VenuePublicUseCase;
 import com.lgsoftworks.venue.application.port.in.VenueUseCase;
-import com.lgsoftworks.venue.domain.exception.VenueByAdminIdNotFoundException;
 import com.lgsoftworks.venue.domain.exception.VenueByCodeNotFoundException;
 import com.lgsoftworks.venue.domain.exception.VenueByIdNotFoundException;
 import com.lgsoftworks.venue.domain.model.Venue;
 import com.lgsoftworks.venue.domain.port.out.VenueRepositoryPort;
 import com.lgsoftworks.venue.domain.service.VenueUniquenessValidator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -26,6 +20,7 @@ public class VenueService implements VenueUseCase {
 
     private final VenueRepositoryPort venueRepositoryPort;
     private final VenueUniquenessValidator venueUniquenessValidator;
+    private final VenueModelMapper venueModelMapper;
 
     @Override
     public VenueDTO save(VenueRequest request) {
@@ -41,7 +36,7 @@ public class VenueService implements VenueUseCase {
                 request.getAdminId()
         );
         Venue saved = venueRepositoryPort.save(venue);
-        return VenueModelMapper.toDTO(saved);
+        return venueModelMapper.toDTO(saved);
     }
 
     @Override
@@ -57,26 +52,26 @@ public class VenueService implements VenueUseCase {
         venue.changeSchedule(request.getOpeningHour(), request.getClosingHour());
 
         Venue saved = venueRepositoryPort.save(venue);
-        return VenueModelMapper.toDTO(saved);
+        return venueModelMapper.toDTO(saved);
     }
 
     @Override
     public VenueDTO findById(Long id) {
         return venueRepositoryPort.findById(id)
-                .map(VenueModelMapper::toDTO)
+                .map(venueModelMapper::toDTO)
                 .orElseThrow(() -> new VenueByIdNotFoundException(id));
     }
 
     @Override
     public VenueDTO findByCode(String code) {
         return venueRepositoryPort.findByCode(code)
-                .map(VenueModelMapper::toDTO)
+                .map(venueModelMapper::toDTO)
                 .orElseThrow(() -> new VenueByCodeNotFoundException(code));
     }
 
     @Override
     public Optional<VenueDTO> findByAdminId(Long adminId) {
-        return venueRepositoryPort.findByAdminId(adminId).map(VenueModelMapper::toDTO);
+        return venueRepositoryPort.findByAdminId(adminId).map(venueModelMapper::toDTO);
     }
 
     @Override

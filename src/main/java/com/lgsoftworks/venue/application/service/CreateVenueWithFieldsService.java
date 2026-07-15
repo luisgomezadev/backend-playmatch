@@ -30,6 +30,8 @@ public class CreateVenueWithFieldsService implements CreateVenueWithFieldsUseCas
     private final FieldRepositoryPort fieldRepositoryPort;
     private final VenueUniquenessValidator venueUniquenessValidator;
     private final FieldUniquenessValidator fieldUniquenessValidator;
+    private final FieldModelMapper fieldModelMapper;
+    private final VenueModelMapper venueModelMapper;
 
     @Override
     @Transactional
@@ -37,7 +39,7 @@ public class CreateVenueWithFieldsService implements CreateVenueWithFieldsUseCas
         Venue venue = createVenue(request.getVenue());
         List<FieldDTO> fields = createFields(venue.getId(), request.getFields());
 
-        return new VenueWithFieldsDTO(VenueModelMapper.toDTO(venue), fields);
+        return new VenueWithFieldsDTO(venueModelMapper.toDTO(venue), fields);
     }
 
     private Venue createVenue(VenueRequest venueRequest) {
@@ -70,7 +72,7 @@ public class CreateVenueWithFieldsService implements CreateVenueWithFieldsUseCas
                             venueIdVO
                     );
                     Field saved = fieldRepositoryPort.save(field);
-                    return FieldModelMapper.toDTO(saved);
+                    return fieldModelMapper.toDTO(saved);
                 })
                 .toList();
     }

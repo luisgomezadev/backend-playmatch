@@ -2,13 +2,16 @@ package com.lgsoftworks.field.domain.model;
 
 import com.lgsoftworks.field.domain.exception.InvalidFieldDataException;
 import com.lgsoftworks.venue.domain.model.VenueId;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Field {
     private Long id;
@@ -17,9 +20,6 @@ public class Field {
     private BigDecimal hourlyRate;
     private VenueId venueId;
     private boolean active;
-
-    protected Field() {
-    }
 
     public static Field create(String name, FieldType fieldType, BigDecimal hourlyRate, VenueId venueId) {
         Field field = new Field();
