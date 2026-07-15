@@ -9,8 +9,9 @@ import java.util.Optional;
 
 public interface FieldUseCase {
     FieldDTO save(FieldRequest request);
-    Optional<FieldDTO> findById(Long id);
+    FieldDTO findById(Long id);
     List<FieldDTO> findByVenueId(Long venueId);
     FieldDTO updatePrice(Long fieldId, BigDecimal newHourlyRate);
+    FieldDTO update(FieldRequest request, Long fieldId);
     void deleteById(Long id);
 }

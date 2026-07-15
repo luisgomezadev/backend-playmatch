@@ -9,5 +9,4 @@ public interface FieldRepositoryPort {
     Field save(Field field);
     Optional<Field> findById(Long id);
     List<Field> findByVenueId(Long venueId);
-    void deleteById(Long id);
 }

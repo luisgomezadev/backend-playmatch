@@ -56,7 +56,7 @@ public class ReservationJpaAdapter implements ReservationRepositoryPort {
 
     @Override
     public List<Reservation> findActiveByVenueIdAndDate(Long venueId, LocalDate date) {
-        return reservationRepository.findByField_Venue_IdAndStatusAndReservationDate(venueId, ReservationStatus.ACTIVE, date)
+        return reservationRepository.findByField_Venue_IdAndStatusAndReservationDateOrderByStartTimeAsc(venueId, ReservationStatus.ACTIVE, date)
                 .stream().map(mapper::toModel).toList();
     }
 }

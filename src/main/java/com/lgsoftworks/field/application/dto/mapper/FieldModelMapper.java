@@ -5,8 +5,7 @@ import com.lgsoftworks.field.domain.model.Field;
 
 public class FieldModelMapper {
 
-    private FieldModelMapper() {
-    }
+    private FieldModelMapper(){}
 
     public static FieldDTO toDTO(Field field) {
         if (field == null) return null;
@@ -16,7 +15,7 @@ public class FieldModelMapper {
         dto.setFieldType(field.getFieldType());
         dto.setHourlyRate(field.getHourlyRate());
         dto.setVenueId(field.getVenueId().value());
-        dto.setActive(field.isActive());
         return dto;
     }
+
 }

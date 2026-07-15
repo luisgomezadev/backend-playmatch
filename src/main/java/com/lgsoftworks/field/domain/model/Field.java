@@ -51,7 +51,17 @@ public class Field {
         this.name = requireNonBlank(newName);
     }
 
+    public void updateFieldType(FieldType newFieldType) {
+        if (newFieldType == null) {
+            throw new InvalidFieldDataException("El tipo de la cancha es requerido");
+        }
+        this.fieldType = newFieldType;
+    }
+
     public void deactivate() {
+        if (!this.active) {
+            throw new InvalidFieldDataException("La cancha ya está inactiva");
+        }
         this.active = false;
     }
 

@@ -65,6 +65,10 @@ public class Venue {
         this.address = requireNonBlank(newAddress, "La dirección es requerida");
     }
 
+    public void changeCode(String newCode) {
+        this.code = requireNonBlank(newCode, "El código del complejo deportivo es requerido");
+    }
+
     public void changeSchedule(LocalTime newOpeningHour, LocalTime newClosingHour) {
         validateSchedule(newOpeningHour, newClosingHour);
         this.openingHour = newOpeningHour;

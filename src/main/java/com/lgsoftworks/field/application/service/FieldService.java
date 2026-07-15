@@ -34,8 +34,10 @@ public class FieldService implements FieldUseCase {
     }
 
     @Override
-    public Optional<FieldDTO> findById(Long id) {
-        return fieldRepositoryPort.findById(id).map(FieldModelMapper::toDTO);
+    public FieldDTO findById(Long id) {
+        return fieldRepositoryPort.findById(id)
+                .map(FieldModelMapper::toDTO)
+                .orElseThrow(() -> new FieldByIdNotFoundException(id));
     }
 
     @Override
@@ -55,8 +57,21 @@ public class FieldService implements FieldUseCase {
     }
 
     @Override
+    public FieldDTO update(FieldRequest request, Long fieldId) {
+        Field field = fieldRepositoryPort.findById(fieldId)
+                .orElseThrow(() -> new FieldByIdNotFoundException(fieldId));
+        field.updateFieldType(request.getFieldType());
+        field.updatePrice(request.getHourlyRate());
+        field.rename(request.getName());
+        Field updated = fieldRepositoryPort.save(field);
+        return FieldModelMapper.toDTO(updated);
+    }
+
+    @Override
     public void deleteById(Long id) {
-        fieldRepositoryPort.findById(id).orElseThrow(() -> new FieldByIdNotFoundException(id));
-        fieldRepositoryPort.deleteById(id);
+        Field field = fieldRepositoryPort.findById(id)
+                .orElseThrow(() -> new FieldByIdNotFoundException(id));
+        field.deactivate();
+        fieldRepositoryPort.save(field);
     }
 }

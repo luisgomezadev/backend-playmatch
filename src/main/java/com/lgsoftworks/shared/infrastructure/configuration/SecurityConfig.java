@@ -60,7 +60,8 @@ public class SecurityConfig {
                                 "/uploads/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/field/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/venue/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/venue/p/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/venue/code/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/reservation/code/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/reservation/availability/hours/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/reservation").permitAll()

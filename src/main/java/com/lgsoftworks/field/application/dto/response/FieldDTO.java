@@ -16,5 +16,4 @@ public class FieldDTO {
     private FieldType fieldType;
     private BigDecimal hourlyRate;
     private Long venueId;
-    private boolean active;
 }

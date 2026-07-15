@@ -6,8 +6,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FieldRepository extends JpaRepository<FieldEntity, Long>, JpaSpecificationExecutor<FieldEntity> {
-    List<FieldEntity> findByVenueId(Long venueId);
+    List<FieldEntity> findByVenueIdAndActiveTrue(Long venueId);
+    Optional<FieldEntity> findByIdAndActiveTrue(Long id);
 }

@@ -3,7 +3,6 @@ package com.lgsoftworks.field.infrastructure.adapter.in.web;
 import com.lgsoftworks.field.application.dto.request.FieldRequest;
 import com.lgsoftworks.field.application.dto.response.FieldDTO;
 import com.lgsoftworks.field.application.port.in.FieldUseCase;
-import com.lgsoftworks.field.domain.exception.FieldByIdNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -35,15 +34,21 @@ public class FieldController {
     @Operation(summary = "Obtener una cancha por su ID")
     @GetMapping("/{id}")
     public ResponseEntity<FieldDTO> getFieldById(@PathVariable Long id) {
-        return fieldUseCase.findById(id)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new FieldByIdNotFoundException(id));
+        return ResponseEntity.ok(fieldUseCase.findById(id));
     }
 
     @Operation(summary = "Crear una nueva cancha")
     @PostMapping
     public ResponseEntity<FieldDTO> saveField(@Valid @RequestBody FieldRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(fieldUseCase.save(request));
+    }
+
+    @Operation(summary = "Actualizar la información de una cancha")
+    @PutMapping("/{id}")
+    public ResponseEntity<FieldDTO> updateField(
+            @PathVariable Long id,
+            @Valid @RequestBody FieldRequest request) {
+        return ResponseEntity.ok(fieldUseCase.update(request, id));
     }
 
     @Operation(summary = "Actualizar el precio por hora de una cancha")
