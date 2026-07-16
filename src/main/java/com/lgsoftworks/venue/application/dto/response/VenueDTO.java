@@ -18,6 +18,4 @@ public class VenueDTO {
     private String address;
     private LocalTime openingHour;
     private LocalTime closingHour;
-    private Long adminId;
-    private Status status;
 }

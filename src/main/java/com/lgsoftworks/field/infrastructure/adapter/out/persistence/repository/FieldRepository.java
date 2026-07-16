@@ -11,5 +11,6 @@ import java.util.Optional;
 @Repository
 public interface FieldRepository extends JpaRepository<FieldEntity, Long>, JpaSpecificationExecutor<FieldEntity> {
     List<FieldEntity> findByVenueIdAndActiveTrue(Long venueId);
+    List<FieldEntity> findByVenueId(Long venueId);
     Optional<FieldEntity> findByIdAndActiveTrue(Long id);
 }

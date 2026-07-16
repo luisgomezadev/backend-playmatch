@@ -1,6 +1,11 @@
 package com.lgsoftworks.venue.application.service;
 
+import com.lgsoftworks.auth.application.service.CurrentUserService;
+import com.lgsoftworks.auth.domain.exception.AccessDeniedException;
+import com.lgsoftworks.common.response.PageResponse;
+import com.lgsoftworks.user.domain.model.User;
 import com.lgsoftworks.venue.application.dto.mapper.VenueModelMapper;
+import com.lgsoftworks.venue.application.dto.request.VenueFilter;
 import com.lgsoftworks.venue.application.dto.request.VenueRequest;
 import com.lgsoftworks.venue.application.dto.response.VenueDTO;
 import com.lgsoftworks.venue.application.port.in.VenueUseCase;
@@ -10,6 +15,7 @@ import com.lgsoftworks.venue.domain.model.Venue;
 import com.lgsoftworks.venue.domain.port.out.VenueRepositoryPort;
 import com.lgsoftworks.venue.domain.service.VenueUniquenessValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,9 +27,12 @@ public class VenueService implements VenueUseCase {
     private final VenueRepositoryPort venueRepositoryPort;
     private final VenueUniquenessValidator venueUniquenessValidator;
     private final VenueModelMapper venueModelMapper;
+    private final CurrentUserService currentUserService;
 
     @Override
     public VenueDTO save(VenueRequest request) {
+        User currentUser = currentUserService.getCurrentUser();
+
         venueUniquenessValidator.validate(request.getCode());
 
         Venue venue = Venue.create(
@@ -33,7 +42,7 @@ public class VenueService implements VenueUseCase {
                 request.getAddress(),
                 request.getOpeningHour(),
                 request.getClosingHour(),
-                request.getAdminId()
+                currentUser.getId()
         );
         Venue saved = venueRepositoryPort.save(venue);
         return venueModelMapper.toDTO(saved);
@@ -41,8 +50,14 @@ public class VenueService implements VenueUseCase {
 
     @Override
     public VenueDTO update(Long id, VenueRequest request) {
+        User currentUser = currentUserService.getCurrentUser();
+
         Venue venue = venueRepositoryPort.findById(id)
                 .orElseThrow(() -> new VenueByIdNotFoundException(id));
+
+        if (!venue.getAdminId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("No tienes permiso para modificar este complejo deportivo");
+        }
 
         venueUniquenessValidator.validateForUpdate(request.getCode(), id);
 
@@ -57,9 +72,16 @@ public class VenueService implements VenueUseCase {
 
     @Override
     public VenueDTO findById(Long id) {
-        return venueRepositoryPort.findById(id)
-                .map(venueModelMapper::toDTO)
+        User currentUser = currentUserService.getCurrentUser();
+
+        Venue venue = venueRepositoryPort.findById(id)
                 .orElseThrow(() -> new VenueByIdNotFoundException(id));
+
+        if (!venue.getAdminId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("No tienes permiso para ver este complejo deportivo");
+        }
+
+        return venueModelMapper.toDTO(venue);
     }
 
     @Override
@@ -70,13 +92,30 @@ public class VenueService implements VenueUseCase {
     }
 
     @Override
-    public Optional<VenueDTO> findByAdminId(Long adminId) {
-        return venueRepositoryPort.findByAdminId(adminId).map(venueModelMapper::toDTO);
+    public Optional<VenueDTO> findByAdminId() {
+        User currentUser = currentUserService.getCurrentUser();
+        return venueRepositoryPort.findByAdminId(currentUser.getId()).map(venueModelMapper::toDTO);
     }
 
     @Override
     public void deleteById(Long id) {
-        venueRepositoryPort.findById(id).orElseThrow(() -> new VenueByIdNotFoundException(id));
+        User currentUser = currentUserService.getCurrentUser();
+
+        Venue venue = venueRepositoryPort.findById(id)
+                .orElseThrow(() -> new VenueByIdNotFoundException(id));
+
+        if (!venue.getAdminId().equals(currentUser.getId())) {
+            throw new AccessDeniedException("No tienes permiso para eliminar este complejo deportivo");
+        }
+
         venueRepositoryPort.deleteById(id);
+    }
+
+    @Override
+    public PageResponse<VenueDTO> searchVenues(VenueFilter filter, Pageable pageable) {
+        return PageResponse.from(
+                venueRepositoryPort.search(filter.name(), filter.city(), pageable)
+                        .map(venueModelMapper::toDTO)
+        );
     }
 }

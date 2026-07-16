@@ -8,5 +8,6 @@ import java.util.Optional;
 public interface FieldRepositoryPort {
     Field save(Field field);
     Optional<Field> findById(Long id);
+    List<Field> findAllByVenueId(Long venueId);
     List<Field> findByVenueId(Long venueId);
 }

@@ -1,10 +1,12 @@
 package com.lgsoftworks.venue.application.service;
 
+import com.lgsoftworks.auth.application.service.CurrentUserService;
 import com.lgsoftworks.field.application.dto.mapper.FieldModelMapper;
 import com.lgsoftworks.field.application.dto.response.FieldDTO;
 import com.lgsoftworks.field.domain.model.Field;
 import com.lgsoftworks.field.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.field.domain.service.FieldUniquenessValidator;
+import com.lgsoftworks.user.domain.model.User;
 import com.lgsoftworks.venue.application.dto.mapper.VenueModelMapper;
 import com.lgsoftworks.venue.application.dto.request.CreateFieldItemRequest;
 import com.lgsoftworks.venue.application.dto.request.CreateVenueWithFieldsRequest;
@@ -32,6 +34,7 @@ public class CreateVenueWithFieldsService implements CreateVenueWithFieldsUseCas
     private final FieldUniquenessValidator fieldUniquenessValidator;
     private final FieldModelMapper fieldModelMapper;
     private final VenueModelMapper venueModelMapper;
+    private final CurrentUserService currentUserService;
 
     @Override
     @Transactional
@@ -43,6 +46,8 @@ public class CreateVenueWithFieldsService implements CreateVenueWithFieldsUseCas
     }
 
     private Venue createVenue(VenueRequest venueRequest) {
+        User curreUser = currentUserService.getCurrentUser();
+
         venueUniquenessValidator.validate(venueRequest.getCode());
 
         Venue venue = Venue.create(
@@ -52,7 +57,7 @@ public class CreateVenueWithFieldsService implements CreateVenueWithFieldsUseCas
                 venueRequest.getAddress(),
                 venueRequest.getOpeningHour(),
                 venueRequest.getClosingHour(),
-                venueRequest.getAdminId()
+                curreUser.getId()
         );
         return venueRepositoryPort.save(venue);
     }

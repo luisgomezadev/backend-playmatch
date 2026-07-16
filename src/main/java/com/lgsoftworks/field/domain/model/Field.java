@@ -66,6 +66,9 @@ public class Field {
     }
 
     public void activate() {
+        if (this.active) {
+            throw new InvalidFieldDataException("La cancha ya está inactiva");
+        }
         this.active = true;
     }
 

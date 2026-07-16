@@ -1,5 +1,9 @@
 package com.lgsoftworks.reservation.application.service;
 
+import com.lgsoftworks.field.application.dto.response.FieldDTO;
+import com.lgsoftworks.field.application.port.in.FieldUseCase;
+import com.lgsoftworks.field.domain.model.Field;
+import com.lgsoftworks.field.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.reservation.application.dto.mapper.ReservationModelMapper;
 import com.lgsoftworks.reservation.application.dto.response.ReservationDTO;
 import com.lgsoftworks.reservation.application.port.in.ReservationUseCase;
@@ -11,7 +15,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +26,7 @@ public class ReservationService implements ReservationUseCase {
 
     private final ReservationRepositoryPort reservationRepositoryPort;
     private final ReservationModelMapper reservationModelMapper;
+    private final FieldUseCase fieldUseCase;
 
     @Override
     public Optional<ReservationDTO> findById(Long id) {
@@ -46,8 +54,20 @@ public class ReservationService implements ReservationUseCase {
 
     @Override
     public List<ReservationDTO> findByVenueIdAndDate(Long venueId, LocalDate date) {
-        return reservationRepositoryPort.findActiveByVenueIdAndDate(venueId, date).stream()
-                .map(reservationModelMapper::toDTO)
+        List<Reservation> reservations = reservationRepositoryPort.findActiveByVenueIdAndDate(venueId, date);
+
+        Map<Long, FieldDTO> fieldsById = fieldUseCase.findByVenueId(venueId).stream()
+                .collect(Collectors.toMap(FieldDTO::getId, Function.identity()));
+
+        return reservations.stream()
+                .map(r -> {
+                    ReservationDTO dto = reservationModelMapper.toDTO(r);
+                    FieldDTO field = fieldsById.get(r.getFieldId());
+                    if (field != null) {
+                        dto.setFieldName(field.getName());
+                    }
+                    return dto;
+                })
                 .toList();
     }
 

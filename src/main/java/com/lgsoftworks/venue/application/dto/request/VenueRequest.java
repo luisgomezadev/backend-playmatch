@@ -38,6 +38,4 @@ public class VenueRequest {
     @NotNull(message = "La hora de cierre es requerida")
     private LocalTime closingHour;
 
-    @NotNull(message = "El ID del admin es requerido")
-    private Long adminId;
 }

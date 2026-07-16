@@ -10,7 +10,9 @@ public interface FieldUseCase {
     FieldDTO save(FieldRequest request);
     FieldDTO findById(Long id);
     List<FieldDTO> findByVenueId(Long venueId);
+    List<FieldDTO> findAllByVenueId(Long venueId);
     FieldDTO updatePrice(Long fieldId, BigDecimal newHourlyRate);
     FieldDTO update(FieldRequest request, Long fieldId);
-    void deleteById(Long id);
+    void deactivate(Long fieldId);
+    void active(Long fieldId);
 }

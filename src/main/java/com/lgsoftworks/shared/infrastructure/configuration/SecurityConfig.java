@@ -58,7 +58,7 @@ public class SecurityConfig {
                                 "/uploads/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/field/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/venue/p/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/venue/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/venue/code/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/reservation/code/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/reservation/availability/hours/**").permitAll()
@@ -84,7 +84,7 @@ public class SecurityConfig {
                 "http://localhost:4200",
                 "https://projectplaymatch.vercel.app"
         ));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setExposedHeaders(List.of("Authorization"));
         config.setAllowCredentials(true);

@@ -25,10 +25,16 @@ public class FieldController {
 
     private final FieldUseCase fieldUseCase;
 
-    @Operation(summary = "Obtener las canchas de un complejo deportivo")
+    @Operation(summary = "Obtener las canchas activas de un complejo deportivo")
     @GetMapping("/venue/{venueId}")
     public ResponseEntity<List<FieldDTO>> getFieldsByVenueId(@PathVariable Long venueId) {
         return ResponseEntity.ok(fieldUseCase.findByVenueId(venueId));
+    }
+
+    @Operation(summary = "Obtener las canchas de un complejo deportivo")
+    @GetMapping("/all/venue/{venueId}")
+    public ResponseEntity<List<FieldDTO>> getAllFieldsByVenueId(@PathVariable Long venueId) {
+        return ResponseEntity.ok(fieldUseCase.findAllByVenueId(venueId));
     }
 
     @Operation(summary = "Obtener una cancha por su ID")
@@ -59,10 +65,17 @@ public class FieldController {
         return ResponseEntity.ok(fieldUseCase.updatePrice(id, newHourlyRate));
     }
 
-    @Operation(summary = "Eliminar una cancha")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        fieldUseCase.deleteById(id);
+    @Operation(summary = "Desactivar una cancha")
+    @PatchMapping("/{id}/deactivate")
+    public ResponseEntity<Void> deactivateById(@PathVariable Long id) {
+        fieldUseCase.deactivate(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Activar una cancha")
+    @PatchMapping("/{id}/activate")
+    public ResponseEntity<Void> activateById(@PathVariable Long id) {
+        fieldUseCase.active(id);
         return ResponseEntity.noContent().build();
     }
 }

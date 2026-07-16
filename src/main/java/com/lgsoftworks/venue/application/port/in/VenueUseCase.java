@@ -1,7 +1,10 @@
 package com.lgsoftworks.venue.application.port.in;
 
+import com.lgsoftworks.common.response.PageResponse;
+import com.lgsoftworks.venue.application.dto.request.VenueFilter;
 import com.lgsoftworks.venue.application.dto.request.VenueRequest;
 import com.lgsoftworks.venue.application.dto.response.VenueDTO;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 
@@ -10,6 +13,7 @@ public interface VenueUseCase {
     VenueDTO update(Long id, VenueRequest request);
     VenueDTO findById(Long id);
     VenueDTO findByCode(String code);
-    Optional<VenueDTO> findByAdminId(Long adminId);
+    Optional<VenueDTO> findByAdminId();
     void deleteById(Long id);
+    PageResponse<VenueDTO> searchVenues(VenueFilter filter, Pageable pageable);
 }

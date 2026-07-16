@@ -11,11 +11,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
-@Data
 public class FieldDTO {
     private Long id;
     private String name;
     private FieldType fieldType;
     private BigDecimal hourlyRate;
     private Long venueId;
+    private boolean active;
 }

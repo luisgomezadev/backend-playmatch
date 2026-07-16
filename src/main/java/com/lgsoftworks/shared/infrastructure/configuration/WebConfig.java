@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "http://localhost:4200",
                         "https://projectplaymatch.vercel.app"
                 )
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("Authorization", "Content-Type")
                 .exposedHeaders("Authorization")
                 .allowCredentials(true);
