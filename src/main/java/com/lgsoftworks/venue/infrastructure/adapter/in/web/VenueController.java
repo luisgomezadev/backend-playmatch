@@ -64,7 +64,7 @@ public class VenueController {
         return ResponseEntity.ok(venueUseCase.findByAdminId());
     }
 
-    @Operation(summary = "Obtener un complejo por su código")
+    @Operation(summary = "Obtener un complejo por su código (url)")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Complejo encontrado"),
             @ApiResponse(responseCode = "404", description = "Complejo no encontrado")
