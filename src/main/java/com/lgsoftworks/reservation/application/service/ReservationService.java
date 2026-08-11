@@ -2,14 +2,15 @@ package com.lgsoftworks.reservation.application.service;
 
 import com.lgsoftworks.field.application.dto.response.FieldDTO;
 import com.lgsoftworks.field.application.port.in.FieldUseCase;
-import com.lgsoftworks.field.domain.model.Field;
-import com.lgsoftworks.field.domain.port.out.FieldRepositoryPort;
 import com.lgsoftworks.reservation.application.dto.mapper.ReservationModelMapper;
 import com.lgsoftworks.reservation.application.dto.response.ReservationDTO;
 import com.lgsoftworks.reservation.application.port.in.ReservationUseCase;
+import com.lgsoftworks.reservation.domain.exception.ReservationByCodeNotFoundException;
 import com.lgsoftworks.reservation.domain.exception.ReservationByIdNotFoundException;
 import com.lgsoftworks.reservation.domain.model.Reservation;
 import com.lgsoftworks.reservation.domain.port.out.ReservationRepositoryPort;
+import com.lgsoftworks.venue.application.dto.response.VenueDTO;
+import com.lgsoftworks.venue.application.port.in.VenueUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class ReservationService implements ReservationUseCase {
     private final ReservationRepositoryPort reservationRepositoryPort;
     private final ReservationModelMapper reservationModelMapper;
     private final FieldUseCase fieldUseCase;
+    private final VenueUseCase venueUseCase;
 
     @Override
     public Optional<ReservationDTO> findById(Long id) {
@@ -35,7 +37,21 @@ public class ReservationService implements ReservationUseCase {
 
     @Override
     public Optional<ReservationDTO> findByCode(String code) {
-        return reservationRepositoryPort.findByCode(code).map(reservationModelMapper::toDTO);
+        Optional<ReservationDTO> optionalReservationDTO = reservationRepositoryPort.findByCode(code)
+                .map(reservationModelMapper::toDTO);
+
+        if (optionalReservationDTO.isPresent()) {
+            FieldDTO fieldDTO = fieldUseCase.findById(optionalReservationDTO.get().getFieldId());
+            VenueDTO venueDTO = venueUseCase.findById(fieldDTO.getVenueId());
+
+            optionalReservationDTO.get().setVenueName(venueDTO.getName());
+            optionalReservationDTO.get().setFieldName(fieldDTO.getName());
+
+            return optionalReservationDTO;
+        } else {
+            throw new ReservationByCodeNotFoundException(code);
+        }
+
     }
 
     @Override

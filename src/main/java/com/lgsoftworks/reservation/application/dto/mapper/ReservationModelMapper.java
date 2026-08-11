@@ -11,5 +11,6 @@ import org.mapstruct.ReportingPolicy;
 public interface ReservationModelMapper {
 
     @Mapping(target = "fieldName", ignore = true)
+    @Mapping(target = "venueName", ignore = true)
     ReservationDTO toDTO(Reservation reservation);
 }

@@ -19,6 +19,7 @@ public class ReservationDTO {
     private String cellphone;
     private Long fieldId;
     private String fieldName;
+    private String venueName;
     private ReservationDuration duration;
     private LocalTime startTime;
     private LocalTime endTime;

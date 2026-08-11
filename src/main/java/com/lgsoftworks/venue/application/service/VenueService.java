@@ -72,6 +72,13 @@ public class VenueService implements VenueUseCase {
 
     @Override
     public VenueDTO findById(Long id) {
+        Venue venue = venueRepositoryPort.findById(id)
+                .orElseThrow(() -> new VenueByIdNotFoundException(id));
+        return venueModelMapper.toDTO(venue);
+    }
+
+    @Override
+    public VenueDTO findByIdForCurrentUser(Long id) {
         User currentUser = currentUserService.getCurrentUser();
 
         Venue venue = venueRepositoryPort.findById(id)
